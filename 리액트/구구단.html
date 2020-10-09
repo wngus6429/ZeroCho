@@ -1,0 +1,79 @@
+<!-- @format -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>구구단</title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      class GuGudan extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            first: Math.ceil(Math.random() * 9),
+            second: Math.ceil(Math.random() * 9),
+            value: "",
+            result: "",
+          };
+        }
+        onSubmit = (e) => {
+          e.preventDefault();
+          if (parseInt(this.state.value) === this.state.first * this.state.second) {
+            this.setState((prevState) => {
+              //setState에 return을 하는 함수를 넣음
+              //prevState는 예전 상태값이라 생각, 예전 상태값을 다음 상태값에 활용 가능
+              return {
+                result: "정답=" + prevState.value, //정답이 나왔으니 위에 질문은 다시 바뀌어야 하니
+                first: Math.ceil(Math.random() * 9),
+                second: Math.ceil(Math.random() * 9),
+                value: "", //빈 공간 초기화
+              };
+            });
+            this.input.focus();
+          } else {
+            this.setState({ result: "땡", value: "" });
+          }
+          this.input.focus();
+        };
+        //여기서 우리가 만들어준 함수는 그냥 화살표 함수 쓴다고 생각하셈
+        //왜냐 선언문을 사용하면 this가 현재 class를 가리키지 않음. bind 써야하는듯
+        onChange = (e) => this.setState({ value: e.target.value });
+        onRefInput = (c) => {
+          this.input = c;
+          console.log(c);
+        };
+        render() {
+          console.log("랜더링");
+          return (
+            //지금 바벨이 지원을 안해서. 따로 React.Fragment라 쳐야함. 바벨툴 설치해야함
+            //React.Fragment를 사용하면 쓸데없는 div가 하나 줄어서 좋음
+            <React.Fragment>
+              <div>
+                {this.state.first} 곱하기 {this.state.second} 는?
+                <form onSubmit={this.onSubmit}>
+                  <input
+                    ref={this.onRefInput}
+                    type="number"
+                    value={this.state.value}
+                    onChange={this.onChange}
+                  />
+                  <button>입력!</button>
+                </form>
+                <div>{this.state.result}</div>
+              </div>
+            </React.Fragment>
+          );
+        }
+      }
+    </script>
+    <script type="text/babel">
+      ReactDOM.render(<GuGudan />, document.querySelector("#root"));
+    </script>
+  </body>
+</html>

@@ -4,14 +4,20 @@ const input = document.querySelector("#input");
 const check = document.querySelector("#check");
 const logs = document.querySelector("#logs");
 
-let numbers = [0,1,2,3,4,5,6,7,8,9];
+// 고급 문법 let numbers = Array(10).fill().map((v, i) => i)
+//let numbers = [0,1,2,3,4,5,6,7,8,9]; 
+let numbers = []
+ for (let n=0; n <= 9; n++){
+  numbers.push(n)
+}
 let answer = []
-
-for (let n = 0; n<=3; n++){
-  const index = Math.floor(Math.random() * (10 - n))
+for (let n = 0; n <= 3; n++){
+  const index = Math.floor(Math.random() * numbers.length)
   //-n을 안하면 언디파인 나옴. numbers의 길이는 줄어드는데. Math.random은 10까지 돌리니까
   answer.push(numbers[index]) //0~9까지 정수
+  console.log(answer)
   numbers.splice(index, 1) //splice로 삭제
+  //여기서 사용한 n은 목숨이 여기 블럭 안임. 블럭 끝나면 죽는거
 }
 console.log(answer)
 
@@ -22,13 +28,46 @@ check.addEventListener("click", () => {
     if (answer.join("") === value) {
       //answer === value.split("")할수 있지만 객체 끼리는 값이 같아도 다르다고 나옴
       //그래서 join으로 문자열을 만들어서 비교한다.
-      console.log("같다")
-      logs.appendChild(document.createTextNode("HR"))
+      logs.textContent = "HomeRun"
+      //logs.appendChild(document.createTextNode("HomeRun"))
     } else{
       console.log("다르다")
+      let strike = 0;
+      let ball = 0;
+      //[ ]구조분해 할당
+      for(const [aIndex, aNumber] of answer.entries()){
+        console.log(aNumber) //value.split 문자를 배열로 만들고 entries
+        for (const [iIndex, iString] of input.value.split("").entries()){
+          if(aNumber === Number(iString)){
+            if (aIndex === iIndex){
+              strike += 1
+           } else {
+             ball += 1
+           }
+          }
+        }
+      }
+      //최신 문법이라 한다. 백틱이랑, 태그도 이렇게 같이 추가 가능
+      logs.append(`${input.value}:${strike} strike ${ball} ball`, document.createElement("br"))
+      if(count > 10){
+        logs.appendChild(document.createTextNode(`Game Over:${answer.join("")}`))
+      } else {
+        count += 1
+      }
     }
+    //appendChild는 뭔가 추가할때 사용
+    // const message = document.createTextNode(`${input.value}:${strike} strike ${ball} ball`)
+    //   logs.appendChild(message)
+    //   logs.appendChild(document.createElement("br"));
+    //   if(count > 10){
+    //     logs.appendChild(document.createTextNode(`Game Over:${answer.join("")}`))
+    //   } else {
+    //     count += 1
+    //   }
   }
 });
+
+//entries는 배열 뒤에만 붙일수 있음
 
 //배열은 자료형이 객체이다
 

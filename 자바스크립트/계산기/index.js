@@ -16,7 +16,7 @@ plusButton.addEventListener("click", () => {
   if (temp) {
     operator = "+";
     numberInput.value = null;
-  } else {
+  } else { //temp가 없으면
     if (numberInput.value) {
       temp = Number(numberInput.value); //문자열을 숫자로
       operator = "+";

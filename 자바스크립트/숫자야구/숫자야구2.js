@@ -15,7 +15,7 @@ for (let n = 0; n <= 3; n++) {
   const index = Math.floor(Math.random() * numbers.length);
   //-n을 안하면 언디파인 나옴. numbers의 길이는 줄어드는데. Math.random은 10까지 돌리니까
   answer.push(numbers[index]); //0~9까지 정수
-  console.log(answer);
+  //  console.log(answer)
   numbers.splice(index, 1); //splice로 삭제
   //여기서 사용한 n은 목숨이 여기 블럭 안임. 블럭 끝나면 죽는거
 }
@@ -35,9 +35,12 @@ check.addEventListener("click", () => {
       let strike = 0;
       let ball = 0;
       //[ ]구조분해 할당
+      //첫번쨰 for문 1번 돌면 밑에 4번, 이런식
       for (const [aIndex, aNumber] of answer.entries()) {
-        console.log(aNumber); //value.split 문자를 배열로 만들고 entries
+        console.log(aIndex, aNumber); //value.split 문자를 배열로 만들고 entries
         for (const [iIndex, iString] of input.value.split("").entries()) {
+          console.log(iIndex, iString);
+          //console.log(aNumber, iString)
           if (aNumber === Number(iString)) {
             if (aIndex === iIndex) {
               strike += 1;
@@ -86,7 +89,7 @@ check.addEventListener("click", () => {
 // ];
 // Number(answer.join("")); //배열을 문자열로 바꾸는게 join
 
-//let n = 0 //4번 돌리겟지
+// let n = 0 //4번 돌리겟지
 // while (n <= 3){
 //   const index = Math.floor(Math.random() * (10 - n))
 //   //-n을 안하면 언디파인 나옴. numbers의 길이는 줄어드는데. Math.random은 10까지 돌리니까
@@ -103,11 +106,14 @@ check.addEventListener("click", () => {
 // const number2 = String(Math.floor(Math.random() * 10));
 // const number3 = String(Math.floor(Math.random() * 10));
 // const number4 = String(Math.floor(Math.random() * 10));
-// let answer = Number(number1 + number2 + number3 + number4);
+// let answerg = Number(number1 + number2 + number3 + number4);
+// console.log(answerg)
 
+// let good = []
 // let n = 0;
-// while (n <= 3) {
-//   answer[n] = Math.floor(Math.random() * 10);
+// while (n <= 50) {
+//   good[n] = Math.floor(Math.random() * 100);
 //   n++; // n = n + 1, N += 1
 // }
-// console.log(answer);
+// good.sort((a, b) => { return a - b })
+// console.log(good);

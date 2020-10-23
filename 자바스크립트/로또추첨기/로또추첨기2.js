@@ -1,7 +1,6 @@
-const candidate = Array(45)
-  .fill()
-  .map((index, number) => number + 1);
-console.log(candidate);
+
+const candidate = Array(45).fill().map((index, number) => number + 1)
+console.log(candidate)
 //fill 은 배열을 만들기 위해, Array(45)하면 length 는 생기는데 empty 배열
 //fill("1") 하면 안에 45개 배열 안에 모두 "1"이 들어감
 //하지만 fill 하면 undefined이지만 45개의 공간이 생긴다.
@@ -10,62 +9,65 @@ console.log(candidate);
 //반복문 종류 while, for, forEach, for of , for in, map도 반복문이긴 하지
 //do while, filter, splice, slice, textContent등등
 const shuffle = [];
-while (candidate.length > 0) {
-  const random = Math.floor(Math.random() * candidate.length);
-  const spliceArray = candidate.splice(random, 1);
-  //console.log(candidate)
-  //console.log(spliceArray)
-  const value = spliceArray[0];
-  shuffle.push(value);
+while(candidate.length > 0){
+    const random = Math.floor(Math.random() * candidate.length)
+    const spliceArray = candidate.splice(random, 1);
+    //console.log(candidate)
+    //console.log(spliceArray)
+    const value = spliceArray[0];
+    shuffle.push(value)
 }
-console.log(shuffle);
+console.log(shuffle)
 
-const winBalls = shuffle.slice(0, 6).sort((a, b) => a - b); //당첨번호
-//앞에서 리턴하는 값이 0보다 크면 , 자리를 바꾼다.
+const winBalls = shuffle.slice(0, 6).sort((a, b)=> a - b); //당첨번호
+//앞에서 리턴하는 값이 0보다 크면 , 자리를 바꾼다. 
 const bonus = shuffle[6]; //7번째 보너스
 // console.log(winBalls);
 // console.log(bonus);
 
-function colorball(number, tag) {
-  if (number < 10) {
-    tag.style.backgroundColor = "red";
-  } else if (number < 20) {
-    tag.style.backgroundColor = "orange";
-  } else if (number < 30) {
-    tag.style.backgroundColor = "yellow";
-  } else if (number < 40) {
-    tag.style.backgroundColor = "blue";
-    tag.style.color = "white";
-  } else {
-    tag.style.backgroundColor = "black";
-    tag.style.color = "white";
-  }
+function colorball(number, tag){
+    if (number < 10){
+    tag.style.backgroundColor = "red"}
+    else if (number < 20){
+        tag.style.backgroundColor = "orange"
+    }
+    else if (number < 30){
+        tag.style.backgroundColor = "yellow"
+    }
+    else if (number < 40){
+        tag.style.backgroundColor = "blue"
+        tag.style.color = "white"
+    }
+    else{
+        tag.style.backgroundColor = "black"
+        tag.style.color = "white"
+    }
 }
 
-const resultTag = document.querySelector("#result");
+const resultTag = document.querySelector("#result")
 
-//map으로 써도 정상 작동됨.
+//map으로 써도 정상 작동됨. 
 //맵은 반복문이며 1대1 에 좀 더 초첨이 맞춰져 있음.
 //forEach는 1,2,3,4 단순반복에 좀 더 특화
 //리턴이 있으면 map이 좋고 없으면 forEach가 좋다
-winBalls.forEach((number, index) => {
-  setTimeout(() => {
-    const ball = document.createElement("div");
-    colorball(number, ball);
-    ball.className = "ball";
-    ball.textContent = number;
-    resultTag.appendChild(ball); //그냥 append도 됨
-  }, 1000 * (index + 1));
-});
+winBalls.forEach((number, index)=>{
+    setTimeout(() =>{
+        const ball = document.createElement('div')
+        colorball(number, ball)
+        ball.className = "ball";
+        ball.textContent = number;
+        resultTag.appendChild(ball);//그냥 append도 됨
+    }, 1000 * (index + 1))
+})
 
-const bonusTag = document.querySelector("#bonus");
-setTimeout(() => {
-  const bonusBall = document.createElement("div");
+const bonusTag = document.querySelector("#bonus")
+setTimeout(() =>{
+  const bonusBall = document.createElement('div')
   bonusBall.className = "ball";
-  colorball(bonus, bonusBall);
+  colorball(bonus, bonusBall)
   bonusBall.textContent = bonus;
-  bonusTag.appendChild(bonusBall); //그냥 append도 됨
-}, 7000);
+  bonusTag.appendChild(bonusBall);//그냥 append도 됨
+ }, 7000);
 //10개를 아예 처음부터 섞어서 앞에서 부터 뽑기
 
 // for(let i=0; i<6; i++){
@@ -121,6 +123,6 @@ setTimeout(() => {
 //         bonusBall.style.backgroundColor = "black"
 //         bonusBall.style.color = "white"
 //     }
-
+    
 // bonusBall.textContent = bonus;
 // bonusTag.appendChild(bonusBall);//그냥 append도 됨

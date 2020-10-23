@@ -78,16 +78,21 @@ const 비동기콜백 = (event) => {
 // let 줄들 = [];
 // let 칸들 = []
 // let 턴 = "X";
+// 칸들 = [
+// [첫칸, 두칸, 세칸],
+// [첫칸, 두칸, 세칸],
+// [첫칸, 두칸, 세칸]
+// ]
 for(i = 1; i <= 3; i++){
   let 줄 = document.createElement("tr")
   줄들.push(줄)
   //줄.textContent = "줄"
   칸들.push([]);
-
+  console.log(칸들)
     for(let j = 1; j<=3; j++){
     let 칸 = document.createElement("td")
     칸.addEventListener("click", 비동기콜백)
-    
+    console.log(칸)
     칸들[i - 1].push(칸);
     //칸.textContent = "칸"
     줄.appendChild(칸);
@@ -96,16 +101,12 @@ table.appendChild(줄)
 }
 body.appendChild(table)
 body.appendChild(결과)
-console.log(줄들,칸들)
+//console.log(줄들,칸들)
 
 
 
 
-// 칸들 = [
-// [첫칸, 두칸, 세칸],
-// [첫칸, 두칸, 세칸],
-// [첫칸, 두칸, 세칸]
-// ]
+
 
 // let 배열 = [1,2,3,4,5]
 // let 배열 = [

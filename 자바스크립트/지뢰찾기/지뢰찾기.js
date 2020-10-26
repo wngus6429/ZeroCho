@@ -1,7 +1,9 @@
-let tbody = document.querySelector("#table tbody");
 let dataset = []; //데이터창고
+let tbody = document.querySelector("#table tbody");
 
-document.querySelector("#exec").addEventListener("click", function () {
+document.querySelector("#exec").addEventListener("click", () => {
+  //tbody.innerHTML = ""; //실행누르면 초기화되게끔
+  //console.log(tbody);
   let hor = parseInt(document.querySelector("#hor").value);
   let ver = parseInt(document.querySelector("#ver").value);
   let mine = parseInt(document.querySelector("#mine").value);
@@ -38,8 +40,51 @@ document.querySelector("#exec").addEventListener("click", function () {
         let 칸 = Array.prototype.indexOf.call(부모tr.children, td);
         let 줄 = Array.prototype.indexOf.call(부모tbody.children, tr);
         console.log(부모tr, 부모tbody, td, 칸, 줄);
-        td.textContent = "!";
-        dataset[줄][칸] = "!"; //태그 화면으로 헀으니 데이터 쪽에도 적용
+        if (
+          e.currentTarget.textContent === "" ||
+          e.currentTarget.textContent === "X"
+        ) {
+          e.currentTarget.textContent = "!";
+        } else if (e.currentTarget.textContent === "!") {
+          e.currentTarget.textContent = "?";
+        } else if (e.currentTarget.textContent === "?") {
+          //데이터는 빈칸일때 1을 넣어줘야함.
+          if (dataset[줄][칸] === 1) {
+            e.currentTarget.textContent = "";
+          } //화면과 데이터는 다른거임.
+          if (dataset[줄][칸] === "X") {
+            e.currentTarget.textContent = "X";
+          }
+        }
+      });
+      td.addEventListener("click", (e) => {
+        //클릭했을때 주변 지뢰 개수
+        let 부모tr = e.currentTarget.parentNode; //몇번쨰줄 몇번째 칸 알아내야지
+        let 부모tbody = e.currentTarget.parentNode.parentNode;
+        let 칸 = Array.prototype.indexOf.call(부모tr.children, td);
+        let 줄 = Array.prototype.indexOf.call(부모tbody.children, tr);
+        if (dataset[줄][칸] === "X") {
+          e.currentTarget.textContent = "펑";
+        } else {
+          let 주변 = [dataset[줄][칸 - 1], dataset[줄][칸 + 1]];
+          if (dataset[줄 - 1]) {
+            주변 = 주변.concat(
+              dataset[줄 - 1][칸 - 1],
+              dataset[줄 - 1][칸],
+              dataset[줄 - 1][칸 + 1]
+            ); //사실 push도 가능함
+          } // concat은 배열을 합해서 새로운 배열을 만들어낸다
+          if (dataset[줄 + 1]) {
+            주변 = 주변.concat(
+              dataset[줄 + 1][칸 - 1],
+              dataset[줄 + 1][칸],
+              dataset[줄 + 1][칸 + 1]
+            );
+          }
+          e.currentTarget.textContent = 주변.filter(function (v) {
+            return v === "X";
+          }).length;
+        }
       });
       tr.appendChild(td);
       //td.textContent = 1;
@@ -72,3 +117,7 @@ document.querySelector("#exec").addEventListener("click", function () {
 //배열이 아닌 유사배열에 배열의 메서드를 사용하고 싶을 때 씁니다.
 
 //React, angular vue 사용이유. 화면과 데이터를 일치시키기 위해
+
+//e.currentTarget과 e.target은 다르다.
+//e.currentTarget은 이벤트 리스너가 달린놈이 나오고 tbody
+//e.target은 실제 이벤트가 발생한곳 여기서는 td

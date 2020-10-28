@@ -34,7 +34,7 @@ document.querySelector("#exec").addEventListener("click", () => {
   let 셔플 = [];
   //100개는 html value 10, 10 가로 세로 곱한거임
   // 100개 다 계산해서 20개 뽑는건 성능 아까우니, 애초부터 20개만 뽑게 하자 이지
-  while (후보군.length > 80) {
+  while (후보군.length > hor * ver - mine) {
     let 이동값 = 후보군.splice(Math.floor(Math.random() * 후보군.length), 1)[0];
     셔플.push(이동값);
   }
@@ -50,16 +50,20 @@ document.querySelector("#exec").addEventListener("click", () => {
       let td = document.createElement("td");
       td.addEventListener("contextmenu", function (e) {
         e.preventDefault(); //마우스 오른쪽 클릭 이벤트는 contextmenu임
+        if (중단플래그) {
+          return;
+        }
         let 부모tr = e.currentTarget.parentNode; //몇번쨰줄 몇번째 칸 알아내야지
         let 부모tbody = e.currentTarget.parentNode.parentNode;
-        let 칸 = Array.prototype.indexOf.call(부모tr.children, td);
-        let 줄 = Array.prototype.indexOf.call(부모tbody.children, tr);
+        let 칸 = Array.prototype.indexOf.call(부모tr.children, e.currentTarget);
+        let 줄 = Array.prototype.indexOf.call(부모tbody.children, 부모tr);
         console.log(부모tr, 부모tbody, td, 칸, 줄);
         if (
           e.currentTarget.textContent === "" ||
           e.currentTarget.textContent === "X"
         ) {
           e.currentTarget.textContent = "!";
+          e.currentTarget.classList.add("flag");
           if (dataset[줄][칸] === 코드표.지뢰) {
             dataset[줄][칸] = 코드표.깃발지뢰;
           } else {
@@ -67,22 +71,23 @@ document.querySelector("#exec").addEventListener("click", () => {
           }
         } else if (e.currentTarget.textContent === "!") {
           e.currentTarget.textContent = "?";
-          if (dataset[줄][칸] === 코드표.지뢰) {
+          e.currentTarget.classList.remove("flag");
+          e.currentTarget.classList.add("question");
+          if (dataset[줄][칸] === 코드표.깃발지뢰) {
             dataset[줄][칸] = 코드표.물음표지뢰;
           } else {
             dataset[줄][칸] = 코드표.물음표;
           }
         } else if (e.currentTarget.textContent === "?") {
+          e.currentTarget.classList.remove("question");
           //데이터는 빈칸일때 1을 넣어줘야함.
-          if (
-            dataset[줄][칸] === 코드표.지뢰 ||
-            dataset[줄][칸] === 코드표.깃발지뢰 ||
-            dataset[줄][칸] === 코드표.물음표지뢰
-          ) {
+          if (dataset[줄][칸] === 코드표.물음표지뢰) {
             e.currentTarget.textContent = "X";
+            dataset[줄][칸] === 코드표.지뢰;
           } //화면과 데이터는 다른거임.
           else {
             e.currentTarget.textContent = "";
+            dataset[줄][칸] === 코드표.보통칸;
           }
         }
       });
@@ -116,25 +121,27 @@ document.querySelector("#exec").addEventListener("click", () => {
         } else {
           let 주변 = [dataset[줄][칸 - 1], dataset[줄][칸 + 1]];
           if (dataset[줄 - 1]) {
-            주변 = 주변.concat(
+            주변 = 주변.concat([
               dataset[줄 - 1][칸 - 1],
               dataset[줄 - 1][칸],
-              dataset[줄 - 1][칸 + 1]
-            ); //사실 push도 가능함
+              dataset[줄 - 1][칸 + 1],
+            ]); //사실 push도 가능함
           } // concat은 배열을 합해서 새로운 배열을 만들어낸다
           if (dataset[줄 + 1]) {
-            주변 = 주변.concat(
+            주변 = 주변.concat([
               dataset[줄 + 1][칸 - 1],
               dataset[줄 + 1][칸],
-              dataset[줄 + 1][칸 + 1]
-            );
+              dataset[줄 + 1][칸 + 1],
+            ]);
           }
           let 주변지뢰개수 = 주변.filter(function (v) {
-            return v === 코드표.지뢰;
+            return [코드표.지뢰, 코드표.깃발지뢰, 코드표.물음표지뢰].includes(
+              v
+            );
           }).length;
           //주변지뢰개수가 거짓인 값:false, "", 0, null, undefined, NaN 면 뒤에 " "를 써라
           e.currentTarget.textContent = 주변지뢰개수 || "";
-          dataset[줄][칸] = 1;
+          dataset[줄][칸] = 코드표.연칸;
           if (주변지뢰개수 === 0) {
             console.log("주변을 엽니다");
             //주변 8칸 동시 오픈
@@ -164,8 +171,8 @@ document.querySelector("#exec").addEventListener("click", () => {
                 return !!v;
               })
               .forEach(function (옆칸) {
-                let 부모tr = e.currentTarget.parentNode; //몇번쨰줄 몇번째 칸 알아내야지
-                let 부모tbody = e.currentTarget.parentNode.parentNode;
+                let 부모tr = 옆칸.parentNode; //몇번쨰줄 몇번째 칸 알아내야지
+                let 부모tbody = 옆칸.parentNode.parentNode;
                 let 옆칸칸 = Array.prototype.indexOf.call(
                   부모tr.children,
                   옆칸
@@ -174,7 +181,7 @@ document.querySelector("#exec").addEventListener("click", () => {
                   부모tbody.children,
                   부모tr
                 );
-                if (dataset[옆칸줄][옆칸칸] !== 1) {
+                if (dataset[옆칸줄][옆칸칸] !== 코드표.연칸) {
                   옆칸.click();
                 }
               });
@@ -194,25 +201,24 @@ document.querySelector("#exec").addEventListener("click", () => {
   console.log(dataset);
   //지뢰 심기 예시:59 , 배열에는 - 가 나오면 안되니 주의
   for (let k = 0; k < 셔플.length; k++) {
-    let 세로 = Math.floor(셔플[k] / 10); // 예 6 , 자스는 0부터 세니까
-    let 가로 = 셔플[k] % 10; //예 8 , 자스는 0부터 세니까
-    console.log(세로, 가로);
+    let 세로 = Math.floor(셔플[k] / ver); // 예 6 , 자스는 0부터 세니까
+    let 가로 = 셔플[k] % ver; //예 8 , 자스는 0부터 세니까
     tbody.children[세로].children[가로].textContent = "X"; //화면
     //children으로 자식 태그 접근 가능, tbody안에 children이면 tr, 여기에 또 children하면 td이다
-    dataset[세로][가로] = "X"; //2차원 배열
+    dataset[세로][가로] = 코드표.지뢰; //2차원 배열
     //윈도우즈 지뢰찾기는 첫번째 클릭은 무조건 지뢰 위치가 아님
   }
   console.log(dataset);
 });
 
-function 재귀함수(숫자) {
-  console.log(숫자);
-  if (숫자 < 5) {
-    재귀함수(숫자 + 1);
-  }
-}
+// function 재귀함수(숫자) {
+//   console.log(숫자);
+//   if (숫자 < 5) {
+//     재귀함수(숫자 + 1);
+//   }
+// }
 
-재귀함수(1);
+// 재귀함수(1);
 
 //코드 짜는 능력을 기를려면 순서도를 그려야한다. 한마디로 설계서
 //마우스 오른쪽 클릭 이벤트는 contextmenu임

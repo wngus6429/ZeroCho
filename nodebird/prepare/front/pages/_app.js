@@ -1,15 +1,26 @@
-import "antd/dist/antd.css";
 import React from "react";
 import { Component } from "react";
-import PropTypes from "prop-types"
+import PropTypes from "prop-types";
+import "antd/dist/antd.css";
+import Head from "next/head";
 //페이지들의 공통된 부분을 처리
 //굳이 이름 App 이라고 할 필요 없음.
-const App = ({Component}) =>{
-return (<Component/>)
-}
+//App이 부모, index.js가 밑에 Component안으로
+const NodeBird = ({ Component }) => {
+  return (
+    <>
+      <Head>
+        <meta charSet="utf-8" />
+        <title>Nodebird</title>
+      </Head>
+      <div>공통메뉴</div>
+      <Component />
+    </>
+  );
+};
 
-App.propTypes = {
-  Component : PropTypes.elementType.isrequired
-}
+NodeBird.propTypes = {
+  Component: PropTypes.elementType.isrequired,
+};
 
-export default App;
+export default NodeBird;

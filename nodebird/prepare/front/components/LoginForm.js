@@ -2,6 +2,8 @@ import React, { useState, useCallback, useMemo } from "react";
 import { Form, Input, Button } from "antd";
 import Link from "next/link";
 import styled from "styled-components";
+import PropTypes from "prop-types";
+import useinput from "../hooks/useinput";
 
 const ButtonWrapper = styled.div`
   margin-top: 10px;
@@ -12,17 +14,17 @@ const FormWrapper = styled(Form)`
 `;
 
 const LoginForm = ({ setIsLoggedIn }) => {
-  const [Id, setId] = useState("");
-  const [Password, setPassword] = useState("");
-
-  const onChangeId = useCallback((e) => {
-    setId(e.target.value);
-  }, []);
-
+  const [Id, onChangeId] = useinput("");
+  // const [Id, setId] = useState("");
+  // const onChangeId = useCallback((e) => {
+  //   setId(e.target.value);
+  // }, []);
+  const [Password, onChangePassword] = useinput("");
+  // const [Password, setPassword] = useState("");
   //useCallback 써야 성능이 좋아진다.
-  const onChangePassword = useCallback((e) => {
-    setPassword(e.target.value);
-  }, []);
+  // const onChangePassword = useCallback((e) => {
+  //   setPassword(e.target.value);
+  // }, []);
 
   const onSubmitForm = useCallback(() => {
     console.log(Id, Password);
@@ -39,19 +41,13 @@ const LoginForm = ({ setIsLoggedIn }) => {
       <div>
         <label htmlFor="user-password">비밀번호</label>
         <br />
-        <Input
-          name="user-password"
-          type="password"
-          value={Password}
-          onChange={onChangePassword}
-          required
-        />
+        <Input name="user-password" type="password" value={Password} onChange={onChangePassword} required />
       </div>
       <ButtonWrapper>
         <Button type="primary" htmlType="submit" loading={false}>
           로그인
         </Button>
-        <Link href="/singup">
+        <Link href="/signup">
           <a>
             <Button>회원가입</Button>
           </a>
@@ -59,6 +55,10 @@ const LoginForm = ({ setIsLoggedIn }) => {
       </ButtonWrapper>
     </FormWrapper>
   );
+};
+
+LoginForm.propTypes = {
+  setIsLoggedIn: PropTypes.func.isRequired,
 };
 
 export default LoginForm;

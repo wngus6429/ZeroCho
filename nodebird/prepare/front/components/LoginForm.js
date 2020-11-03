@@ -1,11 +1,11 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 import { Form, Input, Button } from "antd";
 import Link from "next/link";
 import styled from "styled-components";
-import PropTypes from "prop-types";
-import useinput from "../hooks/useinput";
+//import PropTypes from "prop-types";
+import useInput from "../hooks/useinput";
 import { useDispatch } from "react-redux";
-import { loginAction } from "../reducers";
+import { loginAction } from "../reducers/user";
 
 const ButtonWrapper = styled.div`
   margin-top: 10px;
@@ -15,15 +15,15 @@ const FormWrapper = styled(Form)`
   padding: 10px;
 `;
 
-const LoginForm = ({}) => {
+const LoginForm = () => {
   const dispatch = useDispatch();
 
-  const [Id, onChangeId] = useinput("");
+  const [Id, onChangeId] = useInput("");
   // const [Id, setId] = useState("");
   // const onChangeId = useCallback((e) => {
   //   setId(e.target.value);
   // }, []);
-  const [Password, onChangePassword] = useinput("");
+  const [Password, onChangePassword] = useInput("");
   // const [Password, setPassword] = useState("");
   //useCallback 써야 성능이 좋아진다.
   // const onChangePassword = useCallback((e) => {

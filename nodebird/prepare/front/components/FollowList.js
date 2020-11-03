@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Button, Card, List } from "antd";
 import Proptypes from "prop-types";
 import { StopTwoTone } from "@ant-design/icons";

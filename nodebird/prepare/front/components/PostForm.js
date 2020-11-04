@@ -52,3 +52,5 @@ const PostForm = () => {
 };
 
 export default PostForm;
+
+//hidden은 밑에 다른 Button (이미지 삽입) 을 사용하기 위해서 안보이게 한것

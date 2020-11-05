@@ -5,20 +5,24 @@
 // game.push(pro)
 // console.log(game)
 
-let gg = Array(40).fill().map((index, num) => num * 3 * 9)
-console.log(gg)
+// let gg = Array(40).fill().map((index, num) => num * 3 * 9)
+// console.log(gg)
 
 // const arr = [1,2,3,4,5]
 // arr[0] = arr[0] * 10
 // console.log(arr)
 
-let arrg = [1,2,3,4,5]
-for (i=0; i < arrg.length; i++){
-    arrg[i] = arrg[i] + 3 * 10 
-}
-console.log("결과", arrg)
+// let arrg = [1,2,3,4,5]
+// for (i=0; i < arrg.length; i++){
+//     arrg[i] = arrg[i] + 3 * 10
+// }
+// console.log("결과", arrg)
 
-arrg.forEach((num, index, array) => this.num = num * 98, array)
-//let game = arrg.map((a) => a * 98)
-console.log("리턴", arrg)
+// arrg.forEach((num, index, array) => this.num = num * 98, array)
+// //let game = arrg.map((a) => a * 98)
+// console.log("리턴", arrg)
 
+//        0  1  2  3  4
+let a = [55, 2, 3, 4, 5];
+a.push("주현");
+console.log(a);

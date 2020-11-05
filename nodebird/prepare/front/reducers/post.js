@@ -7,12 +7,15 @@ export const initialState = {
         nickname: "제로초",
       },
       content: "첫번째 게시글 #해시태그, #익스프레스",
-      Image: [
+      Images: [
         {
           src: "https://www.ilbe.com",
         },
         {
           src: "https://www.naver.com",
+        },
+        {
+          src: "https://manatoki84.net",
         },
       ],
       Comments: [

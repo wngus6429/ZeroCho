@@ -9,14 +9,17 @@ export const initialState = {
       content: "첫번째 게시글 #해시태그, #익스프레스",
       Images: [
         {
-          src: "https://www.ilbe.com",
+          src:
+            "https://cdnb.artstation.com/p/assets/images/images/029/822/295/smaller_square/sakimi-chan-kdaahri.jpg?1598749952",
         },
         {
-          src: "https://www.naver.com",
+          src:
+            "https://p6m5s8c4.stackpathcdn.com/wp-content/uploads/2020/01/Screen-Shot-2020-01-28-at-12.11.51-PM.png",
         },
-        {
-          src: "https://manatoki84.net",
-        },
+        // {
+        //   src:
+        //     "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRHrJIHYecs7LONs1yBDv7FmML5sSCoESzg9Q&usqp=CAU",
+        // },
       ],
       Comments: [
         {

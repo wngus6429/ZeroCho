@@ -1,11 +1,15 @@
 import React, { useCallback, useState } from "react";
 import PropTypes from "prop-types";
 import { PlusOutlined } from "@ant-design/icons";
+import ImagesZoom from "./imagesZoom"; //폴더부르면 자동 index.js부름
 
 const PostImages = ({ images }) => {
   const [showImagesZoom, setshowImagesZoom] = useState(false);
   const onZoom = useCallback(() => {
     setshowImagesZoom(true);
+  }, []);
+  const onClose = useCallback(() => {
+    setshowImagesZoom(false);
   }, []);
   //0개가 없는 이유는 PostCard에서 무조건 한개 이상일때 라고 설정 해줘서 이다
   if (images.length === 1) {
@@ -18,6 +22,7 @@ const PostImages = ({ images }) => {
           alt={images[0].src}
           onClick={onZoom}
         />
+        {showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
       </>
     );
   }
@@ -38,6 +43,7 @@ const PostImages = ({ images }) => {
           alt={images[1].src}
           onClick={onZoom}
         />
+        {showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
       </>
     );
   }
@@ -62,6 +68,7 @@ const PostImages = ({ images }) => {
           개의 사진 더 보기
         </div>
       </div>
+      {showImagesZoom && <ImagesZoom images={images} onClose={onClose} />}
     </>
   );
 };

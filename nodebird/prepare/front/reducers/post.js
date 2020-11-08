@@ -16,10 +16,10 @@ export const initialState = {
           src:
             "https://p6m5s8c4.stackpathcdn.com/wp-content/uploads/2020/01/Screen-Shot-2020-01-28-at-12.11.51-PM.png",
         },
-        // {
-        //   src:
-        //     "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRHrJIHYecs7LONs1yBDv7FmML5sSCoESzg9Q&usqp=CAU",
-        // },
+        {
+          src:
+            "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRHrJIHYecs7LONs1yBDv7FmML5sSCoESzg9Q&usqp=CAU",
+        },
       ],
       Comments: [
         {

@@ -1,80 +1,16 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Slick from "react-slick";
-import styled from "styled-components";
-
-//함수는 func`` 백틱 두개로 호출 할수도 있다
-//밑에 styled.div``은 함수ㅋㅋ
-
-const Overlay = styled.div`
-  position: fixed;
-  z-index: 5000; //이건 자바스크립트 문법임
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-`;
-
-const Header = styled.header`
-  height: 44px;
-  background: white;
-  position: relative;
-  padding: 0;
-  text-align: center;
-
-  & h1 {
-    margin: 0;
-    font-size: 17px;
-    color: #333;
-    line-height: 44px;
-  }
-  & button {
-    position: absolute;
-    right: 0;
-    top: 0;
-    padding: 15px;
-    line-height: 14px;
-    cursor: pointer;
-  }
-`;
-
-const SlickWrapper = styled.div`
-  height: calc(100% - 44px);
-  background: #090909;
-`;
-
-const ImgWrapper = styled.div`
-  padding: 32px;
-  text-align: center;
-
-  &img {
-    margin: 0 auto;
-    max-height: 750px;
-  }
-`;
-
-const Indicator = styled.div`
-  text-align: center;
-  & > div {
-    width: 75px;
-    height: 30px;
-    line-height: 30px;
-    border-radius: 15px;
-    background: #313131;
-    display: inline-block;
-    text-align: center;
-    color: white;
-    font-size: 15px;
-  }
-`;
+import { Overlay, Global, Header, CloseBtn, ImgWrapper, Indicator, SlickWrapper } from "./styles";
 
 const ImagesZoom = ({ images, onClose }) => {
   const [currentSlide, setcurrentSlide] = useState(0);
   return (
     <Overlay>
+      <Global />
       <Header>
         <h1>상세이미지</h1>
-        <button onClick={onClose}>X</button>
+        <CloseBtn onClick={onClose}>X</CloseBtn>
       </Header>
       <SlickWrapper>
         <div>
@@ -92,6 +28,12 @@ const ImagesZoom = ({ images, onClose }) => {
               </ImgWrapper>
             ))}
           </Slick>
+          <Indicator>
+            <div>
+              {currentSlide + 1}
+              {""}/{images.length}
+            </div>
+          </Indicator>
         </div>
       </SlickWrapper>
     </Overlay>
@@ -106,3 +48,7 @@ export default ImagesZoom;
 //initialSlide={0}첫번쨰 사진은 무엇으로
 //afterChange={(slide) => setcurrentSlide} 페이지를 넘길때 마다 번호를줌
 //infinite는 끝에서 더 넘기면 처음걸로감 , arrow는 화살표 사라짐, 무조건 클릭해서 넘겨야함
+
+//스타일은 중요한 부분이 아니기에 styles.js에서 받아 오는걸로 하는거
+//거기에 export 했으니 다른데서 쉽게 가져다 쓸수 있음
+//이건 제일 중요한 로직이니 index.js 로 한것

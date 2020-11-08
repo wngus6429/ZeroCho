@@ -7,9 +7,24 @@ import styled from "styled-components";
 import UserProfile from "../components/UserProfile";
 import LoginForm from "../components/LoginForm";
 import { useSelector } from "react-redux"; //리액트랑 리덕스 연결
+import { createGlobalStyle } from "styled-components";
 
 const SearchInput = styled(Input.Search)`
   vertical-align: middle;
+`;
+
+//gutter 같은거 넣어서 밑에 작은 스크롤이 생겨서 없앨려고
+const Global = createGlobalStyle`
+.ant-row{
+  margin-left:0 !important;
+  margin-right:0 !important;
+}
+.ant-col:first-child{
+  padding-left:0 !important;
+}
+.ant-col:last-child{
+  padding-right:0 !important;
+}
 `;
 
 const AppLayout = ({ children }) => {
@@ -19,6 +34,7 @@ const AppLayout = ({ children }) => {
 
   return (
     <div>
+      <Global />
       <Menu mode="horizontal">
         <Menu.Item>
           <Link href="/">

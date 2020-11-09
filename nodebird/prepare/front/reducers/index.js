@@ -30,5 +30,6 @@ user,
 post,
 });
 //user.js든지 post.js 에서 오는거 리덕스가 알아서 해줌
+//액션에 필요한 추가 데이터는 payload라는 이름을 사용함.
 
 export default rootReducer;

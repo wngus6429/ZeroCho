@@ -8,10 +8,20 @@ import UserProfile from "../components/UserProfile";
 import LoginForm from "../components/LoginForm";
 import { useSelector } from "react-redux"; //리액트랑 리덕스 연결
 import { createGlobalStyle } from "styled-components";
+import { TwitterOutlined } from "@ant-design/icons";
 
 const SearchInput = styled(Input.Search)`
   vertical-align: middle;
 `;
+
+const suffix = (
+  <TwitterOutlined
+    style={{
+      fontSize: 20,
+      color: "#1890ff",
+    }}
+  />
+);
 
 //gutter 같은거 넣어서 밑에 작은 스크롤이 생겨서 없앨려고
 const Global = createGlobalStyle`
@@ -47,7 +57,7 @@ const AppLayout = ({ children }) => {
           </Link>
         </Menu.Item>
         <Menu.Item>
-          <SearchInput enterButton />
+          <SearchInput placeholder="검색어 입력" enterButton="검색" size="large" suffix={suffix} />
           {/* <Input.Search enterButton style={{ verticalAlign: "middle" }} /> */}
         </Menu.Item>
         <Menu.Item>

@@ -2,10 +2,9 @@ import React, { useCallback } from "react";
 import { Form, Input, Button } from "antd";
 import Link from "next/link";
 import styled from "styled-components";
-//import PropTypes from "prop-types";
 import useInput from "../hooks/useinput";
-import { useDispatch } from "react-redux";
-import { loginAction } from "../reducers/user";
+import { useDispatch, useSelector } from "react-redux";
+import { loginRequestAction } from "../reducers/user";
 
 const ButtonWrapper = styled.div`
   margin-top: 10px;
@@ -17,6 +16,7 @@ const FormWrapper = styled(Form)`
 
 const LoginForm = () => {
   const dispatch = useDispatch();
+  const { isLoggingIn } = useSelector((state) => state.user);
 
   const [Id, onChangeId] = useInput("");
   // const [Id, setId] = useState("");
@@ -32,8 +32,10 @@ const LoginForm = () => {
 
   const onSubmitForm = useCallback(() => {
     console.log(Id, Password);
-    dispatch(loginAction({ Id, Password }));
+    dispatch(loginRequestAction({ Id, Password }));
   }, [Id, Password]);
+  //Saga 랑, reducer가 거의 동시에 실행된다 보면됨
+  //강의 : saga 쪼개고 reducer와 연결하기 11분경
 
   return (
     <FormWrapper onFinish={onSubmitForm}>
@@ -48,7 +50,7 @@ const LoginForm = () => {
         <Input name="user-password" type="password" value={Password} onChange={onChangePassword} required />
       </div>
       <ButtonWrapper>
-        <Button type="primary" htmlType="submit" loading={false}>
+        <Button type="primary" htmlType="submit" loading={isLoggingIn}>
           로그인
         </Button>
         <Link href="/signup">

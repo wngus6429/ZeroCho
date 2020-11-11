@@ -3,17 +3,6 @@ import user from "./user";
 import post from "./post";
 import { combineReducers } from "redux";
 
-//초기 앱 데이터 구조를 잡아야함
-const initialState = {
-  user: {
-    
-  },
-  post: {
-    
-  },
-};
-
-
 // (이전 상태, 액션) => 다음 상태 , combineReducers는 리듀서 합쳐줌
 // HYDRATE를 위해서 index reducer를 추가한 상태 28까지
 const rootReducer = combineReducers({

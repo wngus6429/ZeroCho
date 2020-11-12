@@ -1,6 +1,17 @@
 import { all, fork, delay, put, takeLatest } from "redux-saga/effects";
 //여기안에 delay, debounce, throttle, takeLastest, takeEvery, takeMaybe 같은것도 있음
 //지금 적은것들이 사가의 effect라 불림
+import {
+  LOG_IN_REQUEST,
+  LOG_IN_SUCCESS,
+  LOG_IN_FAILURE,
+  LOG_OUT_REQUEST,
+  LOG_OUT_SUCCESS,
+  LOG_OUT_FAILURE,
+  SIGN_UP_REQUEST,
+  SIGN_UP_SUCCESS,
+  SIGN_UP_FAILURE,
+} from "../reducers/user";
 import axios from "axios";
 //이거는 컴바인 리듀스 같은게 필요 없음.
 
@@ -24,14 +35,14 @@ function* logIn(action) {
     //const result = yield call(logInAPI, action.data); //이렇게 결과값 요청후 받음
     yield delay(1000); //서버 만들어 질때까지 delay로 비동기 효과 주기
     yield put({
-      type: "LOG_IN_SUCCESS", //put은 dispatch라고 생각하면됨
+      type: LOG_IN_SUCCESS, //put은 dispatch라고 생각하면됨
       data: action.data, //성공 결과값, 성공후 reducer user.js switch로
     }); //중요한게 사가에서 자동으로 try,catch로 상황보고 석세스나
     //failure보내기 때문에 개인이 따로 액션을 할 필요가 없다
   } catch (err) {
     yield put({
-      type: "LOG_IN_FAILURE",
-      data: err.response.data,
+      type: LOG_IN_FAILURE,
+      error: err.response.data,
     }); //요청이 항상 성공하는건 아니니까, try, catch 쓰면됨
   }
 }
@@ -52,25 +63,49 @@ function* logOut() {
     //const result = yield call(logOutAPI);
     yield delay(1000);
     yield put({
-      type: "LOG_OUT_SUCCESS",
+      type: LOG_OUT_SUCCESS,
     });
   } catch (err) {
+    console.error(err);
     yield put({
-      type: "LOG_OUT_FAILURE",
-      data: err.response.data,
+      type: LOG_OUT_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
+function singUpAPI() {
+  return axios.post("/api/logout", data); //로그인 요청 함
+}
+function* signUp() {
+  try {
+    //const result = yield call(logOutAPI);
+    yield delay(1000); //throw new Error("")를 하게 되면 바로 밑에 catch로 간다
+    yield put({
+      type: SIGN_UP_SUCCESS,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: SIGN_UP_FAILURE,
+      error: err.response.data,
     });
   }
 }
 
 //이벤트 리스너를 만드는거임
 function* watchLogIn() {
-  yield takeLatest("LOG_IN_REQUEST", logIn);
+  yield takeLatest(LOG_IN_REQUEST, logIn);
 } //로그인이라는 action이 실행될떄까지 기다리겠다.
 
 function* watchLogOut() {
-  yield takeLatest("LOG_OUT_REQUEST", logOut);
+  yield takeLatest(LOG_OUT_REQUEST, logOut);
+}
+
+function* watchSignUp() {
+  yield takeLatest(SIGN_UP_REQUEST, signUp);
 }
 
 export default function* userSaga() {
-  yield all([fork(watchLogIn), fork(watchLogOut)]);
+  yield all([fork(watchLogIn), fork(watchLogOut), fork(watchSignUp)]);
 }

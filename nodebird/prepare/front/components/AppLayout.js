@@ -39,7 +39,7 @@ const Global = createGlobalStyle`
 
 const AppLayout = ({ children }) => {
   //const [isLoggedIn, setIsLoggedIn] = useState(false); //리덕스가 있어서
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn); //isLoggedIn이 바뀌면 알아서 applayout이 리랜더링
+  const { me } = useSelector((state) => state.user); //isLoggedIn이 바뀌면 알아서 applayout이 리랜더링
   // const { isLoggedIn } = useSelector((state) => state.user); //구조분해 할당방법, 성능차이 쬐금 남
 
   return (
@@ -69,7 +69,7 @@ const AppLayout = ({ children }) => {
       <Row gutter={8}>
         <Col xs={24} md={6}>
           왼쪽메뉴
-          {isLoggedIn ? <UserProfile /> : <LoginForm />}
+          {me ? <UserProfile /> : <LoginForm />}
         </Col>
         <Col xs={24} md={12}>
           {children}

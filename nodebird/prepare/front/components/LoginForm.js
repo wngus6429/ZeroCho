@@ -16,9 +16,9 @@ const FormWrapper = styled(Form)`
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const { isLoggingIn } = useSelector((state) => state.user);
+  const { logInLoading } = useSelector((state) => state.user);
 
-  const [Id, onChangeId] = useInput("");
+  const [Email, onChangeEmail] = useInput("");
   // const [Id, setId] = useState("");
   // const onChangeId = useCallback((e) => {
   //   setId(e.target.value);
@@ -31,18 +31,18 @@ const LoginForm = () => {
   // }, []);
 
   const onSubmitForm = useCallback(() => {
-    console.log(Id, Password);
-    dispatch(loginRequestAction({ Id, Password }));
-  }, [Id, Password]);
+    console.log(Email, Password);
+    dispatch(loginRequestAction({ Email, Password }));
+  }, [Email, Password]);
   //Saga 랑, reducer가 거의 동시에 실행된다 보면됨
   //강의 : saga 쪼개고 reducer와 연결하기 11분경
 
   return (
     <FormWrapper onFinish={onSubmitForm}>
       <div>
-        <label htmlFor="user-id">아이디</label>
+        <label htmlFor="user-email">이메일</label>
         <br />
-        <Input name="user-id" value={Id} onChange={onChangeId} required />
+        <Input name="user-email" type="email" value={Email} onChange={onChangeEmail} required />
       </div>
       <div>
         <label htmlFor="user-password">비밀번호</label>
@@ -50,7 +50,7 @@ const LoginForm = () => {
         <Input name="user-password" type="password" value={Password} onChange={onChangePassword} required />
       </div>
       <ButtonWrapper>
-        <Button type="primary" htmlType="submit" loading={isLoggingIn}>
+        <Button type="primary" htmlType="submit" loading={logInLoading}>
           로그인
         </Button>
         <Link href="/signup">

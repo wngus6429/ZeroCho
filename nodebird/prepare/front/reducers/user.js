@@ -1,80 +1,148 @@
 export const initialState = {
-  isLoggedIn: false, //로그인 시도중
-  isLoggingIn: false, //
-  isLoggingOut: false, //로그아웃 시도중
+  logInLoading: false, //로그인 시도중
+  logInDone: false, //
+  logInError: null,
+  logOutLoading: false, //로그아웃 시도중
+  logOutDone: false,
+  logOutError: null,
+  signUpLoading: false, //회원가입 시도중
+  signUpDone: false,
+  signUpError: null,
+  changeNicknameLoading: false, //닉네임 변경 시도중
+  changeNicknameDone: false,
+  changeNicknameError: null,
   me: null,
   signUpDate: {},
   loginData: {},
 };
 //export 해둬야 index.js에서 모으지
 
+export const LOG_IN_REQUEST = "LOG_IN_REQUEST";
+export const LOG_IN_SUCCESS = "LOG_IN_SUCCESS";
+export const LOG_IN_FAILURE = "LOG_IN_FAILURE";
+
+export const LOG_OUT_REQUEST = "LOG_OUT_REQUEST";
+export const LOG_OUT_SUCCESS = "LOG_OUT_SUCCESS";
+export const LOG_OUT_FAILURE = "LOG_OUT_FAILURE";
+
+export const SIGN_UP_REQUEST = "SIGN_UP_REQUEST";
+export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
+export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE";
+
+export const CHANGE_NICKNAME_REQUEST = "CHANGE_NICKNAME_REQUEST";
+export const CHANGE_NICKNAME_SUCCESS = "CHANGE_NICKNAME_SUCCESS";
+export const CHANGE_NICKNAME_FAILURE = "CHANGE_NICKNAME_FAILURE";
+
+export const FOLLOW_REQUEST = "FOLLOW_REQUEST";
+export const FOLLOW_SUCCESS = "FOLLOW_SUCCESS";
+export const FOLLOW_FAILURE = "FOLLOW_FAILURE";
+
+export const UNFOLLOW_REQUEST = "UNFOLLOW_REQUEST";
+export const UNFOLLOW_SUCCESS = "UNFOLLOW_SUCCESS";
+export const UNFOLLOW_FAILURE = "UNFOLLOW_FAILURE";
+
+const dummyUser = (data) => ({
+  ...data,
+  nickname: "주현",
+  id: 1,
+  Posts: [],
+  Followings: [],
+  Followers: [],
+}); //시퀄라이즈에서 합쳐주기 때문에 앞에 대문자 인것들이 있다.
+
 export const loginRequestAction = (data) => {
   return {
-    type: "LOG_IN_REQUEST",
+    type: LOG_IN_REQUEST,
     data,
   };
 };
 
 export const logoutRequestAction = () => {
   return {
-    type: "LOG_OUT_REQUEST",
+    type: LOG_OUT_REQUEST,
   };
 };
-// const changeNickname = {
-//     type: "CHANGE_NICKNAME",
-//     data: "boogicho",
-//   };
-
-//async action creator //비동기 action creator
-
-// action creator 유저가 닉네임 어떻게 바꿀지 모르니 이렇게 해야함
-const changeNickname = (data) => {
-  return {
-    type: "CHANGE_NICKNAME",
-    data,
-  };
-};
-changeNickname("boogicho");
-// { type:"CHANGE_NICKNAME", data:"boogicho" }
-//store.dispatch(changeNickname('mighty tak')); //이게 좋지
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case "LOG_IN_REQUEST":
+    case LOG_IN_REQUEST:
       console.log("Reducer User.js");
       return {
         ...state, //안바꾸고 싶은건 ... 써서 참조
-        isLoggingIn: true, //바꾸고 싶은걸 이렇게 적어준다.
+        logInLoading: true, //바꾸고 싶은걸 이렇게 적어준다.
+        logInDone: false,
+        logInError: null,
       };
-    case "LOG_IN_SUCCESS":
+    case LOG_IN_SUCCESS:
       return {
         ...state, //안바꾸고 싶은건 ... 써서 참조
-        isLoggingIn: false,
-        isLoggedIn: true, //바꾸고 싶은걸 이렇게 적어준다.
-        me: { ...action.data, nickname: "zerocho" },
+        logInLoading: false,
+        logInDone: true, //바꾸고 싶은걸 이렇게 적어준다.
+        me: dummyUser(action.data),
       };
-    case "LOG_IN_FAILURE":
+    case LOG_IN_FAILURE:
       return {
         ...state, //안바꾸고 싶은건 ... 써서 참조
-        isLoggedIn: false, //바꾸고 싶은걸 이렇게 적어준다.
-        isLoggingIn: false,
+        logInLoading: false,
+        logInError: action.error, //바꾸고 싶은걸 이렇게 적어준다.
       };
-    case "LOG_OUT_REQUEST":
+    case LOG_OUT_REQUEST:
       return {
         ...state, //안바꾸고 싶은건 ... 써서 참조
-        isLoggingOut: true, //바꾸고 싶은걸 이렇게 적어준다.
+        logOutLoading: true, //바꾸고 싶은걸 이렇게 적어준다.
+        logOutDone: false,
+        logOutError: null,
       };
-    case "LOG_OUT_SUCCESS":
+    case LOG_OUT_SUCCESS:
       return {
-        ...state, //안바꾸고 싶은건 ... 써서 참조
-        isLoggingOut: false,
-        isLoggedIn: false, //바꾸고 싶은걸 이렇게 적어준다.
+        ...state,
+        logOutLoading: false,
+        logOutDone: true,
         me: null,
       };
-    case "LOG_OUT_FAILURE":
+    case LOG_OUT_FAILURE:
       return {
         ...state, //안바꾸고 싶은건 ... 써서 참조
-        isLoggingOut: false,
+        logOutLoading: false,
+        logOutError: action.error,
+      };
+    case SIGN_UP_REQUEST:
+      return {
+        ...state, //안바꾸고 싶은건 ... 써서 참조
+        signUpLoading: true, //바꾸고 싶은걸 이렇게 적어준다.
+        signUpDone: false,
+        signUpError: null,
+      };
+    case SIGN_UP_SUCCESS:
+      return {
+        ...state, //안바꾸고 싶은건 ... 써서 참조
+        signUpLoading: false,
+        signUpDone: true,
+      };
+    case SIGN_UP_FAILURE:
+      return {
+        ...state, //안바꾸고 싶은건 ... 써서 참조
+        signUpLoading: false,
+        signUpError: action.error,
+      };
+    case CHANGE_NICKNAME_REQUEST:
+      return {
+        ...state, //안바꾸고 싶은건 ... 써서 참조
+        changeNicknameLoading: true, //바꾸고 싶은걸 이렇게 적어준다.
+        changeNicknameDone: false,
+        changeNicknameError: null,
+      };
+    case CHANGE_NICKNAME_SUCCESS:
+      return {
+        ...state, //안바꾸고 싶은건 ... 써서 참조
+        changeNicknameLoading: false,
+        changeNicknameDone: true,
+      };
+    case CHANGE_NICKNAME_FAILURE:
+      return {
+        ...state, //안바꾸고 싶은건 ... 써서 참조
+        changeNicknameLoading: false,
+        changeNicknameError: action.error,
       };
     default:
       return state;
@@ -82,3 +150,14 @@ const reducer = (state = initialState, action) => {
 };
 
 export default reducer;
+
+// // action creator 유저가 닉네임 어떻게 바꿀지 모르니 이렇게 해야함
+// const changeNickname = (data) => {
+//   return {
+//     type: CHANGE_NICKNAME,
+//     data,
+//   };
+// };
+// changeNickname("boogicho");
+// // { type:"CHANGE_NICKNAME", data:"boogicho" }
+// //store.dispatch(changeNickname('mighty tak')); //이게 좋지

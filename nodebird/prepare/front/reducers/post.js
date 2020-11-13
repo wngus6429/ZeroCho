@@ -1,3 +1,7 @@
+import shortId from "shortid";
+
+//댓글 객체에 접근 할려면 게시글을 찾고 아이디를 통해서 찾고
+//그 안에 Comments 여기로 접근,
 export const initialState = {
   mainPosts: [
     {
@@ -41,6 +45,9 @@ export const initialState = {
   addPostLoading: false,
   addPostDone: false,
   addPostError: null,
+  addCommentLoading: false,
+  addCommentDone: false,
+  addCommentError: null,
 };
 //왜 User, Image, Comment만 첫글자에 대문자냐? db에서 쓰는 시퀄라이즈랑 관계있는데.어떤 정보와 다른 정보가 관게가 있으면 그것을 합쳐줌
 //합쳐준 애들은 대문자가 되기 때문 , id나 content는 게시글 속성이고
@@ -65,16 +72,25 @@ export const addComment = (data) => ({
   data,
 });
 
-const dummyPost = {
-  id: 2,
-  content: "더미데이터입니다.",
+export const dummyPost = (data) => ({
+  id: shortId.generate(), //이놈을 key로 사용중
+  content: data,
   User: {
     id: 1,
-    nickname: "제로초",
+    nickname: "더미포스트",
   },
   Images: [],
   Comments: [],
-};
+});
+
+const dummyComment = (data) => ({
+  id: shortId.generate(), //이놈을 key로 사용중
+  content: data,
+  User: {
+    id: 1,
+    nickname: "더미코멘트",
+  },
+});
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -83,7 +99,7 @@ const reducer = (state = initialState, action) => {
     case ADD_POST_SUCCESS:
       return {
         ...state,
-        mainPosts: [dummyPost, ...state.mainPosts],
+        mainPosts: [dummyPost(action.data), ...state.mainPosts],
         addPostLoading: false,
         addPostDone: true,
       }; //dummyPost가 앞에 있어야 함 뒤에 있으면 게시글 맨 아래에 추가됨
@@ -91,12 +107,22 @@ const reducer = (state = initialState, action) => {
       return { ...state, addPostLoading: false, addPostError: action.error };
     case ADD_COMMENT_REQUEST:
       return { ...state, addCommentLoading: true, addCommentDone: false, addCommentError: null };
-    case ADD_COMMENT_SUCCESS:
+    case ADD_COMMENT_SUCCESS: {
+      //action.data.content, postId, userId 가 들어있겟지
+      //불변성의 핵심은 바뀌는것만 새로운 객체로 만들고 나머지느 ㄴ객체는 참조를 유지함
+      //그래야 바뀌는것만 바뀌고 안바뀌는거는 참조가 계속 유지되서 메모리를 절약 하는거임
+      const postIndex = state.mainPosts.findIndex((v) => v.id === action.data.postId);
+      const post = { ...state.mainPosts[postIndex] };
+      post.Comments = [dummyComment(action.data.content), ...post.Comments];
+      const mainPosts = [...state.mainPosts];
+      mainPosts[postIndex] = post;
       return {
         ...state,
+        mainPosts,
         addCommentLoading: false,
         addCommentDone: true,
       }; //dummyPost가 앞에 있어야 함 뒤에 있으면 게시글 맨 아래에 추가됨
+    }
     case ADD_COMMENT_FAILURE:
       return { ...state, addCommentLoading: false, addCommentError: action.error };
     default:

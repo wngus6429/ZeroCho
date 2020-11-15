@@ -1,3 +1,5 @@
+import produce from "immer";
+
 export const initialState = {
   logInLoading: false, //로그인 시도중
   logInDone: false, //
@@ -66,107 +68,89 @@ export const logoutRequestAction = () => {
   };
 };
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case LOG_IN_REQUEST:
-      console.log("Reducer User.js");
-      return {
-        ...state, //안바꾸고 싶은건 ... 써서 참조
-        logInLoading: true, //바꾸고 싶은걸 이렇게 적어준다.
-        logInDone: false,
-        logInError: null,
-      };
-    case LOG_IN_SUCCESS:
-      return {
-        ...state, //안바꾸고 싶은건 ... 써서 참조
-        logInLoading: false,
-        logInDone: true, //바꾸고 싶은걸 이렇게 적어준다.
-        me: dummyUser(action.data),
-      };
-    case LOG_IN_FAILURE:
-      return {
-        ...state, //안바꾸고 싶은건 ... 써서 참조
-        logInLoading: false,
-        logInError: action.error, //바꾸고 싶은걸 이렇게 적어준다.
-      };
-    case LOG_OUT_REQUEST:
-      return {
-        ...state, //안바꾸고 싶은건 ... 써서 참조
-        logOutLoading: true, //바꾸고 싶은걸 이렇게 적어준다.
-        logOutDone: false,
-        logOutError: null,
-      };
-    case LOG_OUT_SUCCESS:
-      return {
-        ...state,
-        logOutLoading: false,
-        logOutDone: true,
-        me: null,
-      };
-    case LOG_OUT_FAILURE:
-      return {
-        ...state, //안바꾸고 싶은건 ... 써서 참조
-        logOutLoading: false,
-        logOutError: action.error,
-      };
-    case SIGN_UP_REQUEST:
-      return {
-        ...state, //안바꾸고 싶은건 ... 써서 참조
-        signUpLoading: true, //바꾸고 싶은걸 이렇게 적어준다.
-        signUpDone: false,
-        signUpError: null,
-      };
-    case SIGN_UP_SUCCESS:
-      return {
-        ...state, //안바꾸고 싶은건 ... 써서 참조
-        signUpLoading: false,
-        signUpDone: true,
-      };
-    case SIGN_UP_FAILURE:
-      return {
-        ...state, //안바꾸고 싶은건 ... 써서 참조
-        signUpLoading: false,
-        signUpError: action.error,
-      };
-    case CHANGE_NICKNAME_REQUEST:
-      return {
-        ...state, //안바꾸고 싶은건 ... 써서 참조
-        changeNicknameLoading: true, //바꾸고 싶은걸 이렇게 적어준다.
-        changeNicknameDone: false,
-        changeNicknameError: null,
-      };
-    case CHANGE_NICKNAME_SUCCESS:
-      return {
-        ...state, //안바꾸고 싶은건 ... 써서 참조
-        changeNicknameLoading: false,
-        changeNicknameDone: true,
-      };
-    case CHANGE_NICKNAME_FAILURE:
-      return {
-        ...state, //안바꾸고 싶은건 ... 써서 참조
-        changeNicknameLoading: false,
-        changeNicknameError: action.error,
-      };
-    case ADD_POST_TO_ME:
-      return {
-        ...state,
-        me: {
-          ...state.me,
-          Posts: [{ id: action.data }, ...state.me.Posts],
-        },
-      };
-    case REMOVE_POST_OF_ME:
-      return {
-        ...state,
-        me: {
-          ...state.me,
-          Posts: state.me.Posts.filter((v) => v.id !== action.data),
-        },
-      };
-    default:
-      return state;
-  }
-};
+// => { return produce 임 ㅋㅋ 생략방법임
+//draft를 불변성 상관없이 바꾸면 알아서 다음 draft를 보고 다음 state를 불변성있게 만들어줌
+const reducer = (state = initialState, action) =>
+  produce(state, (draft) => {
+    switch (action.type) {
+      case LOG_IN_REQUEST:
+        draft.logInLoading = true; //바꾸고 싶은걸 이렇게 적어준다.
+        draft.logInDone = false;
+        draft.logInError = null;
+        break;
+      case LOG_IN_SUCCESS:
+        draft.logInLoading = false;
+        draft.logInDone = true; //바꾸고 싶은걸 이렇게 적어준다.
+        draft.me = dummyUser(action.data);
+        break;
+      case LOG_IN_FAILURE:
+        draft.logInLoading = false;
+        draft.logInError = action.error; //바꾸고 싶은걸 이렇게 적어준다.
+        break;
+      case LOG_OUT_REQUEST:
+        draft.logOutLoading = true; //바꾸고 싶은걸 이렇게 적어준다.
+        draft.logOutDone = false;
+        draft.logOutError = null;
+        break;
+      case LOG_OUT_SUCCESS:
+        draft.logOutLoading = false; //바꾸고 싶은걸 이렇게 적어준다.
+        draft.logOutDone = true;
+        draft.me = null;
+        break;
+      case LOG_OUT_FAILURE:
+        draft.logOutLoading = false; //바꾸고 싶은걸 이렇게 적어준다.
+        draft.logOutError = action.error;
+        break;
+      case SIGN_UP_REQUEST:
+        draft.signUpLoading = true; //바꾸고 싶은걸 이렇게 적어준다.
+        draft.signUpDone = false;
+        draft.signUpError = null;
+        break;
+      case SIGN_UP_SUCCESS:
+        draft.signUpLoading = false;
+        draft.signUpDone = true; //바꾸고 싶은걸 이렇게 적어준다.
+        break;
+      case SIGN_UP_FAILURE:
+        draft.signUpLoading = false;
+        draft.signUpError = action.error; //바꾸고 싶은걸 이렇게 적어준다.
+        break;
+      case CHANGE_NICKNAME_REQUEST:
+        draft.changeNicknameLoading = true; //바꾸고 싶은걸 이렇게 적어준다.
+        draft.changeNicknameDone = false;
+        draft.changeNicknameError = null;
+        break;
+      case CHANGE_NICKNAME_SUCCESS:
+        draft.changeNicknameLoading = false;
+        draft.changeNicknameDone = true; //바꾸고 싶은걸 이렇게 적어준다.
+        break;
+      case CHANGE_NICKNAME_FAILURE:
+        draft.changeNicknameLoading = false;
+        draft.changeNicknameError = action.error; //바꾸고 싶은걸 이렇게 적어준다.
+        break;
+      case ADD_POST_TO_ME:
+        draft.me.Posts.unshift({ id: action.data });
+        break;
+      // return {
+      //   ...state,
+      //   me: {
+      //     ...state.me,
+      //     Posts: [{ id: action.data }, ...state.me.Posts],
+      //   },
+      // };
+      case REMOVE_POST_OF_ME:
+        draft.me.Posts = draft.me.Posts.filter((v) => v.id !== action.data);
+        break;
+      // return {
+      //   ...state,
+      //   me: {
+      //     ...state.me,
+      //     Posts: state.me.Posts.filter((v) => v.id !== action.data),
+      //   },
+      // };
+      default:
+        break;
+    }
+  });
 
 export default reducer;
 

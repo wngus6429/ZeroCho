@@ -19,17 +19,8 @@ const LoginForm = () => {
   const { logInLoading } = useSelector((state) => state.user);
 
   const [Email, onChangeEmail] = useInput("");
-  // const [Id, setId] = useState("");
-  // const onChangeId = useCallback((e) => {
-  //   setId(e.target.value);
-  // }, []);
   const [Password, onChangePassword] = useInput("");
-  // const [Password, setPassword] = useState("");
-  //useCallback 써야 성능이 좋아진다.
-  // const onChangePassword = useCallback((e) => {
-  //   setPassword(e.target.value);
-  // }, []);
-
+  
   const onSubmitForm = useCallback(() => {
     console.log(Email, Password);
     dispatch(loginRequestAction({ Email, Password }));

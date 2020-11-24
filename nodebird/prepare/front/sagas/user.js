@@ -1,4 +1,4 @@
-import { all, fork, delay, put, takeLatest } from "redux-saga/effects";
+import { all, fork, delay, put, takeLatest, call } from "redux-saga/effects";
 //여기안에 delay, debounce, throttle, takeLastest, takeEvery, takeMaybe 같은것도 있음
 //지금 적은것들이 사가의 effect라 불림
 import {
@@ -80,13 +80,16 @@ function* logOut() {
   }
 }
 
-function singUpAPI() {
-  return axios.post("/api/logout", data); //로그인 요청 함
-}
-function* signUp() {
+function singUpAPI(data) {
+  return axios.post("http://localhost:1211/user", data); //로그인 요청 함
+} //data안에 Email, Password, NickName 가 들어있다. signup.js 참조
+//get이랑 delete요청은 데이터를 못 보내지만, post,put,patch는 넘길수 있다. 두번째로
+
+function* signUp(action) {
   try {
-    //const result = yield call(logOutAPI);
-    yield delay(1000); //throw new Error("")를 하게 되면 바로 밑에 catch로 간다
+    const result = yield call(singUpAPI, action.data);
+    //yield delay(1000); //throw new Error("")를 하게 되면 바로 밑에 catch로 간다
+    console.log(result);
     yield put({
       type: SIGN_UP_SUCCESS,
     });

@@ -33,7 +33,7 @@ const Signup = () => {
   // const onChangeId = useCallback((e) => {
   //   setId(e.target.value);
   // }, []);
-  const [nickName, onChangeNickName] = useinput("");
+  const [nickname, onChangeNickName] = useinput("");
   // const [NickName, setNickName] = useState("");
   // const onChangeNickName = useCallback((e) => {
   //   setNickName(e.target.value);
@@ -66,10 +66,10 @@ const Signup = () => {
     if (!term) {
       return setTermError(true);
     }
-    console.log(email, nickName, password);
+    console.log(email, nickname, password);
     dispatch({
       type: SIGN_UP_REQUEST,
-      data: { email, password, nickName },
+      data: { email, password, nickname },
     });
   }, [email, password, passwordCheck, term]);
   return (
@@ -86,7 +86,7 @@ const Signup = () => {
         <div>
           <label htmlFor="user-id">닉네임</label>
           <br />
-          <Input name="user-id" value={nickName} onChange={onChangeNickName} required />
+          <Input name="user-id" value={nickname} onChange={onChangeNickName} required />
         </div>
         <div>
           <label htmlFor="user-password">비밀번호</label>

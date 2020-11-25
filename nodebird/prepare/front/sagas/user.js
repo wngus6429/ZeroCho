@@ -80,14 +80,14 @@ function* logOut() {
   }
 }
 
-function singUpAPI(data) {
+function signUpAPI(data) {
   return axios.post("http://localhost:3065/user", data); //로그인 요청 함
 } //data안에 Email, Password, NickName 가 들어있다. signup.js 참조
 //get이랑 delete요청은 데이터를 못 보내지만, post,put,patch는 넘길수 있다. 두번째로
 
 function* signUp(action) {
   try {
-    const result = yield call(singUpAPI, action.data);
+    const result = yield call(signUpAPI, action.data);
     //yield delay(1000); //throw new Error("")를 하게 되면 바로 밑에 catch로 간다
     console.log(result);
     yield put({

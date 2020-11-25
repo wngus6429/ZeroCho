@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 const env = process.env.NODE_ENV || "development";
-const config = require("../config/config.json")[env];
+const config = require("../config/config")[env];
 //config.json 안에 있는 development를 가져오는거지
 const db = {};
 const sequelize = new Sequelize(config.database, config.username, config.password, config);

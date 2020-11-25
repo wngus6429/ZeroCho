@@ -81,7 +81,7 @@ function* logOut() {
 }
 
 function singUpAPI(data) {
-  return axios.post("http://localhost:1211/user", data); //로그인 요청 함
+  return axios.post("http://localhost:3065/user", data); //로그인 요청 함
 } //data안에 Email, Password, NickName 가 들어있다. signup.js 참조
 //get이랑 delete요청은 데이터를 못 보내지만, post,put,patch는 넘길수 있다. 두번째로
 

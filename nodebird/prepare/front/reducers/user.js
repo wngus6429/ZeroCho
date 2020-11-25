@@ -13,14 +13,14 @@ export const initialState = {
   logOutLoading: false, //로그아웃 시도중
   logOutDone: false,
   logOutError: null,
-  signUpLoading: false, //회원가입 시도중
+  signUpLoading: false, // 회원가입 시도중
   signUpDone: false,
   signUpError: null,
   changeNicknameLoading: false, //닉네임 변경 시도중
   changeNicknameDone: false,
   changeNicknameError: null,
   me: null,
-  signUpDate: {},
+  signUpData: {},
   loginData: {},
 };
 //export 해둬야 index.js에서 모으지
@@ -80,73 +80,73 @@ const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
       case FOLLOW_REQUEST:
-        draft.followLoading = true; //바꾸고 싶은걸 이렇게 적어준다.
+        draft.followLoading = true;
         draft.followDone = false;
         draft.followError = null;
         break;
       case FOLLOW_SUCCESS:
         draft.followLoading = false;
-        draft.followDone = true; //바꾸고 싶은걸 이렇게 적어준다.
+        draft.followDone = true;
         draft.me.Followings.push({ id: action.data });
         break;
       case FOLLOW_FAILURE:
         draft.followLoading = false;
-        draft.followError = action.error; //바꾸고 싶은걸 이렇게 적어준다.
+        draft.followError = action.error;
         break;
       case UNFOLLOW_REQUEST:
-        draft.unfollowLoading = true; //바꾸고 싶은걸 이렇게 적어준다.
+        draft.unfollowLoading = true;
         draft.unfollowDone = false;
         draft.unfollowError = null;
         break;
       case UNFOLLOW_SUCCESS:
         draft.unfollowLoading = false;
-        draft.unfollowDone = true; //바꾸고 싶은걸 이렇게 적어준다.
+        draft.unfollowDone = true;
         draft.me.Followings = draft.me.Followings.filter((v) => v.id !== action.data);
         break; //지울때는 필터를 많이 사용한대, 제로초의 경우 , 그 사람만 빠지는 로직
       case UNFOLLOW_FAILURE:
         draft.unfollowLoading = false;
-        draft.unfollowError = action.error; //바꾸고 싶은걸 이렇게 적어준다.
+        draft.unfollowError = action.error;
         break;
       case LOG_IN_REQUEST:
-        draft.logInLoading = true; //바꾸고 싶은걸 이렇게 적어준다.
+        draft.logInLoading = true;
         draft.logInDone = false;
         draft.logInError = null;
         break;
       case LOG_IN_SUCCESS:
         draft.logInLoading = false;
-        draft.logInDone = true; //바꾸고 싶은걸 이렇게 적어준다.
+        draft.logInDone = true;
         draft.me = dummyUser(action.data);
         break;
       case LOG_IN_FAILURE:
         draft.logInLoading = false;
-        draft.logInError = action.error; //바꾸고 싶은걸 이렇게 적어준다.
+        draft.logInError = action.error;
         break;
       case LOG_OUT_REQUEST:
-        draft.logOutLoading = true; //바꾸고 싶은걸 이렇게 적어준다.
+        draft.logOutLoading = true;
         draft.logOutDone = false;
         draft.logOutError = null;
         break;
       case LOG_OUT_SUCCESS:
-        draft.logOutLoading = false; //바꾸고 싶은걸 이렇게 적어준다.
+        draft.logOutLoading = false;
         draft.logOutDone = true;
         draft.me = null;
         break;
       case LOG_OUT_FAILURE:
-        draft.logOutLoading = false; //바꾸고 싶은걸 이렇게 적어준다.
+        draft.logOutLoading = false;
         draft.logOutError = action.error;
         break;
       case SIGN_UP_REQUEST:
-        draft.signUpLoading = true; //바꾸고 싶은걸 이렇게 적어준다.
-        draft.signUpDone = false;
+        draft.signUpLoading = true;
         draft.signUpError = null;
+        draft.signUpDone = false;
         break;
       case SIGN_UP_SUCCESS:
         draft.signUpLoading = false;
-        draft.signUpDone = true; //바꾸고 싶은걸 이렇게 적어준다.
+        draft.signUpDone = true;
         break;
       case SIGN_UP_FAILURE:
         draft.signUpLoading = false;
-        draft.signUpError = action.error; //바꾸고 싶은걸 이렇게 적어준다.
+        draft.signUpError = action.error;
         break;
       case CHANGE_NICKNAME_REQUEST:
         draft.changeNicknameLoading = true; //바꾸고 싶은걸 이렇게 적어준다.

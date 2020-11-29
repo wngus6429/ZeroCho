@@ -23,7 +23,7 @@ import axios from "axios";
 
 //logInAPI이거는 generator안임. * 붙이면 안됨
 function logInAPI(data) {
-  return axios.post("/api/login", data); //로그인 요청 함
+  return axios.post("/user/login", data); //로그인 요청 함
 }
 
 //항상 effect 앞에는 yield(일드)를 붙여준다
@@ -38,11 +38,11 @@ function logInAPI(data) {
 function* logIn(action) {
   try {
     console.log("Saga User.js");
-    //const result = yield call(logInAPI, action.data); //이렇게 결과값 요청후 받음
-    yield delay(1000); //서버 만들어 질때까지 delay로 비동기 효과 주기
+    const result = yield call(logInAPI, action.data); //이렇게 결과값 요청후 받음
+    // yield delay(1000); //서버 만들어 질때까지 delay로 비동기 효과 주기
     yield put({
       type: LOG_IN_SUCCESS, //put은 dispatch라고 생각하면됨
-      data: action.data, //성공 결과값, 성공후 reducer user.js switch로
+      data: result.data, //성공 결과값, 성공후 reducer user.js switch로
     }); //중요한게 사가에서 자동으로 try,catch로 상황보고 석세스나
     //failure보내기 때문에 개인이 따로 액션을 할 필요가 없다
   } catch (err) {
@@ -62,7 +62,7 @@ function* logIn(action) {
 //takeLatest 는 마지막에 클릭한거. (로딩 도중 기준) 여러번 클릭 방지, 첫번째꺼는 takeLeading
 
 function logOutAPI() {
-  return axios.post("/api/logout", data); //로그인 요청 함
+  return axios.post("/user/logout", data); //로그인 요청 함
 }
 function* logOut() {
   try {
@@ -81,7 +81,7 @@ function* logOut() {
 }
 
 function signUpAPI(data) {
-  return axios.post("http://localhost:3065/user", data); //로그인 요청 함
+  return axios.post("/user", data); //로그인 요청 함
 } //data안에 Email, Password, NickName 가 들어있다. signup.js 참조
 //get이랑 delete요청은 데이터를 못 보내지만, post,put,patch는 넘길수 있다. 두번째로
 

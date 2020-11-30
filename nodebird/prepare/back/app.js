@@ -54,6 +54,8 @@ app.use("/post", postRouter); //앞에 "/post"를 붙임으로 인해서
 
 app.use("/user", userRouter);
 
+//에러처리 미들웨어는 여기쯤에 내부적으로 있음
+
 app.listen(3065, () => {
   console.log("서버 실행 중!");
 });

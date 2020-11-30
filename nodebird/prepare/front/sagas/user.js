@@ -62,12 +62,11 @@ function* logIn(action) {
 //takeLatest 는 마지막에 클릭한거. (로딩 도중 기준) 여러번 클릭 방지, 첫번째꺼는 takeLeading
 
 function logOutAPI() {
-  return axios.post("/user/logout", data); //로그인 요청 함
+  return axios.post("/user/logout"); //로그인 요청 함
 }
 function* logOut() {
   try {
-    //const result = yield call(logOutAPI);
-    yield delay(1000);
+    yield call(logOutAPI);
     yield put({
       type: LOG_OUT_SUCCESS,
     });

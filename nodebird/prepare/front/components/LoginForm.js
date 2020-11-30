@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Form, Input, Button } from "antd";
 import Link from "next/link";
 import styled from "styled-components";
@@ -16,15 +16,20 @@ const FormWrapper = styled(Form)`
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const { logInLoading } = useSelector((state) => state.user);
+  const { logInLoading, logInError } = useSelector((state) => state.user);
+  const [email, onChangeEmail] = useInput("");
+  const [password, onChangePassword] = useInput("");
 
-  const [Email, onChangeEmail] = useInput("");
-  const [Password, onChangePassword] = useInput("");
-  
+  useEffect(() => {
+    if (logInError) {
+      alert(logInError);
+    }
+  }, [logInError]);
+
   const onSubmitForm = useCallback(() => {
-    console.log(Email, Password);
-    dispatch(loginRequestAction({ Email, Password }));
-  }, [Email, Password]);
+    console.log(email, password);
+    dispatch(loginRequestAction({ email, password }));
+  }, [email, password]);
   //Saga 랑, reducer가 거의 동시에 실행된다 보면됨
   //강의 : saga 쪼개고 reducer와 연결하기 11분경
 
@@ -33,12 +38,12 @@ const LoginForm = () => {
       <div>
         <label htmlFor="user-email">이메일</label>
         <br />
-        <Input name="user-email" type="email" value={Email} onChange={onChangeEmail} required />
+        <Input name="user-email" type="email" value={email} onChange={onChangeEmail} required />
       </div>
       <div>
         <label htmlFor="user-password">비밀번호</label>
         <br />
-        <Input name="user-password" type="password" value={Password} onChange={onChangePassword} required />
+        <Input name="user-password" type="password" value={password} onChange={onChangePassword} required />
       </div>
       <ButtonWrapper>
         <Button type="primary" htmlType="submit" loading={logInLoading}>

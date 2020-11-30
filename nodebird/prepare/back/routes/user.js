@@ -1,12 +1,13 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
-const { User } = require("../models");
+const { User, Post } = require("../models");
+const {isLoggedIn isNotLoggedIn} = require("./middlewares");
 const router = express.Router();
 
 //애매해서 로그인 포스트 //POST //post/user/login
 //이게 미들웨어 확장이라고 한다.
-router.post("/login", (req, res, next) => {
+router.post("/login", isNotLoggedIn, (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
     if (err) {
       console.error(err);
@@ -23,13 +24,20 @@ router.post("/login", (req, res, next) => {
         console.error(loginErr);
         return next(loginErr);
       }
-      return res.status(200).json(user); //사용자 정보를 프론트로 넘겨줌
+      const fullUserWithoutPassword = await User.findOne({
+        where: { id: user.id },
+        attributes: {
+          exclude: ["password"],
+        }, //원하는 정보만 받기, 비밀번호만 안 받고  싶음
+        include: [{ model: Post }, { model: User, as: "Followings" }, { model: User, as: "Followers" }],
+      });
+      return res.status(200).json(fullUserWithoutPassword); //사용자 정보를 프론트로 넘겨줌
     });
   })(req, res, next);
 }); //local 뒤의 부분은 passport폴더 local의 done 내용이 온거
 
 //post/user/
-router.post("/", async (req, res, next) => {
+router.post("/", isNotLoggedIn, async (req, res, next) => {
   try {
     const exUser = await User.findOne({
       where: { email: req.body.email },
@@ -51,7 +59,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.post("/user/logout", (req, res, next) => {
+router.post("/logout", isLoggedIn, (req, res, next) => {
   console.log(req.user);
   req.logout();
   req.session.destroy();

@@ -21,7 +21,8 @@ db.sequelize
 
 app.use(
   cors({
-    origin: "*",
+    origin: "http://localhost:9000",
+    credentials: true, //이게 있어야 쿠키를 전달 할 수 있다
   })
 );
 

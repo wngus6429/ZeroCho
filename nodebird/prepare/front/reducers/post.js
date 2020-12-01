@@ -85,25 +85,25 @@ export const addComment = (data) => ({
   data,
 });
 
-export const dummyPost = (data) => ({
-  id: data.id, //AddPost 할때 id 만들어줌
-  content: data.content,
-  User: {
-    id: 1,
-    nickname: "제로초",
-  },
-  Images: [],
-  Comments: [],
-});
+// export const dummyPost = (data) => ({
+//   id: data.id, //AddPost 할때 id 만들어줌
+//   content: data.content,
+//   User: {
+//     id: 1,
+//     nickname: "제로초",
+//   },
+//   Images: [],
+//   Comments: [],
+// });
 
-export const dummyComment = (data) => ({
-  id: shortId.generate(), //이놈을 key로 사용중
-  content: data,
-  User: {
-    id: 1,
-    nickname: "더미코멘트",
-  },
-});
+// export const dummyComment = (data) => ({
+//   id: shortId.generate(), //이놈을 key로 사용중
+//   content: data,
+//   User: {
+//     id: 1,
+//     nickname: "더미코멘트",
+//   },
+// });
 
 //reducer란 이전 상태를 액션을 통해 다음 상태로 만들어내는
 //immer가 불변성을 도와줌
@@ -134,7 +134,7 @@ const reducer = (state = initialState, action) =>
       case ADD_POST_SUCCESS:
         draft.addPostLoading = false;
         draft.addPostDone = true;
-        draft.mainPosts.unshift(dummyPost(action.data));
+        draft.mainPosts.unshift(action.data);
         break; //dummyPost가 앞에 있어야 함 뒤에 있으면 게시글 맨 아래에 추가됨
       case ADD_POST_FAILURE:
         draft.addPostLoading = false;
@@ -160,8 +160,8 @@ const reducer = (state = initialState, action) =>
         draft.addCommentError = null;
         break;
       case ADD_COMMENT_SUCCESS:
-        const post = draft.mainPosts.find((v) => v.id === action.data.postId);
-        post.Comments.unshift(dummyComment(action.data.content));
+        const post = draft.mainPosts.find((v) => v.id === action.data.PostId);
+        post.Comments.unshift(action.data);
         draft.addCommentLoading = false;
         draft.addCommentDone = true;
         break;

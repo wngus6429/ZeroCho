@@ -1,4 +1,4 @@
-import { all, fork, delay, put, takeLatest, throttle } from "redux-saga/effects";
+import { all, fork, delay, put, takeLatest, throttle, call } from "redux-saga/effects";
 import axios from "axios";
 import {
   ADD_POST_REQUEST,
@@ -39,23 +39,20 @@ function* loadPosts(action) {
 }
 
 function addPostAPI(data) {
-  return axios.post("/api/post", data); //로그인 요청 함
+  return axios.post("/post", { content: data }, { withCredentials: true }); //로그인 요청 함
+  //뒷부분을 저렇게 해줘야 req.body 안에 들어간다
 }
 function* addPost(action) {
   try {
-    // const result = yield call(addPostAPI, action.data);
-    yield delay(1000);
+    const result = yield call(addPostAPI, action.data);
     const id = shortId.generate();
     yield put({
       type: ADD_POST_SUCCESS,
-      data: {
-        id,
-        content: action.data,
-      },
+      data: result.data,
     });
     yield put({
       type: ADD_POST_TO_ME, //게시글 작성하면 게시글에 대한 id와
-      data: id, //유저 id를 연결 해야하니까
+      data: result.data.id, //유저 id를 연결 해야하니까
     });
   } catch (err) {
     console.error(err);
@@ -67,7 +64,7 @@ function* addPost(action) {
 }
 
 function removePostAPI(data) {
-  return axios.delete("/api/post", data); //로그인 요청 함
+  return axios.delete("/api/post", data, { withCredentials: true }); //로그인 요청 함
 }
 function* removePost(action) {
   try {
@@ -92,15 +89,14 @@ function* removePost(action) {
 }
 
 function addCommentAPI(data) {
-  return axios.post("/api/post/${data.id}/comment", data); //로그인 요청 함
+  return axios.post("/post/${data.id}/comment", data, { withCredentials: true }); //post/1/comment
 }
 function* addComment(action) {
   try {
-    //const result = yield call(addCommentAPI, action.data);
-    yield delay(1000);
+    const result = yield call(addCommentAPI, action.data);
     yield put({
       type: ADD_COMMENT_SUCCESS,
-      data: action.data,
+      data: result.data,
     });
   } catch (err) {
     yield put({

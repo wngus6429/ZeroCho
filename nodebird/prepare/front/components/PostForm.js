@@ -9,7 +9,7 @@ import useinput from "../hooks/useinput";
 const PostForm = () => {
   const { addPostDone, imagePaths } = useSelector((state) => state.post);
   const dispatch = useDispatch();
-  const [Text, onChangeText, setText] = useinput("");
+  const [text, onChangeText, setText] = useinput("");
 
   useEffect(() => {
     if (addPostDone) {
@@ -18,8 +18,8 @@ const PostForm = () => {
   }, [addPostDone]);
 
   const onSubmit = useCallback(() => {
-    dispatch(addPost(Text));
-  }, [Text]);
+    dispatch(addPost(text));
+  }, [text]);
 
   const imageInput = useRef();
 
@@ -30,7 +30,7 @@ const PostForm = () => {
   return (
     <Form style={{ margin: "10px 0 20px" }} encType="multipart/form-data" onFinish={onSubmit}>
       <Input.TextArea
-        value={Text}
+        value={text}
         onChange={onChangeText}
         maxLength={140}
         placeholder="어떤 신기한 일이 있었나요?"

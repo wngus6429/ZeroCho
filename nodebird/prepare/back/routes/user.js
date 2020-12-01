@@ -2,7 +2,7 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
 const { User, Post } = require("../models");
-const {isLoggedIn isNotLoggedIn} = require("./middlewares");
+const { isLoggedIn, isNotLoggedIn } = require("./middlewares");
 const router = express.Router();
 
 //애매해서 로그인 포스트 //POST //post/user/login

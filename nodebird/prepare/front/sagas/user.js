@@ -2,6 +2,9 @@ import { all, fork, delay, put, takeLatest, call } from "redux-saga/effects";
 //여기안에 delay, debounce, throttle, takeLastest, takeEvery, takeMaybe 같은것도 있음
 //지금 적은것들이 사가의 effect라 불림
 import {
+  LOAD_USER_REQUEST,
+  LOAD_USER_SUCCESS,
+  LOAD_USER_FAILURE,
   LOG_IN_REQUEST,
   LOG_IN_SUCCESS,
   LOG_IN_FAILURE,
@@ -20,6 +23,26 @@ import {
 } from "../reducers/user";
 import axios from "axios";
 //이거는 컴바인 리듀스 같은게 필요 없음.
+
+//get,delete는 데이터가 없기 떄문에, 두번째 자리가 withCredential자리, 근데
+//saga에서 공통 설정 해줬음
+function logUserAPI() {
+  return axios.get("/user");
+}
+function* loadUser(action) {
+  try {
+    const result = yield call(logUserAPI, action.data);
+    yield put({
+      type: LOAD_USER_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    yield put({
+      type: LOAD_USER_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
 
 //logInAPI이거는 generator안임. * 붙이면 안됨
 function logInAPI(data) {
@@ -141,6 +164,10 @@ function* unfollow(action) {
   }
 }
 
+function* watchLoadUser() {
+  yield takeLatest(LOAD_USER_REQUEST, loadUser);
+}
+
 function* watchFollow() {
   yield takeLatest(FOLLOW_REQUEST, follow);
 } //로그인이라는 action이 실행될떄까지 기다리겠다.
@@ -163,5 +190,12 @@ function* watchSignUp() {
 }
 
 export default function* userSaga() {
-  yield all([fork(watchFollow), fork(watchUnfollow), fork(watchLogIn), fork(watchLogOut), fork(watchSignUp)]);
+  yield all([
+    fork(watchLoadUser),
+    fork(watchFollow),
+    fork(watchUnfollow),
+    fork(watchLogIn),
+    fork(watchLogOut),
+    fork(watchSignUp),
+  ]);
 }

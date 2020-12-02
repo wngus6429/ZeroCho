@@ -1,5 +1,5 @@
 const express = require("express");
-const { Post, Image, Comment } = require("../models");
+const { Post, Image, Comment, User } = require("../models");
 const { isLoggedIn } = require("./middlewares");
 const router = express.Router();
 //params는 변수를 담는다
@@ -18,9 +18,16 @@ router.post("/", isLoggedIn, async (req, res) => {
         },
         {
           model: Comment,
+          include: [
+            {
+              model: User,
+              attributes: ["id", "nickname"],
+            },
+          ],
         },
         {
           model: User,
+          attributes: ["id", "nickname"],
         },
       ],
     });
@@ -43,10 +50,19 @@ router.post("/:postId/comment", isLoggedIn, async (req, res) => {
     }
     const comment = await Comment.create({
       content: req.body.content,
-      PostId: req.params.postId,
+      PostId: parseInt(req.params.postId, 10),
       UserId: req.user.id,
     });
-    res.status(201).json(comment); //이렇게 프론트로 돌려주고 그러면 saga, addpost 의 const result 이쪽에 들어감
+    const fullComment = await Comment.findOne({
+      where: { id: comment.id },
+      include: [
+        {
+          model: User,
+          attributes: ["id", "nickname"],
+        },
+      ],
+    });
+    res.status(201).json(fullComment); //이렇게 프론트로 돌려주고 그러면 saga, addpost 의 const result 이쪽에 들어감
   } catch (error) {
     console.error(error);
     next(error);

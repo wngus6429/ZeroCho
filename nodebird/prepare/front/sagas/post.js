@@ -13,21 +13,18 @@ import {
   LOAD_POSTS_REQUEST,
   LOAD_POSTS_SUCCESS,
   LOAD_POSTS_FAILURE,
-  generateDummyPost,
 } from "../reducers/post";
 import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from "../reducers/user";
-import shortId from "shortid";
 
 function loadPostsAPI(data) {
-  return axios.get("/api/posts", data); //로그인 요청 함
+  return axios.get("/posts", data); //로그인 요청 함
 }
 function* loadPosts(action) {
   try {
-    // const result = yield call(loadPostsAPI, action.data);
-    yield delay(1000); //가짜 로딩시간
+    const result = yield call(loadPostsAPI, action.data);
     yield put({
       type: LOAD_POSTS_SUCCESS,
-      data: generateDummyPost(10),
+      data: result.data,
     });
   } catch (err) {
     console.error(err);
@@ -39,7 +36,7 @@ function* loadPosts(action) {
 }
 
 function addPostAPI(data) {
-  return axios.post("/post", { content: data }, { withCredentials: true }); //로그인 요청 함
+  return axios.post("/post", { content: data }); //로그인 요청 함
   //뒷부분을 저렇게 해줘야 req.body 안에 들어간다
 }
 function* addPost(action) {
@@ -64,7 +61,7 @@ function* addPost(action) {
 }
 
 function removePostAPI(data) {
-  return axios.delete("/api/post", data, { withCredentials: true }); //로그인 요청 함
+  return axios.delete("/api/post", data); //로그인 요청 함
 }
 function* removePost(action) {
   try {
@@ -89,7 +86,7 @@ function* removePost(action) {
 }
 
 function addCommentAPI(data) {
-  return axios.post("/post/${data.id}/comment", data, { withCredentials: true }); //post/1/comment
+  return axios.post(`/post/${data.postId}/comment`, data); //post/1/comment
 }
 function* addComment(action) {
   try {
@@ -99,6 +96,7 @@ function* addComment(action) {
       data: result.data,
     });
   } catch (err) {
+    console.error(err);
     yield put({
       type: ADD_COMMENT_FAILURE,
       data: err.response.data,

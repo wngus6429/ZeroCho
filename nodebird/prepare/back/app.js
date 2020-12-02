@@ -3,8 +3,10 @@ const cors = require("cors");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const postRouter = require("./routes/post");
+const postsRouter = require("./routes/posts");
 const userRouter = require("./routes/user");
 const dotenv = require("dotenv");
+const morgan = require("morgan");
 const db = require("./models");
 const passport = require("passport");
 const passportConfig = require("./passport");
@@ -28,6 +30,7 @@ app.use(
 
 passportConfig();
 
+app.use(morgan("dev"));
 //프론트에서 온 정보를 req.body안에 넣어주는 역할을 이 두줄이 한다
 app.use(express.json()); //프론트에서 온 json형식 데이터를 req.body안에 넣음
 app.use(express.urlencoded({ extended: true }));
@@ -49,10 +52,10 @@ app.get("/", (req, res) => {
   res.send("hello express");
 });
 
+app.use("/posts", postsRouter); //이건 제로초 스타일, 복수와 단수 나눔
 app.use("/post", postRouter); //앞에 "/post"를 붙임으로 인해서
 //routes폴더 post.js안에 있는 라우터들 앞에 자동으로 /post가 붙음
 //중복제거 , 앞에 post붙이는걸 프리픽스라고 한다
-
 app.use("/user", userRouter);
 
 //에러처리 미들웨어는 여기쯤에 내부적으로 있음

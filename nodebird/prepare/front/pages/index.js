@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import PostCard from "../components/PostCard";
 import PostForm from "../components/PostForm";
 import { LOAD_POSTS_REQUEST } from "../reducers/post";
+import { LOAD_USER_REQUEST } from "../reducers/user";
 
 //next는 pages라는 폴더를 인식한다 그래서 그 파일을 개별적인 페이지 컴포넌트로 만들어짐
 
@@ -11,13 +12,19 @@ const Home = () => {
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
   const { mainPosts, hasMorePosts, loadPostsLoading } = useSelector((state) => state.post);
-  //메인 페이지가 나올때 바로 useEffect도 되겠지
-  //Componentsdidmount 효과, 빈배열뒤에 넣으면
+
+  //로그인상태쪽
   useEffect(() => {
+    dispatch({
+      type: LOAD_USER_REQUEST,
+    });
     dispatch({
       type: LOAD_POSTS_REQUEST,
     });
   }, []);
+
+  //메인 페이지가 나올때 바로 useEffect도 되겠지
+  //Componentsdidmount 효과, 빈배열뒤에 넣으면
 
   useEffect(() => {
     function onScroll() {

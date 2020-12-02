@@ -5,6 +5,34 @@ const { User, Post } = require("../models");
 const { isLoggedIn, isNotLoggedIn } = require("./middlewares");
 const router = express.Router();
 
+//Get /user
+router.get("/", async (req, res, next) => {
+  try {
+    if (req.user) {
+      //로그인 안 했는데 매번 새로고침시 작동하면 where요쪽 에러
+      const fullUserWithoutPassword = await User.findOne({
+        where: { id: req.user.id },
+        attributes: {
+          exclude: ["password"],
+        }, //원하는 정보만 받기, 비밀번호만 안 받고  싶음
+        include: [
+          { model: Post, attributes: ["id"] },
+          { model: User, as: "Followings", attributes: ["id"] },
+          { model: User, as: "Followers", attributes: ["id"] },
+        ],
+      });
+      res.status(200).json(fullUserWithoutPassword); //사용자가 있으면 보내주고
+    } else {
+      res.status(200).json(null); //사용자가 없으면 안 보내줌
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+//attributes: ["id"]는 아이디만 가져오게끔. 팔로잉, 팔로워 숫자만 알면 되는데 데이터 다 가져오면 렉 + 데이터 사용량 증가
+//서버에서 프론트로 필요한 데이터만 보내주는거임
+
 //애매해서 로그인 포스트 //POST //post/user/login
 //이게 미들웨어 확장이라고 한다.
 router.post("/login", isNotLoggedIn, (req, res, next) => {
@@ -29,7 +57,11 @@ router.post("/login", isNotLoggedIn, (req, res, next) => {
         attributes: {
           exclude: ["password"],
         }, //원하는 정보만 받기, 비밀번호만 안 받고  싶음
-        include: [{ model: Post }, { model: User, as: "Followings" }, { model: User, as: "Followers" }],
+        include: [
+          { model: Post, attributes: ["id"] },
+          { model: User, as: "Followings", attributes: ["id"] },
+          { model: User, as: "Followers", attributes: ["id"] },
+        ],
       });
       return res.status(200).json(fullUserWithoutPassword); //사용자 정보를 프론트로 넘겨줌
     });

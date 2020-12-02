@@ -33,7 +33,7 @@ export const Header = styled.header`
   position: relative;
   padding: 0;
   text-align: center;
-
+  //&는 안에라는 뜻임
   & h1 {
     margin: 0;
     font-size: 17px;

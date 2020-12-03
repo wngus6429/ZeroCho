@@ -13,12 +13,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   Post.associate = (db) => {
-    db.Post.belongsTo(db.User); //어떤 게시글은 어떤 작성자 한테 속해 있겟지
-    db.Post.belongsToMany(db.Hashtag, { through: "PostHashtag" }); //해쉬태그는 다대다 관계
-    db.Post.hasMany(db.Comment); //하나의 게시글에 댓글 여러개
-    db.Post.hasMany(db.Image); //하나의 게시글이 이미지 여러개
-    db.Post.belongsToMany(db.User, { through: "Like", as: "Likers" }); //포스트에 좋아요를 누른사람들
-    db.Post.belongsTo(db.Post, { as: "Retweet" }); //리트윗관계
+    db.Post.belongsTo(db.User); //어떤 게시글은 어떤 작성자 한테 속해 있겟지 // post.addUser // post.getUser 게시글 작성가 가져오는거 // post.setUser set은 바꾸는거
+    db.Post.belongsToMany(db.Hashtag, { through: "PostHashtag" }); //해쉬태그는 다대다 관계 // post.addHashtags
+    db.Post.hasMany(db.Comment); //하나의 게시글에 댓글 여러개 // post.addComments란게 생김 , post.getComments 댓글 가져오는거
+    db.Post.hasMany(db.Image); //하나의 게시글이 이미지 여러개 , post.addImages가 생김 , post.getImages
+    db.Post.belongsToMany(db.User, { through: "Like", as: "Likers" }); //포스트에 좋아요를 누른사람들, post.addLikers, post.removeLikers 란게 생김
+    db.Post.belongsTo(db.Post, { as: "Retweet" }); //리트윗관계 //post.addRetweet이란게 생김
   };
   return Post;
 };

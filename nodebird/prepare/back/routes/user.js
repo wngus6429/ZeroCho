@@ -77,7 +77,7 @@ router.post("/", isNotLoggedIn, async (req, res, next) => {
     if (exUser) {
       return res.status(403).send("이미 사용중인 아이디입니다.");
     } //리턴 안 붙이면 밑에꺼 까지 실행됨
-    console.log(req);
+    console.log("로그인쪽", req);
     const hashedPassword = await bcrypt.hash(req.body.password, 11);
     await User.create({
       email: req.body.email,

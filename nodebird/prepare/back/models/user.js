@@ -17,8 +17,8 @@ module.exports = (sequelize, DataTypes) => {
     db.User.hasMany(db.Post); //사람이 포스트를 여러개 가질 수 있다
     db.User.hasMany(db.Comment); //사람이 코멘트를 여러개 가질 수 있다
     db.User.belongsToMany(db.Post, { through: "Like", as: "Liked" }); //좋아요 관계
-    db.User.belongsToMany(db.User, { through: "Follow", as: "Followers", foreinkey: "followingId" });
-    db.User.belongsToMany(db.User, { through: "Follow", as: "Followings", foreinkey: "followerId" });
+    db.User.belongsToMany(db.User, { through: "Follow", as: "Followers", foreignKey: "FollowingId" });
+    db.User.belongsToMany(db.User, { through: "Follow", as: "Followings", foreignKey: "FollowerId" });
     //
   };
   return User;

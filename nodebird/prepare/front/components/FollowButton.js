@@ -23,6 +23,9 @@ const FollowButton = ({ post }) => {
       });
     }
   }, [isFollowing]);
+  if (post.User.id === me.id) {
+    return null; //이거를 해야 본인 자기자신이 적은 글에 팔로우 버튼이 안보이게됨
+  }
   return (
     <Button loading={followLoading || unfollowLoading} onClick={onClickbutton}>
       {isFollowing ? "언팔로우" : "팔로우"}

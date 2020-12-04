@@ -2,8 +2,25 @@ import React from "react";
 import { Button, Card, List } from "antd";
 import Proptypes from "prop-types";
 import { StopTwoTone } from "@ant-design/icons";
+import { useDispatch } from "react-redux";
+import { UNFOLLOW_REQUEST, REMOVE_FOLLOWER_REQUEST } from "../reducers/user";
 
 const FollowList = ({ header, data }) => {
+  const dispatch = useDispatch();
+  const onCancel = (id) => () => {
+    if (header === "팔로잉") {
+      dispatch({
+        type: UNFOLLOW_REQUEST,
+        data: id,
+      });
+    } else {
+      dispatch({
+        //이건 팔로워
+        type: REMOVE_FOLLOWER_REQUEST,
+        data: id,
+      });
+    }
+  };
   return (
     <List
       style={{ marginBottom: 20 }}
@@ -19,7 +36,7 @@ const FollowList = ({ header, data }) => {
       dataSource={data}
       renderItem={(item) => (
         <List.Item style={{ marginTop: 20 }}>
-          <Card actions={[<StopTwoTone key="stop" />]}>
+          <Card actions={[<StopTwoTone key="stop" onClick={onCancel(item.id)} />]}>
             <Card.Meta description={item.nickname} />
           </Card>
         </List.Item>
@@ -27,6 +44,7 @@ const FollowList = ({ header, data }) => {
     ></List>
   );
 };
+//반복문 안에서 onclick있으면 반복문에 대한 데이터를 onClick으로 넘겨줘야함
 
 FollowList.propTypes = {
   header: Proptypes.string.isRequired,

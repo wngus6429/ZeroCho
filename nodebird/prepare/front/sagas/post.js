@@ -104,15 +104,14 @@ function* addPost(action) {
 }
 
 function removePostAPI(data) {
-  return axios.delete("/api/post", data); //로그인 요청 함
+  return axios.delete(`/post/${data}`); //delete에는 뒤에 data못 넣음
 }
 function* removePost(action) {
   try {
-    //const result = yield call(addPostAPI, action.data);
-    yield delay(1000);
+    const result = yield call(removePostAPI, action.data);
     yield put({
       type: REMOVE_POST_SUCCESS,
-      data: action.data,
+      data: result.data,
     });
     yield put({
       //user Reducer 조작부분

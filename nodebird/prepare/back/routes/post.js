@@ -76,7 +76,7 @@ router.post("/:postId/comment", isLoggedIn, async (req, res) => {
 });
 
 //PATCH /post/1/like
-router.patch("/:postId/like", async (req, res, next) => {
+router.patch("/:postId/like", isLoggedIn, async (req, res, next) => {
   try {
     const post = await Post.findOne({ where: { id: req.params.postId } });
     //post 있는지 검사를 해야지
@@ -93,7 +93,7 @@ router.patch("/:postId/like", async (req, res, next) => {
 });
 
 //DELETE /post/1/like
-router.delete("/:postId/like", async (req, res, next) => {
+router.delete("/:postId/like", isLoggedIn, async (req, res, next) => {
   try {
     const post = await Post.findOne({ where: { id: req.params.postId } });
     //post 있는지 검사를 해야지
@@ -107,12 +107,25 @@ router.delete("/:postId/like", async (req, res, next) => {
     next(error);
   }
 });
-
-router.delete("/", (req, res) => {
-  //DELETE /post
-  res.send("api post delete 창이다");
+//DELETE /post
+router.delete("/:postId", isLoggedIn, async (req, res, next) => {
+  try {
+    await Post.destroy({
+      //시퀄라이즈에서는 제거할때 destory를 쓴다 , 남이 삭제 못하게 2개로
+      where: {
+        id: req.params.postId,
+        UserId: req.user.id,
+      }, //게시글 id랑, 내가 쓸 게시글
+    });
+    res.status(200).json({ PostId: parseInt(req.params.postId, 10) });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
 });
 
 module.exports = router;
 
 //DB조작 할때는 항상 await 붙여줘야함
+
+//findone , finall로 조회, create로 만들고, destory로 삭제하고, 수정하는건

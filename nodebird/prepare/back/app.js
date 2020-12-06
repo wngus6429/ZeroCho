@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const postRouter = require("./routes/post");
 const postsRouter = require("./routes/posts");
 const userRouter = require("./routes/user");
+const path = require("path");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 const db = require("./models");
@@ -20,7 +21,8 @@ db.sequelize
     console.log("db 연결 성공");
   })
   .catch(console.error);
-
+passportConfig();
+app.use(morgan("dev"));
 app.use(
   cors({
     origin: "http://localhost:9000",
@@ -28,9 +30,8 @@ app.use(
   })
 );
 
-passportConfig();
-
-app.use(morgan("dev"));
+//맨앞 / 는 locahost3065가 된다. __dirname은 현재 폴더 back 안에 uploads 애를 합쳐줌
+app.use("/", express.static(path.join(__dirname, "uploads")));
 //프론트에서 온 정보를 req.body안에 넣어주는 역할을 이 두줄이 한다
 app.use(express.json()); //프론트에서 온 json형식 데이터를 req.body안에 넣음
 app.use(express.urlencoded({ extended: true }));

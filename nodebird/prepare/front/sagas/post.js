@@ -19,8 +19,30 @@ import {
   LOAD_POSTS_REQUEST,
   LOAD_POSTS_SUCCESS,
   LOAD_POSTS_FAILURE,
+  UPLOAD_IMAGES_REQUEST,
+  UPLOAD_IMAGES_SUCCESS,
+  UPLOAD_IMAGES_FAILURE,
 } from "../reducers/post";
 import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from "../reducers/user";
+
+function uploadImagesAPI(data) {
+  return axios.post("/post/images", data); //{name:data} 이렇게 하면 json이 되어버린다
+} //게시글의 일부분 수정하는거라 patch이다
+function* uploadImages(action) {
+  try {
+    const result = yield call(uploadImagesAPI, action.data);
+    yield put({
+      type: UPLOAD_IMAGES_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: UPLOAD_IMAGES_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
 
 function likePostAPI(data) {
   return axios.patch(`/post/${data}/like`);
@@ -80,7 +102,7 @@ function* loadPosts(action) {
 }
 
 function addPostAPI(data) {
-  return axios.post("/post", { content: data }); //로그인 요청 함
+  return axios.post("/post", data); //form데이터는 {} 이런걸로 감싸면 안됨
   //뒷부분을 저렇게 해줘야 req.body 안에 들어간다
 }
 function* addPost(action) {
@@ -146,6 +168,9 @@ function* addComment(action) {
   }
 }
 
+function* watchUploadImages() {
+  yield takeLatest(UPLOAD_IMAGES_REQUEST, uploadImages);
+}
 function* watchLikePost() {
   yield takeLatest(LIKE_POST_REQUEST, likePost);
 }
@@ -173,6 +198,7 @@ function* watchAddComment() {
 
 export default function* postSaga() {
   yield all([
+    fork(watchUploadImages),
     fork(watchLikePost),
     fork(watchUnlikePost),
     fork(watchAddPost),

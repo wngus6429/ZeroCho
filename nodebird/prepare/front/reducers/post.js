@@ -9,14 +9,12 @@ export const initialState = {
   mainPosts: [],
   imagePaths: [], //이미지 경로들
   hasMorePosts: true, //처음에 가져올 시도를 해야하니 당연 true
-
   likePostLoading: false,
   likePostDone: false,
   likePostError: null,
   unlikePostLoading: false,
   unlikePostDone: false,
   unlikePostError: null,
-
   loadPostsLoading: false,
   loadPostsDone: false,
   loadPostsError: null,
@@ -29,6 +27,9 @@ export const initialState = {
   addCommentLoading: false,
   addCommentDone: false,
   addCommentError: null,
+  uploadImagesLoading: false,
+  uploadImagesDone: false,
+  uploadImagesError: null,
 };
 //왜 User, Image, Comment만 첫글자에 대문자냐? db에서 쓰는 시퀄라이즈랑 관계있는데.어떤 정보와 다른 정보가 관게가 있으면 그것을 합쳐줌
 //합쳐준 애들은 대문자가 되기 때문 , id나 content는 게시글 속성이고
@@ -68,6 +69,10 @@ export const initialState = {
 //       ],
 //     }));
 
+export const UPLOAD_IMAGES_REQUEST = "UPLOAD_IMAGES_REQUEST";
+export const UPLOAD_IMAGES_SUCCESS = "UPLOAD_IMAGES_SUCCESS";
+export const UPLOAD_IMAGES_FAILURE = "UPLOAD_IMAGES_FAILURE";
+
 export const LIKE_POST_REQUEST = "LIKE_POST_REQUEST";
 export const LIKE_POST_SUCCESS = "LIKE_POST_SUCCESS";
 export const LIKE_POST_FAILURE = "LIKE_POST_FAILURE";
@@ -91,6 +96,8 @@ export const REMOVE_POST_FAILURE = "REMOVE_POST_FAILURE";
 export const ADD_COMMENT_REQUEST = "ADD_COMMENT_REQUEST";
 export const ADD_COMMENT_SUCCESS = "ADD_COMMENT_SUCCESS";
 export const ADD_COMMENT_FAILURE = "ADD_COMMENT_FAILURE";
+
+export const REMOVE_IMAGE = "REMOVE_IMAGE";
 
 export const addPost = (data) => ({
   type: ADD_POST_REQUEST,
@@ -127,6 +134,23 @@ export const addComment = (data) => ({
 const reducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
+      case REMOVE_IMAGE:
+        draft.imagePaths = draft.imagePaths.filter((v, i) => i !== action.data);
+        break;
+      case UPLOAD_IMAGES_REQUEST:
+        draft.uploadImagesLoading = true;
+        draft.uploadImagesDone = false;
+        draft.uploadImagesError = null;
+        break;
+      case UPLOAD_IMAGES_SUCCESS:
+        draft.imagePaths = action.data;
+        draft.uploadImagesLoading = false;
+        draft.uploadImagesDone = true;
+        break;
+      case UPLOAD_IMAGES_FAILURE:
+        draft.uploadImagesLoading = false;
+        draft.uploadImagesError = action.error;
+        break;
       case LIKE_POST_REQUEST:
         draft.likePostLoading = true;
         draft.likePostDone = false;
@@ -164,6 +188,11 @@ const reducer = (state = initialState, action) =>
         draft.loadPostsDone = false;
         draft.loadPostsError = null;
         break; //break 꼭 적어야함
+      // case LOAD_POSTS_SUCCESS:
+      //   draft.loadPostLoading = false;
+      //   draft.loadPostDone = true;
+      //   draft.singlePost = action.data;
+      //   break;
       case LOAD_POSTS_SUCCESS:
         draft.loadPostsLoading = false;
         draft.loadPostsDone = true;
@@ -184,7 +213,8 @@ const reducer = (state = initialState, action) =>
         draft.addPostLoading = false;
         draft.addPostDone = true;
         draft.mainPosts.unshift(action.data);
-        break; //dummyPost가 앞에 있어야 함 뒤에 있으면 게시글 맨 아래에 추가됨
+        draft.imagePaths = []; //이미지패스 초기화, 그래야 이미지업로드 후 대기 사진 사라짐
+        break;
       case ADD_POST_FAILURE:
         draft.addPostLoading = false;
         draft.addPostError = action.error;

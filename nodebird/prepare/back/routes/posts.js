@@ -1,12 +1,20 @@
 const express = require("express");
 //리밋과 오프셋 방식
 const { Post, User, Image, Comment } = require("../models");
+const { Op } = require("sequelize");
 const router = express.Router();
 
 //Get posts
 router.get("/", async (req, res, next) => {
   try {
+    const where = {}; //초기로딩 ㅋㅋ 쿼리스트링 5분
+    if (parseInt(req.query.lastId, 10)) {
+      //초기 로딩이 아닐 때 //스크롤 내려서 더 불러오는 상황
+      where.id = { [Op.lt]: parseInt(req.query.lastId, 10) }; //보다 작은
+    } // 21 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 //lastId가 12면 12보다 작은거 부름
+    //id가 라스트아이디보다 작은걸로 10개를 불러와라
     const posts = await Post.findAll({
+      where,
       limit: 10, //10개만 가져와라
       order: [
         ["createdAt", "DESC"], //처음에는 게시글 생성일 내림차순으로 정렬한다음
@@ -31,6 +39,19 @@ router.get("/", async (req, res, next) => {
           model: User, //좋아요 누른사람
           as: "Likers",
           attributes: ["id"],
+        },
+        {
+          model: Post,
+          as: "Retweet",
+          include: [
+            {
+              model: User,
+              attributes: ["id", "nickname"],
+            },
+            {
+              model: Image,
+            },
+          ],
         },
       ],
     });

@@ -11,7 +11,13 @@ import { LOAD_USER_REQUEST } from "../reducers/user";
 const Home = () => {
   const dispatch = useDispatch();
   const { me } = useSelector((state) => state.user);
-  const { mainPosts, hasMorePosts, loadPostsLoading } = useSelector((state) => state.post);
+  const { mainPosts, hasMorePosts, loadPostsLoading, retweetError } = useSelector((state) => state.post);
+
+  useEffect(() => {
+    if (retweetError) {
+      alert(retweetError);
+    }
+  }, [retweetError]);
 
   //로그인상태쪽
   useEffect(() => {
@@ -28,19 +34,21 @@ const Home = () => {
 
   useEffect(() => {
     function onScroll() {
-      console.log(
-        window.scrollY, //얼마나 내렸는지 위치,
-        document.documentElement.clientHeight, //화면에서 보이는 길이
-        document.documentElement.scrollHeight //총 길이, 맨 밑에 내렸을때 위 두개 더한게 이거
-      );
+      // console.log(
+      //   window.scrollY, //얼마나 내렸는지 위치,
+      //   document.documentElement.clientHeight, //화면에서 보이는 길이
+      //   document.documentElement.scrollHeight //총 길이, 맨 밑에 내렸을때 위 두개 더한게 이거
+      // );
       if (
         window.scrollY + document.documentElement.clientHeight >
         document.documentElement.scrollHeight - 300
       ) {
         if (hasMorePosts && !loadPostsLoading) {
           //이미 다 불러왔거나, 아니면 불러오는 중이면 더 이상 LOADPOSTREQUEST를 하지 못하게
+          const lastId = mainPosts[mainPosts.length - 1]?.id; //마지막 게시글의 ID /게시글이0일때를 고려해서 ?넣어줌
           dispatch({
             type: LOAD_POSTS_REQUEST,
+            lastId,
           });
         }
       }

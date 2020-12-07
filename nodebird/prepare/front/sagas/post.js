@@ -1,4 +1,4 @@
-import { all, fork, delay, put, takeLatest, throttle, call } from "redux-saga/effects";
+import { all, fork, put, takeLatest, throttle, call } from "redux-saga/effects";
 import axios from "axios";
 import {
   LIKE_POST_REQUEST,
@@ -22,12 +22,34 @@ import {
   UPLOAD_IMAGES_REQUEST,
   UPLOAD_IMAGES_SUCCESS,
   UPLOAD_IMAGES_FAILURE,
+  RETWEET_REQUEST,
+  RETWEET_SUCCESS,
+  RETWEET_FAILURE,
 } from "../reducers/post";
 import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from "../reducers/user";
 
+function retWeetAPI(data) {
+  return axios.post(`/post/${data}/retweet`);
+}
+function* retWeet(action) {
+  try {
+    const result = yield call(retWeetAPI, action.data);
+    yield put({
+      type: RETWEET_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: RETWEET_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
 function uploadImagesAPI(data) {
   return axios.post("/post/images", data); //{name:data} 이렇게 하면 json이 되어버린다
-} //게시글의 일부분 수정하는거라 patch이다
+}
 function* uploadImages(action) {
   try {
     const result = yield call(uploadImagesAPI, action.data);
@@ -58,7 +80,7 @@ function* likePost(action) {
     console.error(err);
     yield put({
       type: LIKE_POST_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }
@@ -77,17 +99,19 @@ function* unlikePost(action) {
     console.error(err);
     yield put({
       type: UNLIKE_POST_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }
 
-function loadPostsAPI(data) {
-  return axios.get("/posts", data); //로그인 요청 함
-}
+function loadPostsAPI(lastId) {
+  return axios.get(`/posts?lastId=${lastId || 0}`); //lastId가 undefined일 경우 0
+} //get에서 데이터를 넣을려면 주소뒤에 ?를 찍고 key는 값
+//주소만봐도 데이터가 담겨있어서 주소를 캐싱하면 데이터까지 같이 캐싱이됨
+//post. put.patch는 데이터캐싱이 안되는데 .get은 데이터캐싱도 할수 있어서 이점이 있다
 function* loadPosts(action) {
   try {
-    const result = yield call(loadPostsAPI, action.data);
+    const result = yield call(loadPostsAPI, action.lastId);
     yield put({
       type: LOAD_POSTS_SUCCESS,
       data: result.data,
@@ -96,7 +120,7 @@ function* loadPosts(action) {
     console.error(err);
     yield put({
       type: LOAD_POSTS_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }
@@ -120,7 +144,7 @@ function* addPost(action) {
     console.error(err);
     yield put({
       type: ADD_POST_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }
@@ -144,7 +168,7 @@ function* removePost(action) {
     console.error(err);
     yield put({
       type: REMOVE_POST_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }
@@ -163,41 +187,40 @@ function* addComment(action) {
     console.error(err);
     yield put({
       type: ADD_COMMENT_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }
 
+function* watchRetweet() {
+  yield takeLatest(RETWEET_REQUEST, retWeet);
+}
 function* watchUploadImages() {
   yield takeLatest(UPLOAD_IMAGES_REQUEST, uploadImages);
 }
 function* watchLikePost() {
   yield takeLatest(LIKE_POST_REQUEST, likePost);
 }
-
 function* watchUnlikePost() {
   yield takeLatest(UNLIKE_POST_REQUEST, unlikePost);
 }
-
 function* watchLoadPosts() {
   yield throttle(2000, LOAD_POSTS_REQUEST, loadPosts);
 } //스크롤 움직이면 너무 많이 실행되기 때문에 한번만 되게끔 2초안에
-
 // 하나라도 action이 적은게 좋다
 function* watchAddPost() {
   yield takeLatest(ADD_POST_REQUEST, addPost);
 }
-
 function* watchRemovePost() {
   yield takeLatest(REMOVE_POST_REQUEST, removePost);
 }
-
 function* watchAddComment() {
   yield takeLatest(ADD_COMMENT_REQUEST, addComment);
 }
 
 export default function* postSaga() {
   yield all([
+    fork(watchRetweet),
     fork(watchUploadImages),
     fork(watchLikePost),
     fork(watchUnlikePost),

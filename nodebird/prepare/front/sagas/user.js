@@ -2,6 +2,9 @@ import { all, fork, delay, put, takeLatest, call } from "redux-saga/effects";
 //여기안에 delay, debounce, throttle, takeLastest, takeEvery, takeMaybe 같은것도 있음
 //지금 적은것들이 사가의 effect라 불림
 import {
+  LOAD_MY_INFO_REQUEST,
+  LOAD_MY_INFO_SUCCESS,
+  LOAD_MY_INFO_FAILURE,
   LOAD_USER_REQUEST,
   LOAD_USER_SUCCESS,
   LOAD_USER_FAILURE,
@@ -111,10 +114,28 @@ function* changeNickname(action) {
   }
 }
 
+function loadMyInfoAPI() {
+  return axios.get("/user");
+}
+function* loadMyInfo() {
+  try {
+    const result = yield call(loadMyInfoAPI);
+    yield put({
+      type: LOAD_MY_INFO_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    yield put({
+      type: LOAD_MY_INFO_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
 //get,delete는 데이터가 없기 떄문에, 두번째 자리가 withCredential자리, 근데
 //saga에서 공통 설정 해줬음
-function logUserAPI() {
-  return axios.get("/user");
+function logUserAPI(data) {
+  return axios.get(`/user/${data}`);
 }
 function* loadUser(action) {
   try {
@@ -265,7 +286,9 @@ function* watchLoadFollowings() {
 function* watchChangeNickname() {
   yield takeLatest(CHANGE_NICKNAME_REQUEST, changeNickname);
 }
-
+function* watchLoadMyInfo() {
+  yield takeLatest(LOAD_MY_INFO_REQUEST, loadMyInfo);
+}
 function* watchLoadUser() {
   yield takeLatest(LOAD_USER_REQUEST, loadUser);
 }
@@ -297,6 +320,7 @@ export default function* userSaga() {
     fork(watchLoadFollowers),
     fork(watchLoadFollowings),
     fork(watchChangeNickname),
+    fork(watchLoadMyInfo),
     fork(watchLoadUser),
     fork(watchFollow),
     fork(watchUnfollow),

@@ -12,7 +12,7 @@ router.get("/", async (req, res, next) => {
       //초기 로딩이 아닐 때 //스크롤 내려서 더 불러오는 상황
       where.id = { [Op.lt]: parseInt(req.query.lastId, 10) }; //보다 작은
     } // 21 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 //lastId가 12면 12보다 작은거 부름
-    //id가 라스트아이디보다 작은걸로 10개를 불러와라
+    //id가 라스트아이디보다 작은걸로 10개를 불러와라 //Op는 operator
     const posts = await Post.findAll({
       where,
       limit: 10, //10개만 가져와라
@@ -55,7 +55,7 @@ router.get("/", async (req, res, next) => {
         },
       ],
     });
-    console.log("get 게시물", posts);
+    //console.log("get 게시물", posts);
     res.status(200).json(posts);
   } catch (error) {
     console.error(error);

@@ -7,6 +7,7 @@ const router = express.Router();
 
 //Get /user
 router.get("/", async (req, res, next) => {
+  console.log(req.headers); //여기안에 쿠키가 들어있음
   try {
     if (req.user) {
       //로그인 안 했는데 매번 새로고침시 작동하면 where요쪽 에러

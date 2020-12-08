@@ -1,14 +1,14 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Head from "next/head";
 import { END } from "redux-saga";
-
 import { Avatar, Card } from "antd";
 import AppLayout from "../components/AppLayout";
 import wrapper from "../store/configureStore";
 import { LOAD_USER_REQUEST } from "../reducers/user";
 
 const About = () => {
+  const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.user);
   //내 자신 정보가 서버사이드랜더링이 안되면 텅비게 나오겟지 밑에 null
   return (
@@ -51,10 +51,10 @@ const About = () => {
 export const getStaticProps = wrapper.getStaticProps(async (context) => {
   console.log("getStaticProps");
   context.store.dispatch({
-    type: LOAD_USER_REQUEST,
+    type: LOAD_USER_REQUEST, //내 정보가 아니라 특정한 사람 정보
     data: 1,
   });
-  context.store.dispatch(END);
+  context.store.dispatch(END); //서버사이드랜더링이 request가 success될떄까지 기다려주는거
   await context.store.sagaTask.toPromise();
 });
 

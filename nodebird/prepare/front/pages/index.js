@@ -84,7 +84,7 @@ export const getServerSideProps = wrapper.getServerSideProps(async (context) => 
   });
   context.store.dispatch(END); //next redux wrapper에 이렇게 하라고 적혀있음
   await context.store.sagaTask.toPromise(); //이거는 configurestore에. sagaTask등록한거
-});
+}); //서버사이드랜더링이 request가 success될떄까지 기다려주는거
 
 export default Home;
 

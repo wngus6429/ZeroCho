@@ -1,14 +1,14 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Head from "next/head";
 import { END } from "redux-saga";
+
 import { Avatar, Card } from "antd";
 import AppLayout from "../components/AppLayout";
 import wrapper from "../store/configureStore";
 import { LOAD_USER_REQUEST } from "../reducers/user";
 
-const About = () => {
-  const dispatch = useDispatch();
+const Profile = () => {
   const { userInfo } = useSelector((state) => state.user);
   //내 자신 정보가 서버사이드랜더링이 안되면 텅비게 나오겟지 밑에 null
   return (
@@ -58,4 +58,4 @@ export const getStaticProps = wrapper.getStaticProps(async (context) => {
   await context.store.sagaTask.toPromise();
 });
 
-export default About;
+export default Profile;

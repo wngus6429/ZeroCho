@@ -67,6 +67,7 @@ const Home = () => {
 //서버사이드 랜더링 이부분이 알아서 home보다 먼저 실행됨. 그래야 데이터 먼저 채우고 화면이 렌더링
 //매개변수 context , 여긴 프론트서버에서 실행되는거임
 export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
+  console.log("getServerSideProps start");
   console.log("context", context);
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
   const cookie = context.req ? context.req.headers.cookie : ""; //이걸 해야 서버쪽으로 쿠키가 전달이됨
@@ -83,6 +84,7 @@ export const getServerSideProps = wrapper.getServerSideProps(async (context) => 
     type: LOAD_POSTS_REQUEST,
   });
   context.store.dispatch(END); //next redux wrapper에 이렇게 하라고 적혀있음
+  console.log("getServerSideProps end");
   await context.store.sagaTask.toPromise(); //이거는 configurestore에. sagaTask등록한거
 }); //서버사이드랜더링이 request가 success될떄까지 기다려주는거
 

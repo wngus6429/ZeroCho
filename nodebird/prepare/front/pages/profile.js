@@ -7,7 +7,7 @@ import axios from "axios";
 import AppLayout from "../components/AppLayout";
 import NicknameEditForm from "../components/NicknameEditForm";
 import FollowList from "../components/FollowList";
-import { LOAD_FOLLOWERS_REQUEST, LOAD_FOLLOWINGS_REQUEST } from "../reducers/user";
+import { LOAD_FOLLOWERS_REQUEST, LOAD_FOLLOWINGS_REQUEST, LOAD_MY_INFO_REQUEST } from "../reducers/user";
 import wrapper from "../store/configureStore";
 
 const Profile = () => {
@@ -64,6 +64,7 @@ export const getServerSideProps = wrapper.getServerSideProps(async (context) => 
     type: LOAD_MY_INFO_REQUEST,
   });
   context.store.dispatch(END); //next redux wrapper에 이렇게 하라고 적혀있음
+  console.log("getServerSideProps end");
   await context.store.sagaTask.toPromise(); //이거는 configurestore에. sagaTask등록한거
 }); //서버사이드랜더링이 request가 success될떄까지 기다려주는거
 

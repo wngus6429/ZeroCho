@@ -4,7 +4,7 @@ import { Form, Input, Checkbox, Button } from "antd";
 import Head from "next/head";
 import styled from "styled-components";
 import useinput from "../hooks/useinput";
-import { SIGN_UP_REQUEST } from "../reducers/user";
+import { SIGN_UP_REQUEST, LOAD_MY_INFO_REQUEST } from "../reducers/user";
 import { useDispatch, useSelector } from "react-redux";
 import router from "next/router";
 import { END } from "redux-saga";

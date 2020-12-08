@@ -1,11 +1,10 @@
 import produce from "immer";
 
 export const initialState = {
-  loadMyInfoLoading: false, //유저정보 가져오기 시도중
+  loadMyInfoLoading: false, // 유저 정보 가져오기 시도중
   loadMyInfoDone: false,
   loadMyInfoError: null,
-
-  loadUserLoading: false, //유저정보 가져오기 시도중
+  loadUserLoading: false, // 유저 정보 가져오기 시도중
   loadUserDone: false,
   loadUserError: null,
   followLoading: false, //팔로우시도중
@@ -158,8 +157,8 @@ const reducer = (state = initialState, action) =>
         break;
       case LOAD_MY_INFO_REQUEST:
         draft.loadMyInfoLoading = true;
-        draft.loadMyInfoDone = false;
         draft.loadMyInfoError = null;
+        draft.loadMyInfoDone = false;
         break;
       case LOAD_MY_INFO_SUCCESS:
         draft.loadMyInfoLoading = false;
@@ -172,8 +171,8 @@ const reducer = (state = initialState, action) =>
         break;
       case LOAD_USER_REQUEST:
         draft.loadUserLoading = true;
-        draft.loadUserDone = false;
         draft.loadUserError = null;
+        draft.loadUserDone = false;
         break;
       case LOAD_USER_SUCCESS:
         draft.loadUserLoading = false;

@@ -125,6 +125,7 @@ function* loadMyInfo() {
       data: result.data,
     });
   } catch (err) {
+    console.error(err);
     yield put({
       type: LOAD_MY_INFO_FAILURE,
       error: err.response.data,
@@ -134,17 +135,18 @@ function* loadMyInfo() {
 
 //get,delete는 데이터가 없기 떄문에, 두번째 자리가 withCredential자리, 근데
 //saga에서 공통 설정 해줬음
-function logUserAPI(data) {
+function loadUserAPI(data) {
   return axios.get(`/user/${data}`);
 }
 function* loadUser(action) {
   try {
-    const result = yield call(logUserAPI, action.data);
+    const result = yield call(loadUserAPI, action.data);
     yield put({
       type: LOAD_USER_SUCCESS,
       data: result.data,
     });
   } catch (err) {
+    console.error(err);
     yield put({
       type: LOAD_USER_FAILURE,
       error: err.response.data,
@@ -289,6 +291,7 @@ function* watchChangeNickname() {
 function* watchLoadMyInfo() {
   yield takeLatest(LOAD_MY_INFO_REQUEST, loadMyInfo);
 }
+
 function* watchLoadUser() {
   yield takeLatest(LOAD_USER_REQUEST, loadUser);
 }

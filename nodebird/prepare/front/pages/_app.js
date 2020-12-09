@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import "antd/dist/antd.css";
 import Head from "next/head";
-import withReduxSaga from "next-redux-saga";
+//import withReduxSaga from "next-redux-saga";
 import wrapper from "../store/configureStore";
 //페이지들의 공통된 부분을 처리
 //굳이 이름 App 이라고 할 필요 없음.
@@ -15,7 +15,6 @@ const NodeBird = ({ Component }) => {
         <meta charSet="utf-8" />
         <title>Nodebird</title>
       </Head>
-      <div>공통메뉴</div>
       <Component />
     </>
   );
@@ -25,5 +24,5 @@ NodeBird.propTypes = {
   Component: PropTypes.elementType.isRequired,
 };
 
-export default wrapper.withRedux(withReduxSaga(NodeBird));
+export default wrapper.withRedux(NodeBird);
 //이렇게 감싸는걸 hoc로 감싼다라고 함, 존안 유튜브에서 나온듯?

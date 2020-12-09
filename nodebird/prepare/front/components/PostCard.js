@@ -28,12 +28,6 @@ const PostCard = ({ post }) => {
   //me.id가 있으면 그 데이터가 들어가고 없으면 undefined
   //옵셔널 체이닝 연산자라고 한다. optional chaining
 
-  // useEffect(() => {
-  //   if (retweetError) {
-  //     alert(retweetError);
-  //   }
-  // }, [retweetError]);
-
   const onLike = useCallback(() => {
     if (!id) {
       return alert("로그인이 필요합니다");

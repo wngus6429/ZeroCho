@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const postRouter = require("./routes/post");
 const postsRouter = require("./routes/posts");
 const userRouter = require("./routes/user");
+const hashtagRouter = require("./routes/hashtag");
 const path = require("path");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
@@ -58,6 +59,7 @@ app.use("/post", postRouter); //앞에 "/post"를 붙임으로 인해서
 //routes폴더 post.js안에 있는 라우터들 앞에 자동으로 /post가 붙음
 //중복제거 , 앞에 post붙이는걸 프리픽스라고 한다
 app.use("/user", userRouter);
+app.use("/hashtag", hashtagRouter);
 
 //에러처리 미들웨어는 여기쯤에 내부적으로 있음
 

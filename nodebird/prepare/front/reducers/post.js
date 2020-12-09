@@ -7,6 +7,7 @@ import produce from "immer";
 //그 안에 Comments 여기로 접근,
 export const initialState = {
   mainPosts: [],
+  singlePost: null,
   imagePaths: [], //이미지 경로들
   hasMorePosts: true, //처음에 가져올 시도를 해야하니 당연 true
   likePostLoading: false,
@@ -15,6 +16,9 @@ export const initialState = {
   unlikePostLoading: false,
   unlikePostDone: false,
   unlikePostError: null,
+  loadPostLoading: false,
+  loadPostDone: false,
+  loadPostError: null,
   loadPostsLoading: false,
   loadPostsDone: false,
   loadPostsError: null,
@@ -83,6 +87,18 @@ export const LIKE_POST_FAILURE = "LIKE_POST_FAILURE";
 export const UNLIKE_POST_REQUEST = "UNLIKE_POST_REQUEST";
 export const UNLIKE_POST_SUCCESS = "UNLIKE_POST_SUCCESS";
 export const UNLIKE_POST_FAILURE = "UNLIKE_POST_FAILURE";
+
+export const LOAD_POST_REQUEST = "LOAD_POST_REQUEST";
+export const LOAD_POST_SUCCESS = "LOAD_POST_SUCCESS";
+export const LOAD_POST_FAILURE = "LOAD_POST_FAILURE";
+
+export const LOAD_USER_POSTS_REQUEST = "LOAD_USER_POSTS_REQUEST";
+export const LOAD_USER_POSTS_SUCCESS = "LOAD_USER_POSTS_SUCCESS";
+export const LOAD_USER_POSTS_FAILURE = "LOAD_USER_POSTS_FAILURE";
+
+export const LOAD_HASHTAG_POSTS_REQUEST = "LOAD_HASHTAG_POSTS_REQUEST";
+export const LOAD_HASHTAG_POSTS_SUCCESS = "LOAD_HASHTAG_POSTS_SUCCESS";
+export const LOAD_HASHTAG_POSTS_FAILURE = "LOAD_HASHTAG_POSTS_FAILURE";
 
 export const LOAD_POSTS_REQUEST = "LOAD_POSTS_REQUEST";
 export const LOAD_POSTS_SUCCESS = "LOAD_POSTS_SUCCESS";
@@ -204,23 +220,37 @@ const reducer = (state = initialState, action) =>
         draft.unlikePostLoading = false;
         draft.unlikePostError = action.error;
         break;
+      case LOAD_POST_REQUEST:
+        draft.loadPostLoading = true;
+        draft.loadPostDone = false;
+        draft.loadPostError = null;
+        break;
+      case LOAD_POST_SUCCESS:
+        draft.loadPostLoading = false;
+        draft.loadPostDone = true;
+        draft.singlePost = action.data;
+        break;
+      case LOAD_POST_FAILURE:
+        draft.loadPostLoading = false;
+        draft.loadPostError = action.error;
+        break;
+      case LOAD_USER_POSTS_REQUEST:
       case LOAD_POSTS_REQUEST:
+      case LOAD_HASHTAG_POSTS_REQUEST:
         draft.loadPostsLoading = true;
         draft.loadPostsDone = false;
         draft.loadPostsError = null;
-        break; //break 꼭 적어야함
-      // case LOAD_POSTS_SUCCESS:
-      //   draft.loadPostLoading = false;
-      //   draft.loadPostDone = true;
-      //   draft.singlePost = action.data;
-      //   break;
+        break; //한페이지에서 같이 사용되지 않을때는 공유해도 된다. 이렇게 해서 state줄이기
+      case LOAD_USER_POSTS_SUCCESS: //이렇게 하는건 맨 위에 state 같이 쓰기 위해
+      case LOAD_HASHTAG_POSTS_SUCCESS:
       case LOAD_POSTS_SUCCESS:
         draft.loadPostsLoading = false;
         draft.loadPostsDone = true;
         draft.mainPosts = draft.mainPosts.concat(action.data);
-        //action.data에 더미데이터들이 들어있을거고 그거랑 기존데이터랑 합쳐줌, 계속 추가하는거지
-        draft.hasMorePosts = action.data.length === 10; //게시글 50개만 보겟다고
+        draft.hasMorePosts = action.data.length === 10;
         break;
+      case LOAD_USER_POSTS_FAILURE:
+      case LOAD_HASHTAG_POSTS_FAILURE:
       case LOAD_POSTS_FAILURE:
         draft.loadPostsLoading = false;
         draft.loadPostsError = action.error;

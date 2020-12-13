@@ -9,7 +9,6 @@ import LoginForm from "../components/LoginForm";
 import { useSelector } from "react-redux"; //리액트랑 리덕스 연결
 import Router from "next/router"; //프로그래밍적으로 주소를 옮길떄는 router사용
 import { createGlobalStyle } from "styled-components";
-import { TwitterOutlined } from "@ant-design/icons";
 import useinput from "../hooks/useinput";
 
 const SearchInput = styled(Input.Search)`
@@ -59,8 +58,10 @@ const AppLayout = ({ children }) => {
       </Menu>
       <Row gutter={8}>
         <Col xs={24} md={6}>
-          왼쪽메뉴
           {me ? <UserProfile /> : <LoginForm />}
+          <img src={react} />
+          <img src="../images/nodejs.jpeg" height="10px" width="100%" />
+          <img src="../images/mysql.jpg" height="10px" width="100%" />
         </Col>
         <Col xs={24} md={12}>
           {children}

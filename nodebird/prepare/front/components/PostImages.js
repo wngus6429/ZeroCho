@@ -17,7 +17,7 @@ const PostImages = ({ images }) => {
       <>
         <img
           role="presentation"
-          style={{ maxHeight: "200px" }}
+          style={{ maxHeight: "400px", width: "200px" }}
           src={`http://localhost:3065/${images[0].src}`}
           alt={images[0].src}
           onClick={onZoom}

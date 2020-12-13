@@ -35,6 +35,35 @@ router.get("/", async (req, res, next) => {
 //attributes: ["id"]는 아이디만 가져오게끔. 팔로잉, 팔로워 숫자만 알면 되는데 데이터 다 가져오면 렉 + 데이터 사용량 증가
 //서버에서 프론트로 필요한 데이터만 보내주는거임
 
+router.get("/followers", isLoggedIn, async (req, res, next) => {
+  // GET /user/followers
+  try {
+    const user = await User.findOne({ where: { id: req.user.id } }); //나 먼저 찾고
+    if (!user) {
+      res.status(403).send("없는 사람을 찾으려고 하시네요?");
+    }
+    const followers = await user.getFollowers({ limit: parseInt(req.query.limit, 10) });
+    res.status(200).json(followers);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+router.get("/followings", isLoggedIn, async (req, res, next) => {
+  // GET /user/followings
+  try {
+    const user = await User.findOne({ where: { id: req.user.id } }); //나 먼저 찾고
+    if (!user) {
+      res.status(403).send("없는 사람을 찾으려고 하시네요?");
+    }
+    const followings = await user.getFollowings({ limit: parseInt(req.query.limit, 10) });
+    res.status(200).json(followings);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
 //Get /user/1
 router.get("/:userId", async (req, res, next) => {
   try {
@@ -235,35 +264,6 @@ router.delete("/follower/:userId", isLoggedIn, async (req, res, next) => {
     } //상대방이 나를 언팔로 하는거랑 내가 끊는거랑 같음
     await user.removeFollowings(req.user.id);
     res.status(200).json({ UserId: parseInt(req.params.userId, 10) });
-  } catch (error) {
-    console.error(error);
-    next(error);
-  }
-});
-
-router.get("/followers", isLoggedIn, async (req, res, next) => {
-  // GET /user/followers
-  try {
-    const user = await User.findOne({ where: { id: req.user.id } }); //나 먼저 찾고
-    if (!user) {
-      res.status(403).send("없는 사람을 찾으려고 하시네요?");
-    }
-    const followers = await user.getFollowers();
-    res.status(200).json(followers);
-  } catch (error) {
-    console.error(error);
-    next(error);
-  }
-});
-router.get("/followings", isLoggedIn, async (req, res, next) => {
-  // GET /user/followings
-  try {
-    const user = await User.findOne({ where: { id: req.user.id } }); //나 먼저 찾고
-    if (!user) {
-      res.status(403).send("없는 사람을 찾으려고 하시네요?");
-    }
-    const followings = await user.getFollowings();
-    res.status(200).json(followings);
   } catch (error) {
     console.error(error);
     next(error);

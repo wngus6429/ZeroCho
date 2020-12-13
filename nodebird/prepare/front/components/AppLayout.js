@@ -41,7 +41,7 @@ const AppLayout = ({ children }) => {
   return (
     <div>
       <Global />
-      <Menu mode="horizontal">
+      <Menu theme="dark" mode="horizontal">
         <Menu.Item>
           <Link href="/">
             <a>홈 화면</a>
@@ -59,9 +59,18 @@ const AppLayout = ({ children }) => {
       <Row gutter={8}>
         <Col xs={24} md={6}>
           {me ? <UserProfile /> : <LoginForm />}
-          <img src={react} />
-          <img src="../images/nodejs.jpeg" height="10px" width="100%" />
-          <img src="../images/mysql.jpg" height="10px" width="100%" />
+          <img
+            src="https://postfiles.pstatic.net/MjAyMDEyMTRfODQg/MDAxNjA3ODg0NjU2ODcx.dhDrmT4RoJ2YhvqU1KcP6jO629Gm3Y39H49I_E3DkFYg.8ey29SrIwOBiSak_3Nh3vsjHNySCDQwcxXDizp17VIcg.PNG.wngussla6429/react.png?type=w966"
+            width="100%"
+          />
+          <img
+            src="https://postfiles.pstatic.net/MjAyMDEyMTRfMTQy/MDAxNjA3ODg0NjU2ODU5.m_huTF4Vf5ClACQ3O75XwiL_IJBalVdpdQmxOhRqOrog.IoujRTtJxU1q1G7Qe3QVJvkvW5qXDQ7egUZGLl-eI0sg.JPEG.wngussla6429/nodejs.jpeg?type=w966"
+            width="100%"
+          />
+          <img
+            src="https://postfiles.pstatic.net/MjAyMDEyMTRfMjU0/MDAxNjA3ODg0NjU2ODUx.azz0P_cxsiP_7rCEtP7KibcGCgnCKQc2oaJ9DVH4JKwg.UsqNQfUCvc99VLMWoem6k0QTZmqjbukpG2RrN06AbKMg.JPEG.wngussla6429/mysql.jpg?type=w966"
+            width="100%"
+          />
         </Col>
         <Col xs={24} md={12}>
           {children}

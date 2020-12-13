@@ -8,11 +8,20 @@ import { loginRequestAction } from "../reducers/user";
 
 const ButtonWrapper = styled.div`
   margin-top: 10px;
+
+  & Button {
+    font-size: 15px;
+    border-radius: 20px;
+  }
 `;
 
 const FormWrapper = styled(Form)`
   padding: 10px;
   background-color: #d2f698;
+
+  & label {
+    font-size: 15px;
+  }
 `;
 
 const LoginForm = () => {
@@ -52,7 +61,7 @@ const LoginForm = () => {
         </Button>
         <Link href="/signup">
           <a>
-            <Button>회원가입</Button>
+            <Button type="danger">회원가입</Button>
           </a>
         </Link>
       </ButtonWrapper>

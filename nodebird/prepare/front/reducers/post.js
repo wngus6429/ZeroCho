@@ -1,5 +1,5 @@
 //import shortId from "shortid";
-import produce from "immer";
+import produce from "../util/produce"; //여기안에 immer
 //import faker from "faker";
 //import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from "./user";
 

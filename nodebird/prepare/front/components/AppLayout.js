@@ -66,18 +66,18 @@ const AppLayout = ({ children }) => {
           {me ? <UserProfile /> : <LoginForm />}
           <img
             src="https://postfiles.pstatic.net/MjAyMDEyMTRfODQg/MDAxNjA3ODg0NjU2ODcx.dhDrmT4RoJ2YhvqU1KcP6jO629Gm3Y39H49I_E3DkFYg.8ey29SrIwOBiSak_3Nh3vsjHNySCDQwcxXDizp17VIcg.PNG.wngussla6429/react.png?type=w966"
-            width="33%"
-            height="60px"
+            width="33.3%"
+            height="80px"
           />
           <img
             src="https://postfiles.pstatic.net/MjAyMDEyMTRfMTQy/MDAxNjA3ODg0NjU2ODU5.m_huTF4Vf5ClACQ3O75XwiL_IJBalVdpdQmxOhRqOrog.IoujRTtJxU1q1G7Qe3QVJvkvW5qXDQ7egUZGLl-eI0sg.JPEG.wngussla6429/nodejs.jpeg?type=w966"
-            width="33%"
-            height="60px"
+            width="33.3%"
+            height="80px"
           />
           <img
             src="https://postfiles.pstatic.net/MjAyMDEyMTRfMjU0/MDAxNjA3ODg0NjU2ODUx.azz0P_cxsiP_7rCEtP7KibcGCgnCKQc2oaJ9DVH4JKwg.UsqNQfUCvc99VLMWoem6k0QTZmqjbukpG2RrN06AbKMg.JPEG.wngussla6429/mysql.jpg?type=w966"
-            width="33%"
-            height="60px"
+            width="33.3%"
+            height="80px"
           />
         </Col>
         <Col xs={24} md={12}>
@@ -85,7 +85,9 @@ const AppLayout = ({ children }) => {
         </Col>
         <Col xs={24} md={6}>
           <a href="https://wngus6429.github.io/NewPortFolio/" target="_blank" rel="noopener noreferrer">
-            포트폴리오
+            <div style={{ fontSize: "80px", textAlign: "center", color: "red", backgroundColor: "yellow" }}>
+              포트폴리오
+            </div>
           </a>
         </Col>
       </Row>

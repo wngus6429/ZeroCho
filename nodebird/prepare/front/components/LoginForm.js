@@ -8,7 +8,6 @@ import { loginRequestAction } from "../reducers/user";
 
 const ButtonWrapper = styled.div`
   margin-top: 10px;
-
   & Button {
     font-size: 15px;
     border-radius: 20px;

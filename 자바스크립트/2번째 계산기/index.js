@@ -9,14 +9,19 @@ const multiplyButton = document.querySelector("#multiply");
 const calculateButton = document.querySelector("#calculate");
 const resultInput = document.querySelector("#result");
 
-let temp; //저장된 값
-let operator; //연산자
+//처음에는 일단 전부 const로 적으면 된다.
+//나중에 const 에러나면 바꿔줘도 됨
+//어디서든 쓸수 있게 공통으로 만들어 줘야함
+let temp; //저장된 값 , const 하면 안 됨.
+let operator; //연산자 , const 하면 안 됨.
+//초기화 할때는 null을 주로 쓴다 사람에 따라 undefined로 함
 
 plusButton.addEventListener("click", () => {
   if (temp) {
     operator = "+";
     numberInput.value = null;
-  } else { //temp가 없으면
+  } else {
+    //temp가 없으면
     if (numberInput.value) {
       temp = Number(numberInput.value); //문자열을 숫자로
       operator = "+";
@@ -97,6 +102,7 @@ calculateButton.addEventListener("click", () => {
       //이거 안하면 + 다시 더할때 문자열 판정나서 8 + 4 = 84 나옴
     }
   } else {
+    // 숫자 넣고 = 누르고, 다른 연산자 눌러 이어서 가능하게 하게끔
     if (numberInput.value) {
       resultInput.value = temp;
     }

@@ -99,6 +99,7 @@ calculateButton.addEventListener("click", () => {
         //temp = resultInput.value;
       }
       temp = Number(resultInput.value);
+      //이거 위에 처리해줘야 하는거 한줄만 적기 위해
       //이거 안하면 + 다시 더할때 문자열 판정나서 8 + 4 = 84 나옴
     }
   } else {

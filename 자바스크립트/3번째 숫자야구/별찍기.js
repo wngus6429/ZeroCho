@@ -35,13 +35,24 @@
 // }
 // console.log(answer);
 
-let gw = [];
-let g = 0;
-while (g < 10) {
-  gw.push(g);
-  g++;
-  for (let f = 0; f < 3; f++) {
-    gw.push("개련아");
-  }
-}
-console.log(gw);
+// let gw = [];
+// let g = 0;
+// while (g < 10) {
+//   gw.push(g);
+//   g++;
+//   for (let f = 0; f < 3; f++) {
+//     gw.push("개련아");
+//   }
+// }
+// console.log(gw);
+
+let wh = [
+  Math.floor(Math.random() * 10),
+  Math.floor(Math.random() * 10),
+  Math.floor(Math.random() * 10),
+  Math.floor(Math.random() * 10),
+];
+console.log(wh);
+console.log(wh.join(" "));
+
+//console.log(Math.floor(Math.random() * 10));

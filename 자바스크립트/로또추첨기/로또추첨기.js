@@ -1,7 +1,7 @@
 const candidate = Array(45)
   .fill()
   .map((index, number) => number + 1);
-console.log(candidate);
+console.log("숫자 생성", candidate);
 //fill 은 배열을 만들기 위해, Array(45)하면 length 는 생기는데 empty 배열
 //fill("1") 하면 안에 45개 배열 안에 모두 "1"이 들어감
 //하지만 fill 하면 undefined이지만 45개의 공간이 생긴다.
@@ -13,13 +13,12 @@ const shuffle = [];
 while (candidate.length > 0) {
   const random = Math.floor(Math.random() * candidate.length);
   const spliceArray = candidate.splice(random, 1);
-  //console.log(candidate)
-  //console.log(spliceArray)
   const value = spliceArray[0];
   shuffle.push(value);
 }
-console.log(shuffle);
+console.log("셔플", shuffle);
 
+//sort뒤에 저짓 안하면 40, 7 이런 순서로 나옴. 앞에 숫자로 계산하지
 const winBalls = shuffle.slice(0, 6).sort((a, b) => a - b); //당첨번호
 //앞에서 리턴하는 값이 0보다 크면 , 자리를 바꾼다.
 const bonus = shuffle[6]; //7번째 보너스
@@ -27,6 +26,7 @@ const bonus = shuffle[6]; //7번째 보너스
 // console.log(bonus);
 
 function colorball(number, tag) {
+  console.log(number, tag);
   if (number < 10) {
     tag.style.backgroundColor = "red";
   } else if (number < 20) {
@@ -43,16 +43,15 @@ function colorball(number, tag) {
 }
 
 const resultTag = document.querySelector("#result");
-
 //map으로 써도 정상 작동됨.
 //맵은 반복문이며 1대1 에 좀 더 초첨이 맞춰져 있음.
-//forEach는 1,2,3,4 단순반복에 좀 더 특화
+//forEach는 1,2,3,4 단순반복에 좀 더 특화, 배열에 대한 반복문
 //리턴이 있으면 map이 좋고 없으면 forEach가 좋다
 winBalls.forEach((number, index) => {
   setTimeout(() => {
     const ball = document.createElement("div");
     colorball(number, ball);
-    ball.className = "ball";
+    ball.className = "ball"; //클래스 명 줘야 css적용가능
     ball.textContent = number;
     resultTag.appendChild(ball); //그냥 append도 됨
   }, 1000 * (index + 1));

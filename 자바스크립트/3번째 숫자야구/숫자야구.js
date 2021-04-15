@@ -66,15 +66,6 @@ check.addEventListener("click", () => {
         count += 1;
       }
     }
-    //appendChild는 뭔가 추가할때 사용
-    // const message = document.createTextNode(`${input.value}:${strike} strike ${ball} ball`)
-    //   logs.appendChild(message)
-    //   logs.appendChild(document.createElement("br"));
-    //   if(count > 10){
-    //     logs.appendChild(document.createTextNode(`Game Over:${answer.join("")}`))
-    //   } else {
-    //     count += 1
-    //   }
   }
 });
 

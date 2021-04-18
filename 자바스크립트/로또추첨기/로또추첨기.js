@@ -120,6 +120,3 @@ setTimeout(() => {
 //         bonusBall.style.backgroundColor = "black"
 //         bonusBall.style.color = "white"
 //     }
-
-// bonusBall.textContent = bonus;
-// bonusTag.appendChild(bonusBall);//그냥 append도 됨

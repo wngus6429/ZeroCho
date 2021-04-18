@@ -27,7 +27,8 @@ const intervalMaker = () => {
     }
     computerTag.style.background = `url(https://en.pimg.jp/023/182/267/1/23182267.jpg) ${rspCoord[computerChoice]} 0`;
   }, 200);
-}; //위에 리턴 꼭 해줘야 한다. 함수 자체를 돌려줘야해서
+};
+
 let startinterval = intervalMaker();
 
 const rockTag = document.querySelector("#rock");
@@ -41,13 +42,26 @@ const score = {
 };
 
 //중복문이 만나면 함수를 사용하거나 반복문을 사용하거나 둘중 하나
-//멀리 떨어져 있으면 함수를 사용하는게 낫다.
 // 이걸 고차함수라 한다. 함수가 다른 함수를 리턴하는거
-//중괄호 다음에 리턴이 바로오면 return 생략가능 , 원래 코드는 밑에
-// 버튼 눌렀을때 실행되고 밑에서 1초뒤에 다시 움직이는 ㅋ
-const clickButton = (myChoice) => () => {
-  clearInterval(startinterval); //interval 멈추는거임
-  const myScore = score[myChoice];
+//중괄호 다음에 리턴이 바로오면 return 생략가능
+const clickButton = (myChoice) => {
+  return () => {
+    const myScore = score[myChoice];
+    const computerScore = score[computerChoice];
+    const diff = myScore - computerScore;
+    const scoreTag = document.querySelector("#score");
+    let accScore = Number(scoreTag.textContent);
+    if (diff === 2 || diff === -1) {
+      accScore += 1;
+    } else if (diff === -2 || diff === 1) {
+      accScore -= 1;
+    }
+    scoreTag.textContent = accScore;
+  };
+};
+
+rockTag.addEventListener("click", () => {
+  const myScore = score.rock;
   const computerScore = score[computerChoice];
   const diff = myScore - computerScore;
   const scoreTag = document.querySelector("#score");
@@ -58,16 +72,41 @@ const clickButton = (myChoice) => () => {
     accScore -= 1;
   }
   scoreTag.textContent = accScore;
-  setTimeout(() => {
-    // 1초뒤에 이걸 해주겠다
-    startinterval = intervalMaker();
-  }, 1000);
-};
+});
+
+scissorTag.addEventListener("click", () => {
+  const myScore = score.scissor;
+  const computerScore = score[computerChoice];
+  const diff = myScore - computerScore;
+  const scoreTag = document.querySelector("#score");
+  let accScore = Number(scoreTag.textContent);
+  if (diff === 2 || diff === -1) {
+    accScore += 1;
+  } else if (diff === -2 || diff === 1) {
+    accScore -= 1;
+  }
+  scoreTag.textContent = accScore;
+});
+paperTag.addEventListener("click", () => {
+  const myScore = score.paper;
+  const computerScore = score[computerChoice];
+  const diff = myScore - computerScore;
+  const scoreTag = document.querySelector("#score");
+  let accScore = Number(scoreTag.textContent);
+  if (diff === 2 || diff === -1) {
+    accScore += 1;
+  } else if (diff === -2 || diff === 1) {
+    accScore -= 1;
+  }
+  scoreTag.textContent = accScore;
+});
+
 // 다른 함수를 리턴 해야하는 이유는 클릭버튼에 함수가 들어가야 해서,
 // 원리는 함수를 호출했을때 그자리에 리턴값이 들어가야해서, 리턴값이 함수여야함
 rockTag.addEventListener("click", clickButton("rock"));
 scissorTag.addEventListener("click", clickButton("scissor"));
 paperTag.addEventListener("click", clickButton("paper"));
+
 //임의의 규칙을 만들어서 코드로 만들줄 알아야한다.
 // 알고리즘을 공부하게 되면 알게된다.
 //가위 : 1, 바위:0, 보:-1
@@ -85,16 +124,17 @@ paperTag.addEventListener("click", clickButton("paper"));
 //     const myScore = score[myChoice];
 //     const computerScore = score[computerChoice];
 //     const diff = myScore - computerScore;
-//     const scoreTag = document.querySelector("#score");
-//     let accScore = Number(scoreTag.textContent);
-//     if (diff === 2 || diff === -1) {
+//     const scoreTag = document.querySelector("#score")
+//     let accScore = Number(scoreTag.textContent)
+//     if (diff === 2 || diff === -1){
 //       accScore += 1;
-//     } else if (diff === -2 || diff === 1) {
+//     }
+//     else if(diff === -2 || diff === 1){
 //       accScore -= 1;
 //     }
 //     scoreTag.textContent = accScore;
-//   };
-// };
+//   }
+// }
 // rockTag.addEventListener("click", () => {
 //   let score = 0;
 //   if (coord === rspCoord.rock) {
@@ -124,45 +164,4 @@ paperTag.addEventListener("click", clickButton("paper"));
 //   } else if (coord === rspCoord.scissor) {
 //     score -= 1;
 //   }
-// });
-
-// rockTag.addEventListener("click", () => {
-//   const myScore = score.rock;
-//   const computerScore = score[computerChoice];
-//   const diff = myScore - computerScore;
-//   const scoreTag = document.querySelector("#score");
-//   let accScore = Number(scoreTag.textContent);
-//   if (diff === 2 || diff === -1) {
-//     accScore += 1;
-//   } else if (diff === -2 || diff === 1) {
-//     accScore -= 1;
-//   }
-//   scoreTag.textContent = accScore;
-// });
-
-// scissorTag.addEventListener("click", () => {
-//   const myScore = score.scissor;
-//   const computerScore = score[computerChoice];
-//   const diff = myScore - computerScore;
-//   const scoreTag = document.querySelector("#score");
-//   let accScore = Number(scoreTag.textContent);
-//   if (diff === 2 || diff === -1) {
-//     accScore += 1;
-//   } else if (diff === -2 || diff === 1) {
-//     accScore -= 1;
-//   }
-//   scoreTag.textContent = accScore;
-// });
-// paperTag.addEventListener("click", () => {
-//   const myScore = score.paper;
-//   const computerScore = score[computerChoice];
-//   const diff = myScore - computerScore;
-//   const scoreTag = document.querySelector("#score");
-//   let accScore = Number(scoreTag.textContent);
-//   if (diff === 2 || diff === -1) {
-//     accScore += 1;
-//   } else if (diff === -2 || diff === 1) {
-//     accScore -= 1;
-//   }
-//   scoreTag.textContent = accScore;
 // });

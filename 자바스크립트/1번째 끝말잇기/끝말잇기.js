@@ -1,6 +1,7 @@
 /** @format */
 
-//input 만 value고 div, span, button은 다 textContent 대소문자 주의
+//input 만 value
+//div, span, button은 다 textContent 대소문자 주의
 
 const button = document.querySelector("#button");
 
@@ -14,7 +15,7 @@ button.addEventListener("click", () => {
     wordTag.textContent = input;
     errorTag.textContent = "";
     inputTag.value = "";
-    inputTag.focus();
+    inputTag.focus(); //커서 input 태그안에
     dictionary.push(input);
   } else {
     errorTag.textContent = "땡";

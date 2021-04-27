@@ -98,14 +98,16 @@ calculateButton.addEventListener("click", () => {
         resultInput.value = temp / Number(numberInput.value);
         //temp = resultInput.value;
       }
-      temp = Number(resultInput.value);
+      temp = Number(resultInput.value); //추가 계산 위해
       //이거 위에 처리해줘야 하는거 한줄만 적기 위해
       //이거 안하면 + 다시 더할때 문자열 판정나서 8 + 4 = 84 나옴
     }
   } else {
+    //= 눌렀는데 연산자는 있는데. 값이 없을경우
     // 숫자 넣고 = 누르고, 다른 연산자 눌러 이어서 가능하게 하게끔
     if (numberInput.value) {
       resultInput.value = temp;
+      console.log("여기", resultInput.value);
     }
   }
 });

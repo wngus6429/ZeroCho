@@ -1,4 +1,4 @@
-const candidate = Array(45)
+const candidate = Array(38)
   .fill()
   .map((index, number) => number + 1);
 console.log("숫자 생성", candidate);
@@ -19,9 +19,9 @@ while (candidate.length > 0) {
 console.log("셔플", shuffle);
 
 //sort뒤에 저짓 안하면 40, 7 이런 순서로 나옴. 앞에 숫자로 계산하지
-const winBalls = shuffle.slice(0, 6).sort((a, b) => a - b); //당첨번호
+const winBalls = shuffle.slice(0, 7).sort((a, b) => a - b); //당첨번호
 //앞에서 리턴하는 값이 0보다 크면 , 자리를 바꾼다.
-const bonus = shuffle[6]; //7번째 보너스
+const bonus = shuffle[7]; //7번째 보너스
 // console.log(winBalls);
 // console.log(bonus);
 

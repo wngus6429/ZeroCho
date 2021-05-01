@@ -1,10 +1,9 @@
 <!-- @format -->
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
   </head>
   <body>
@@ -31,11 +30,18 @@
             </button>
           );
         }
-      } //이게 바로 JSX이다
+      } //이게 바로 JSX이다 ( JS + xml)
     </script>
     <script type="text/babel">
-      //babel ㅋㅋ
-      ReactDOM.render(<LikeButton />, document.querySelector("#root"));
+      ReactDOM.render(
+        <div>
+          <LikeButton />
+          <LikeButton />
+          <LikeButton />
+        </div>,
+        document.querySelector("#root")
+      );
     </script>
   </body>
 </html>
+>

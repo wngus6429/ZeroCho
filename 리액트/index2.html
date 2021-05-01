@@ -1,0 +1,40 @@
+<!-- @format -->
+<!-- prettier-ignore -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- 결과 : <div id="root"><button>Like</button></div> -->
+    <script>
+      //const e = React.createElement;
+      class LikeButton extends React.Component {
+        //constructor 기본적으로 쓰는거라 생각하셈.
+        constructor(props) {
+          super(props);
+          this.state = {
+            liked: false, //기본상태
+          };
+        }
+        render() {
+          return (
+            <button type="submit" onClick={() => this.setState({ liked: true })}>
+              Like
+            </button>
+          );
+          //e("button", { onClick: () => {this.setState({ liked: true })}, type: "submit",},
+          //  this.state.liked === true ? "Liked" : "Like"
+          //);
+          //return e("button", (onclick = () => console.log("클릭함")), "Like");
+          // <button onclick = () => {console.log("클릭함")}>Like</button>
+        }
+      } //이게 바로 JSX이다
+    </script>
+    <script>
+      ReactDOM.render(<LikeButton />, document.querySelector("#root"));
+    </script>
+  </body>
+</html>

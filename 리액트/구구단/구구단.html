@@ -18,10 +18,11 @@
           this.state = {
             first: Math.ceil(Math.random() * 9),
             second: Math.ceil(Math.random() * 9),
-            value: "",
-            result: "",
+            value: "", //맨처음에는 당연 없으니까
+            result: "", //맨처음에는 당연 없으니까
           };
         }
+        //입력 버튼을 누르게 되면 onSubmit 발동
         onSubmit = (e) => {
           e.preventDefault();
           if (parseInt(this.state.value) === this.state.first * this.state.second) {
@@ -30,20 +31,20 @@
               //prevState는 예전 상태값이라 생각, 예전 상태값을 다음 상태값에 활용 가능
               return {
                 result: "정답=" + prevState.value, //정답이 나왔으니 위에 질문은 다시 바뀌어야 하니
-                first: Math.ceil(Math.random() * 9),
-                second: Math.ceil(Math.random() * 9),
+                first: Math.ceil(Math.random() * 9), //새로운 값으로 설정
+                second: Math.ceil(Math.random() * 9), //새로운 값으로 설정
                 value: "", //빈 공간 초기화
               };
             });
             this.input.focus();
           } else {
-            this.setState({ result: "땡", value: "" });
+            this.setState({ result: "땡", value: "" }); //한번에 복수 변경 가능
           }
           this.input.focus();
         };
         //여기서 우리가 만들어준 함수는 그냥 화살표 함수 쓴다고 생각하셈
         //왜냐 선언문을 사용하면 this가 현재 class를 가리키지 않음. bind 써야하는듯
-        onChange = (e) => this.setState({ value: e.target.value });
+        onChange = (e) => this.setState({ value: e.target.value }, console.log(e.target.value));
         onRefInput = (c) => {
           this.input = c;
           console.log(c);
@@ -68,7 +69,13 @@
       }
     </script>
     <script type="text/babel">
-      ReactDOM.render(<GuGudan />, document.querySelector("#root"));
+      ReactDOM.render(
+        <div>
+          <GuGudan />
+          <GuGudan />
+        </div>,
+        document.querySelector("#root")
+      );
     </script>
   </body>
 </html>

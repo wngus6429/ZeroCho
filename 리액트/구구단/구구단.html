@@ -48,21 +48,21 @@
         onRefInput = (c) => {
           this.input = c;
           console.log(c);
+          //input안에서 입력 후 제출 후 자동 focus()
         };
         render() {
           console.log("랜더링");
           return (
             //지금 바벨이 지원을 안해서. 따로 React.Fragment라 쳐야함. 바벨툴 설치해야함
             //React.Fragment를 사용하면 쓸데없는 div가 하나 줄어서 좋음
+            //그냥 <> </> 해도 되는데. 바벨 툴을 써야함
             <React.Fragment>
-              <div>
-                {this.state.first} 곱하기 {this.state.second} 는?
-                <form onSubmit={this.onSubmit}>
-                  <input ref={this.onRefInput} type="number" value={this.state.value} onChange={this.onChange} />
-                  <button>입력!</button>
-                </form>
-                <div>{this.state.result}</div>
-              </div>
+              {this.state.first} 곱하기 {this.state.second} 는?
+              <form onSubmit={this.onSubmit}>
+                <input ref={this.onRefInput} type="number" value={this.state.value} onChange={this.onChange} />
+                <button>입력!</button>
+              </form>
+              <div>{this.state.result}</div>
             </React.Fragment>
           );
         }

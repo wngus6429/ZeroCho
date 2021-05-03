@@ -4,7 +4,7 @@ const path = require("path"); //걍 외워
 module.exports = {
   name: "park-wordrelay", //웹팩설정에 대한 이름 설정인데 마음대로 가능
   mode: "development", //실서비스에서는 production
-  devtool: "eval", //빠르게 하겠다는거
+  devtool: "eval", //빠르게 하겠다는거, 개발:eval, 배포:hidden-source-map
   resolve: {
     extensions: [".js", ".jsx"], //알아서 웹팩이 확장자 찾음 밑에 entry에서 확장자 꼭 붙일 필요 없음.
   },

@@ -1,9 +1,10 @@
 const path = require("path");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+//process.env.NODE_ENV = 'production' //배포모드
 
 module.exports = {
   name: "park-relay",
-  mode: "development",
+  mode: "development", //배포 production
   devtool: "eval", //배포는 hidden-source-map
   resolve: {
     extensions: [".js", ".jsx"],

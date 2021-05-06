@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Try from "./Try";
+import Try from "./TryClass";
 
 //훅스로 바꿔도 애는 클래스때의 위치 고수해도 됨
 function getNumbers() {

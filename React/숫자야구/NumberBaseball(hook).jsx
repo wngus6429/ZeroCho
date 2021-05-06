@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import TryHook from "./TryHook";
 
 //훅스로 바꿔도 애는 클래스때의 위치 고수해도 됨
@@ -13,7 +13,7 @@ function getNumbers() {
   return array;
 }
 
-const NumberBaseballHook = () => {
+const NumberBaseballHook = memo(() => {
   const [result, setresult] = useState("");
   const [value, setvalue] = useState("");
   const [answer, setanswer] = useState(getNumbers());
@@ -76,6 +76,6 @@ const NumberBaseballHook = () => {
       {/* 반복되는걸 배열로 만들어라 */}
     </>
   );
-};
+});
 
 export default NumberBaseballHook;

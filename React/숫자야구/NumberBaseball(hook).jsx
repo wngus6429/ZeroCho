@@ -1,4 +1,4 @@
-import React, { useState, memo } from "react";
+import React, { useState, memo, useRef } from "react";
 import TryHook from "./TryHook";
 
 //훅스로 바꿔도 애는 클래스때의 위치 고수해도 됨
@@ -18,6 +18,7 @@ const NumberBaseballHook = memo(() => {
   const [value, setvalue] = useState("");
   const [answer, setanswer] = useState(getNumbers());
   const [tries, settries] = useState([]);
+  const inputREF = useRef(null);
 
   const onSubmitForm = (e) => {
     e.preventDefault();
@@ -30,6 +31,7 @@ const NumberBaseballHook = memo(() => {
       setvalue("");
       setanswer(getNumbers());
       settries([]);
+      inputREF.current.focus();
     } else {
       //답이 틀렸으면
       const answerArray = value.split("").map((v) => parseInt(v));
@@ -41,6 +43,7 @@ const NumberBaseballHook = memo(() => {
         setvalue("");
         setanswer(getNumbers());
         settries([]);
+        inputREF.current.focus();
       } else {
         //10번 틀리기 전에는 기회더주고 몇볼 몇스트라이크인지 알려주고
         for (let i = 0; i < 4; i += 1) {
@@ -52,6 +55,7 @@ const NumberBaseballHook = memo(() => {
         }
         settries((prevTries) => [...prevTries, { try: value, result: `${strike} 스트라이크 ${ball} 볼` }]);
         setvalue("");
+        inputREF.current.focus();
       }
     }
   };

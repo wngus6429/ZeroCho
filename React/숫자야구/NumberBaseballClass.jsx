@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, createRef } from "react";
 import Try from "./TryClass";
 
 //훅스로 바꿔도 애는 클래스때의 위치 고수해도 됨
@@ -36,6 +36,7 @@ class NumberBaseball extends Component {
         answer: getNumbers(),
         tries: [],
       });
+      this.inputRef.current.focus();
     } else {
       //답이 틀렸으면
       const answerArray = this.state.value.split("").map((v) => parseInt(v));
@@ -49,6 +50,7 @@ class NumberBaseball extends Component {
           answer: getNumbers(),
           tries: [],
         });
+        this.inputRef.current.focus();
       } else {
         //10번 틀리기 전에는 기회더주고 몇볼 몇스트라이크인지 알려주고
         for (let i = 0; i < 4; i += 1) {
@@ -64,6 +66,7 @@ class NumberBaseball extends Component {
             value: "",
           };
         });
+        this.inputRef.current.focus();
       }
     }
   };
@@ -73,17 +76,19 @@ class NumberBaseball extends Component {
     this.setState({ value: e.target.value });
   };
 
-  // fruit = [
-  //   { fruit: "배", taste: "맛잇네" },
-  //   { fruit: "사과", taste: "맛이없다" },
-  // ];
+  inputRef = createRef();
+
+  // onInputRef = (c) => {
+  // console.log() //다른동작 가능
+  //   this.inputRef = c;
+  // };
 
   render() {
     return (
       <>
         <h1>{this.state.result}</h1>
         <form onSubmit={this.onSubmitForm}>
-          <input maxLength={4} value={this.state.value} onChange={this.onChangeInput} />
+          <input ref={this.inputRef} maxLength={4} value={this.state.value} onChange={this.onChangeInput} />
         </form>
         <div>시도: {this.state.tries.length}</div>
         <ul>

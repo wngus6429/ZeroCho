@@ -36,9 +36,19 @@ class ResponseCheckClass extends Component {
     }
   };
 
+  onReset = () => {
+    this.setState({ result: [] });
+    //result를 비워주면 밑에 삼항연산자 에서 null이 되니까
+  };
+
   renderAverage = () => {
     const { result } = this.state;
-    return result.length === 0 ? null : <div>평균 시간: {result.reduce((a, c) => a + c) / result.length}ms</div>;
+    return result.length === 0 ? null : (
+      <>
+        <div>평균 시간: {result.reduce((a, c) => a + c) / result.length}ms</div>
+        <button onClick={this.onReset}>리셋</button>
+      </>
+    );
   };
 
   render() {

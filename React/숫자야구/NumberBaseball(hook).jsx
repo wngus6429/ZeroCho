@@ -12,6 +12,8 @@ function getNumbers() {
   }
   return array;
 }
+//밑에서 input 입력 할때 이 함수가 계속 실행되는데
+//이때 필요한게 useMemo, useCallback 이다
 
 const NumberBaseballHook = memo(() => {
   const [result, setresult] = useState("");

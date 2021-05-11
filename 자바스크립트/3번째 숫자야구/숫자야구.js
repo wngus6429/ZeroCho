@@ -32,7 +32,7 @@ check.addEventListener("click", () => {
   if (value && value.length === 4) {
     //input 존재하고 4자리 인가
     if (answer.join("") === value) {
-      //answer === value.split("")할수 있지만 객체 끼리는 값이 같아도 다르다고 나옴
+      //answer === value.split("")할수 있지만 객체, 배열 끼리는 값이 같아도 다르다고 나옴
       //그래서 join으로 문자열을 만들어서 비교한다.
       logs.textContent = "HomeRun";
       //logs.appendChild(document.createTextNode("HomeRun"))

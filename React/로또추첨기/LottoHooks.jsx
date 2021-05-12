@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import Ball from "./Ball";
 
 //state 안 쓰는 놈들은 이렇게 분리해주니 좋다 재사용
@@ -17,7 +17,9 @@ function getWinNumbers() {
 }
 
 const Lotto = () => {
-  const [winNumbers, setwinNumbers] = useState(getWinNumbers());
+  const lottoNumbers = useMemo(() => getWinNumbers(), []);
+  //두번째 배열안에 요소가 바뀌지 않는 이상 다시 실행되지 않음, 두번째 변할때마다 실행
+  const [winNumbers, setwinNumbers] = useState(lottoNumbers);
   const [winballs, setwinballs] = useState([]);
   const [bonus, setbonus] = useState(null);
   const [redo, setredo] = useState(false);
@@ -27,7 +29,7 @@ const Lotto = () => {
     console.log("useEffect");
     for (let i = 0; i < winNumbers.length - 1; i++) {
       timeouts.current[i] = setTimeout(() => {
-        setwinballs((prevState) => [...prevState.winBalls, winNumbers[i]]);
+        setwinballs((prevBalls) => [...prevBalls, winNumbers[i]]);
       }, (i + 1) * 1000); //첫번째 공은 1초뒤에
     } //보너스공
     timeouts.current[7] = setTimeout(() => {
@@ -40,7 +42,7 @@ const Lotto = () => {
         clearTimeout(v);
       });
     };
-  }, [winballs.length === 0]); //여기 빈배열이면 componentDidmount랑 같다
+  }, [timeouts.current]); //여기 빈배열이면 componentDidmount랑 같다
   //배열에 요소가 있으면 componentDidmount랑 componentDidUpdate 둘다 수행
 
   //바뀌기 이전의 state가 prevState안에 들어있다
@@ -53,14 +55,17 @@ const Lotto = () => {
   //     }
   //   }
 
-  const onClickRedo = () => {
+  const onClickRedo = useCallback(() => {
     console.log("리셋~~~!!");
-    setwinNumbers(getWinNumbers());
+    console.log(winNumbers);
+    setwinNumbers(getWinNumbers);
     setwinballs([]);
     setbonus(null);
     setredo(false);
     timeouts.current = [];
-  };
+  }, [winNumbers]); //넣어야 잊어먹는다 ㅋㅋ
+  //여기다가 적용해주면, 이 함수 자체를 기억해서 함수컴포넌트가 재 실행되도
+  //이 함수 자체를 기억해둬서 랜더링 되지 않는다
 
   return (
     <>

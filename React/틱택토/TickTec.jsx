@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useCallback } from "react";
+import React, { useEffect, useReducer, useCallback, memo } from "react";
 import Table from "./Table";
 
 const initialState = {
@@ -62,7 +62,7 @@ const reducer = (state, action) => {
 //액션 타입으로 액션이 뭔지 구별하고 SET_WINNER라는 액션이면 그거를 state를 어떻게 바꿀지return에서 기술
 //기존 initialState를 바꾸면 안되고
 
-const TickTec = () => {
+const TickTec = memo(() => {
   //마지막 3번째 지연 초기화 거의 안씀, 첫번째 두번째 만으로 괜찮음
   const [state, dispatch] = useReducer(reducer, initialState);
   const { tableData, turn, winner, recentCell } = state;
@@ -131,7 +131,7 @@ const TickTec = () => {
       {/* 누군가가 승리하면 화면 표시하는걸로 */}
     </>
   );
-};
+});
 
 //실제 클릭 하는건 td가 된다
 //Table 밑에 Tr 이 있고 Tr 밑에 Td가 있다, 컴포넌트간 간격이 크다

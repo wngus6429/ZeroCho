@@ -55,7 +55,7 @@ check.addEventListener("click", () => {
         }
       }
       //최신 문법이라 한다. 백틱이랑, 태그도 이렇게 같이 추가 가능
-      //append 안쓰면 document.createTextNode 안 써도됨. 최신 내용 ㅋㅋ 태그도 같이 가능하네
+      //append 쓰면 document.createTextNode 안 써도됨. 최신 내용 ㅋㅋ 태그도 같이 가능하네
       logs.append(
         `${input.value}:${strike} strike ${ball} ball`,
         document.createElement("br") //줄바꾸기

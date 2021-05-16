@@ -33,5 +33,4 @@ export default Td;
 //dispatch는 state를 바꾸는게 비동기
 //redux는 동기적으로 바뀜, useRecuer는 비동기임
 //비동기인 스테이트에 따라서 뭔가 처리를 할려면 useEffect를 써야함
-
 //리랜더링 되는지 useEffect와 useRef로 사용할수 있다.

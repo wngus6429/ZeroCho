@@ -2,6 +2,7 @@ import React, { memo } from "react";
 import Tr from "./Tr";
 
 const Table = memo(({ tableData, dispatch }) => {
+  console.log("'tableData'", tableData, "'dispatch'", dispatch);
   return (
     <>
       <table>

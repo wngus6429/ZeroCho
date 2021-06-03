@@ -11,16 +11,18 @@ import Router from "next/router"; //프로그래밍적으로 주소를 옮길떄
 import { createGlobalStyle } from "styled-components";
 import useinput from "../hooks/useinput";
 
+import { Card } from "antd";
+const { Meta } = Card;
+
 const SearchInput = styled(Input.Search)`
   vertical-align: middle;
 `;
-
 //gutter 같은거 넣어서 밑에 작은 스크롤이 생겨서 없앨려고
 const Global = createGlobalStyle`
 body {
-background: url("https://user-images.githubusercontent.com/55697824/104767331-485ed580-57af-11eb-8573-3942b09090bb.jpg");
+background: url("./back2.jpg");
 background-size: cover;
-background-repeat: no-repeat;
+background-repeat: repeat;
 }
 .ant-row{
   margin-left:0 !important;
@@ -64,30 +66,24 @@ const AppLayout = ({ children }) => {
       <Row gutter={8}>
         <Col xs={24} md={6}>
           {me ? <UserProfile /> : <LoginForm />}
-          <img
-            src="https://postfiles.pstatic.net/MjAyMDEyMTRfODQg/MDAxNjA3ODg0NjU2ODcx.dhDrmT4RoJ2YhvqU1KcP6jO629Gm3Y39H49I_E3DkFYg.8ey29SrIwOBiSak_3Nh3vsjHNySCDQwcxXDizp17VIcg.PNG.wngussla6429/react.png?type=w966"
-            width="33.3%"
-            height="80px"
-          />
-          <img
-            src="https://postfiles.pstatic.net/MjAyMDEyMTRfMTQy/MDAxNjA3ODg0NjU2ODU5.m_huTF4Vf5ClACQ3O75XwiL_IJBalVdpdQmxOhRqOrog.IoujRTtJxU1q1G7Qe3QVJvkvW5qXDQ7egUZGLl-eI0sg.JPEG.wngussla6429/nodejs.jpeg?type=w966"
-            width="33.3%"
-            height="80px"
-          />
-          <img
-            src="https://postfiles.pstatic.net/MjAyMDEyMTRfMjU0/MDAxNjA3ODg0NjU2ODUx.azz0P_cxsiP_7rCEtP7KibcGCgnCKQc2oaJ9DVH4JKwg.UsqNQfUCvc99VLMWoem6k0QTZmqjbukpG2RrN06AbKMg.JPEG.wngussla6429/mysql.jpg?type=w966"
-            width="33.3%"
-            height="80px"
-          />
+          <img src="./react.jpg" width="100%" height="200px" />
+          <img src="./next.png" width="100%" height="200px" />
+          <img src="./secal.png" width="100%" height="200px" />
+          <img src="./AWS.png" width="100%" height="200px" />
         </Col>
-        <Col xs={24} md={12}>
+        <Col xs={24} md={13}>
           {children}
         </Col>
-        <Col xs={24} md={6}>
+        <Col xs={24} md={5}>
           <a href="https://wngus6429.github.io/NewPortFolio/" target="_blank" rel="noopener noreferrer">
-            <div style={{ fontSize: "80px", textAlign: "center", color: "red", backgroundColor: "yellow" }}>
-              포트폴리오
-            </div>
+            <Card hoverable style={{ width: 380 }} cover={<img alt="example" src="./study.jpg" />}>
+              <Meta title="Park PortFolio" description="https://wngus6429.github.io/NewPortFolio/" />
+            </Card>
+          </a>
+          <a href="https://github.com/wngus6429/parksite-jp" target="_blank" rel="noopener noreferrer">
+            <Card hoverable style={{ width: 380 }} cover={<img alt="example" src="./git.jpg" />}>
+              <Meta title="Source" description="https://github.com/wngus6429/parksite-jp" />
+            </Card>
           </a>
         </Col>
       </Row>

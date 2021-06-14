@@ -16,6 +16,7 @@
   "plugins": ["import", "react-hooks", "jsx-a11y"],
   "rules": {
     "jsx-a11y/label-has-associated-control": "off",
+    "quotes": [2, "double", { "avoidEscape": false }],
     "jsx-a11y/anchor-is-valid": "off",
     "no-console": "off",
     "no-underscore-dangle": "off",

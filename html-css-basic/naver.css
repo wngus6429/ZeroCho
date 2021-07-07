@@ -1,4 +1,33 @@
-.headermiddle {
+#headermiddle {
   margin: 0 auto;
   width: 900px;
 }
+
+/* #header-search안에 있는 h1만 선택한거임, 자식 */
+/* div는 생략가능 */
+div#header-search > h1 {
+  width: 280px;
+  display: inline-block;
+}
+
+#header-search h2 {
+  display: none;
+  /* 시각장애인들을 위해 */
+}
+
+#header-search fieldset {
+  width: 520px;
+  display: inline-block;
+}
+
+/* 이거는 자손인데. 더 깊이까지 가능 */
+/* #headermiddle h1 {
+} */
+
+/* 보통은 자손 선택을 많이함, 자손이 넓은 범위라서 편함 */
+
+/* span은 inline 이다. inline-block은 차이가 있다.
+bloack은 너비 100%차지, inline, inline-block은 자기 컨텐츠나 너비 그것만 공간 차이 */
+
+/* inline block은 width 랑 height 지정가능, 빈공간 만들기 가능 */
+/* inline은 진짜 자기공간만, 빈공간 만들수가 없지, 주로 텍스트에 많이씀 */

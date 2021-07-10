@@ -1,3 +1,12 @@
+.blind {
+  position: absolute;
+  overflow: hidden;
+  clear: rect(0 0 0 0);
+  margin: -1px;
+  width: 1px;
+  height: 1px;
+}
+
 #headermiddle {
   margin: 0 auto;
   width: 900px;

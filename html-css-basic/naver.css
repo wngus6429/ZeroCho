@@ -12,11 +12,31 @@
   width: 900px;
 }
 
+#header-search a {
+  text-decoration: none;
+}
+
 /* #header-search안에 있는 h1만 선택한거임, 자식 */
 /* div는 생략가능 */
-div#header-search > h1 {
-  width: 280px;
+div#header-search h1 {
+  width: 200px;
+  height: 50px;
   display: inline-block;
+  background-image: url(./naver.png);
+  background-position: -4px -10px;
+  /* 가로 세로 마이너스는 위로고 플러스는 아래로 이동*/
+  /* text-indent: 100%; */
+  /* 글자 들여쓰기, 오른쪽으로 최대로 옮김 */
+  /* overflow: hidden; */
+  /* 밖으로 나간거 안보이게 한다 */
+  background-repeat: no-repeat;
+  /* 이거 안하면 height나 width 잘못 설정하면 여러개 나옴 */
+  /* background-image: url(./naver.png) -4px 10px no-repeat; */
+  /* 한방에 줄일수도 있음. */
+}
+
+#header-search h1 span {
+  display: none;
 }
 
 #header-search h2 {
@@ -25,8 +45,17 @@ div#header-search > h1 {
 }
 
 #header-search fieldset {
-  width: 520px;
+  margin-left: 20px;
+  /* padding-left: 10px;
+  padding-top: 12px;
+  padding-right: 0;
+  padding-bottom: 12px; */
+  padding: 12px 0 12px 10px;
+  /* 시계방향 위 오른쪽 아래쪽 왼쪽 */
+  width: 600px;
+  height: 50px;
   display: inline-block;
+  border: 2px solid green;
 }
 
 /* 이거는 자손인데. 더 깊이까지 가능 */

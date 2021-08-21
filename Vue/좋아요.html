@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>좋아요</title>
+  </head>
+  <body>
+    <div id="root">
+      <div>좋아요 눌렀음</div>
+      <button>Like</button>
+    </div>
+  </body>
+  <script>
+    const app = new Vue({
+      el: "#root", //이걸로 root 통제
+      data: {
+        liked: false,
+      },
+      methods: {
+        onClickButton() {
+          this.liked = true; //this는 data를 가리킨다. 즉 this.liked를 가리키지
+        },
+      },
+    });
+  </script>
+</html>

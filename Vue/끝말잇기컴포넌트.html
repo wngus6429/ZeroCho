@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root">
+      <word-relay start-Word="초밥"></word-relay>
+      <word-relay start-Word="바보"></word-relay>
+      <word-relay start-Word="주현님"></word-relay>
+    </div>
+    <script>
+      //전역(글로벌) 컴포넌트임, 당연 지역(로컬) 컴포넌트로 있겟지?
+      Vue.component("wordRelay", {
+        template: `
+            <div>
+                <div>{{word}}</div>
+                    <form v-on:submit="onSubmitForm">
+                        <input type="text" v-model="inputvalue" ref="control" />
+                        <button type="submit">입력~!</button>
+                    </form>
+                <div>{{result}}</div>
+            </div>
+        `,
+        props: ["startWord"],
+        data() {
+          //이렇게 하는 이유는 참조관계 때문에 그럼
+          //컴포넌트 특징이 여러번 사용을 전제로 하기에.
+          // 데이터가 각각 컴포넌트마다 달라야 하기에 이렇게 해야함
+          return {
+            word: this.startWord,
+            inputvalue: "",
+            result: "",
+          };
+        },
+        methods: {
+          onSubmitForm(e) {
+            e.preventDefault();
+            if (this.word[this.word.length - 1] === this.inputvalue[0]) {
+              this.result = "정답";
+              this.word = this.inputvalue;
+              this.inputvalue = "";
+              this.$refs.control.focus();
+            } else {
+              this.result = "틀렸다";
+              this.inputvalue = "";
+              this.$refs.control.focus();
+            }
+          },
+        },
+      });
+    </script>
+    <script>
+      const app = new Vue({
+        el: "#root",
+      });
+    </script>
+  </body>
+</html>

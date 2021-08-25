@@ -9,6 +9,10 @@
   </head>
   <body>
     <div id="root">
+      <!-- v-if 를 붙이면 true면 보이고 v-else는 false면 보인다고 생각 -->
+      <div v-if="route === 'main">메인화면</div>
+      <div v-else-if="route === 'sub">서브화면</div>
+      <div v-else-if="liked">좋아요 눌렀음</div>
       <div v-if="liked">좋아요 눌렀음</div>
       <button v-else v-on:click="onClickButton">Like</button>
     </div>
@@ -18,6 +22,7 @@
       el: "#root", //이걸로 root 통제
       data: {
         liked: false,
+        route: "main",
       },
       methods: {
         onClickButton() {

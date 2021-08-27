@@ -1,10 +1,15 @@
-const VueloaderPlugin = require("vue-loader/lib/plugin");
+const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const path = require("path"); //노드가 절대경로 도와줌
 
 module.exports = {
+  mode: "development",
+  devtool: "eval", //개발용, 속도가 빠름
   entry: {
     app: path.join(__dirname, "main.js"),
     //나중에 app.js로 하나로 합쳐짐
+  },
+  resolve: {
+    extensions: [".js", ".vue"],
   },
   module: {
     //어떻게 합칠건지, 어떤게 처리할건지
@@ -12,11 +17,12 @@ module.exports = {
     rules: [
       {
         test: /\.vue$/, //.vue로 끝나는 파일
-        loader: "vue-loader",
+        use: "vue-loader",
       },
     ],
   },
-  plugins: [new VueloaderPlugin()],
+  plugins: [new VueLoaderPlugin()],
+  //밑에 output나오기전에 plugins에 있는것들이 가공해준다
   output: {
     filename: "[name].js", //app.js
     path: path.join(__dirname, "dist"), //dirname = 디렉토리이름

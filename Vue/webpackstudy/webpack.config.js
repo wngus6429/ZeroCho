@@ -1,6 +1,6 @@
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const path = require("path"); //노드가 절대경로 도와줌
-
+//노드에서는 import from 안쓰고 require랑 module.exports 사용
 module.exports = {
   mode: "development",
   devtool: "eval", //개발용, 속도가 빠름
@@ -16,7 +16,8 @@ module.exports = {
     //JS 아닌놈 처리를 rules가 함
     rules: [
       {
-        test: /\.vue$/, //.vue로 끝나는 파일
+        test: /\.vue$/,
+        //.vue로 끝나는 파일은 vue-loader가 담당한다.
         use: "vue-loader",
       },
     ],

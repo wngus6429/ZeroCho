@@ -64,24 +64,24 @@ const AppLayout = ({ children }) => {
         </Menu.Item>
       </Menu>
       <Row gutter={8}>
-        <Col xs={24} md={6}>
+        <Col xs={24} md={7}>
           {me ? <UserProfile /> : <LoginForm />}
           <img src="./react.jpg" width="100%" height="200px" />
           <img src="./next.png" width="100%" height="200px" />
           <img src="./secal.png" width="100%" height="200px" />
           <img src="./AWS.png" width="100%" height="200px" />
         </Col>
-        <Col xs={24} md={13}>
+        <Col xs={24} md={11}>
           {children}
         </Col>
-        <Col xs={24} md={5}>
+        <Col xs={24} md={6}>
           <a href="https://wngus6429.github.io/NewPortFolio/" target="_blank" rel="noopener noreferrer">
-            <Card hoverable style={{ width: 380 }} cover={<img alt="example" src="./study.jpg" />}>
+            <Card hoverable style={{ width: 320 }} cover={<img alt="example" src="./study.jpg" />}>
               <Meta title="Park PortFolio" description="https://wngus6429.github.io/NewPortFolio/" />
             </Card>
           </a>
           <a href="https://github.com/wngus6429/parksite-jp" target="_blank" rel="noopener noreferrer">
-            <Card hoverable style={{ width: 380 }} cover={<img alt="example" src="./git.jpg" />}>
+            <Card hoverable style={{ width: 320 }} cover={<img alt="example" src="./git.jpg" />}>
               <Meta title="Source" description="https://github.com/wngus6429/parksite-jp" />
             </Card>
           </a>

@@ -29,7 +29,6 @@
         methods: {
           onSubmitForm(e) {
             e.preventDefault();
-            console.log(this);
             console.log(this.first, this.second, this.value);
             if (this.first * this.second === parseInt(this.value)) {
               this.result = "정답";

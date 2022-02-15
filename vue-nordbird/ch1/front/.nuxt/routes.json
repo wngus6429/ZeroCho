@@ -1,0 +1,23 @@
+[
+  {
+    "name": "profile",
+    "path": "/profile",
+    "component": "C:\\\\Users\\\\wngus\\\\Documents\\\\GitHub\\\\ZeroCho\\\\vue-nordbird\\\\ch1\\\\front\\\\pages\\\\profile.vue",
+    "chunkName": "pages/profile",
+    "_name": "_7224ca67"
+  },
+  {
+    "name": "signup",
+    "path": "/signup",
+    "component": "C:\\\\Users\\\\wngus\\\\Documents\\\\GitHub\\\\ZeroCho\\\\vue-nordbird\\\\ch1\\\\front\\\\pages\\\\signup.vue",
+    "chunkName": "pages/signup",
+    "_name": "_5030604a"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "C:\\\\Users\\\\wngus\\\\Documents\\\\GitHub\\\\ZeroCho\\\\vue-nordbird\\\\ch1\\\\front\\\\pages\\\\index.vue",
+    "chunkName": "pages/index",
+    "_name": "_3eba1e90"
+  }
+]

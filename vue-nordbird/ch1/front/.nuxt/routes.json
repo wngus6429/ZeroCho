@@ -2,22 +2,22 @@
   {
     "name": "profile",
     "path": "/profile",
-    "component": "C:\\\\Users\\\\wngus\\\\Documents\\\\GitHub\\\\ZeroCho\\\\vue-nordbird\\\\ch1\\\\front\\\\pages\\\\profile.vue",
+    "component": "C:\\\\Users\\\\wngus\\\\OneDrive\\\\Documents\\\\Github\\\\ZeroCho\\\\vue-nordbird\\\\ch1\\\\front\\\\pages\\\\profile.vue",
     "chunkName": "pages/profile",
-    "_name": "_7224ca67"
+    "_name": "_549327eb"
   },
   {
     "name": "signup",
     "path": "/signup",
-    "component": "C:\\\\Users\\\\wngus\\\\Documents\\\\GitHub\\\\ZeroCho\\\\vue-nordbird\\\\ch1\\\\front\\\\pages\\\\signup.vue",
+    "component": "C:\\\\Users\\\\wngus\\\\OneDrive\\\\Documents\\\\Github\\\\ZeroCho\\\\vue-nordbird\\\\ch1\\\\front\\\\pages\\\\signup.vue",
     "chunkName": "pages/signup",
-    "_name": "_5030604a"
+    "_name": "_577e4246"
   },
   {
     "name": "index",
     "path": "/",
-    "component": "C:\\\\Users\\\\wngus\\\\Documents\\\\GitHub\\\\ZeroCho\\\\vue-nordbird\\\\ch1\\\\front\\\\pages\\\\index.vue",
+    "component": "C:\\\\Users\\\\wngus\\\\OneDrive\\\\Documents\\\\Github\\\\ZeroCho\\\\vue-nordbird\\\\ch1\\\\front\\\\pages\\\\index.vue",
     "chunkName": "pages/index",
-    "_name": "_3eba1e90"
+    "_name": "_0d6a0d14"
   }
 ]

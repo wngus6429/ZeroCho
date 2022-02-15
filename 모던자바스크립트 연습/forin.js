@@ -7,10 +7,10 @@ let salaries = {
 function sumSalaries(money) {
   let sum = 0;
   for (let sal in money) {
+    console.log(sal);
     sum += money[sal];
   }
   return sum;
 }
 
 console.log("확인", sumSalaries(salaries));
-

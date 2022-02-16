@@ -18,16 +18,22 @@
         </v-toolbar-items>
       </v-toolbar>
     </nav>
-    <v-row>
+    <v-row no-gutters>
       <!-- 12가 분할하기 좋아서, <nuxt />가 화면 보이는곳 -->
-      <v-col cols="12" md="4"> 로그인창 </v-col>
-      <v-col cols="12" md="8"> <nuxt /> </v-col>
+      <v-col cols="12" md="3"> <LoginForm /> </v-col>
+      <v-col cols="12" md="9"> <nuxt /> </v-col>
     </v-row>
   </v-app>
 </template>
 
 <script>
-export default {};
+// ~는 소스 디렉토리를 이야기함. 루트라고 생각하면됨
+import LoginForm from "~/components/LoginForm.vue";
+export default {
+  components: {
+    LoginForm,
+  },
+};
 </script>
 
 <style></style>

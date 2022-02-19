@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nuxt"
+    "dev": "nuxt",
+    "lint": "eslint **/*"
   },
   "author": "",
   "license": "ISC",
@@ -16,5 +17,9 @@
     "nuxt": "^2.15.8",
     "vue": "^2.6.10",
     "vuetify": "^2.6.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.9.0",
+    "eslint-plugin-vue": "^8.4.1"
   }
 }

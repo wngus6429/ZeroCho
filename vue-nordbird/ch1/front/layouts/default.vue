@@ -5,7 +5,7 @@
         <v-toolbar-title>
           <nuxt-link to="/">NordBird</nuxt-link>
         </v-toolbar-title>
-        <v-spacer></v-spacer>
+        <v-spacer />
         <v-toolbar-items>
           <!-- hide-details는 밑에 보이지 않는 빈공간 제거 -->
           <v-text-field label="검색" hide-details prepend-icon="mdi-magnify" :style="{ display: 'flex', alignItems: 'center' }" />
@@ -21,7 +21,8 @@
     <v-row no-gutters>
       <!-- 12가 분할하기 좋아서, <nuxt />가 화면 보이는곳 -->
       <v-col cols="12" md="3"> <LoginForm /> </v-col>
-      <v-col cols="12" md="9"> <nuxt /> </v-col>
+      <v-col cols="12" md="6"> <nuxt /> </v-col>
+      <v-col cols="12" md="3"> <img src="@/public/윾.PNG" /> </v-col>
     </v-row>
   </v-app>
 </template>

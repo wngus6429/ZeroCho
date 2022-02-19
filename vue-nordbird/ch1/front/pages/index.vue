@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container style="margin-left: 0px">
     Home Page
     <div>
       <PostCard />

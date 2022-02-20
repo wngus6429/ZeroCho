@@ -4,6 +4,7 @@
       <v-toolbar dark color="green">
         <v-toolbar-title>
           <nuxt-link to="/">NordBird</nuxt-link>
+          <img src="@/public/윾.PNG" height="55px" />
         </v-toolbar-title>
         <v-spacer />
         <v-toolbar-items>

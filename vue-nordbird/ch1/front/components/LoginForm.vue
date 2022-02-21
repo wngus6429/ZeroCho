@@ -1,6 +1,6 @@
 <template>
   <!-- v-container역할이 패딩주는거 -->
-  <v-container>
+  <v-container v-if="!me">
     <v-card elevation="2">
       <v-form ref="form" v-model="valid" @submit.prevent="onSubmitForm">
         <v-container style="margin: 0px">
@@ -10,6 +10,12 @@
           <v-btn nuxt to="/signup">회원가입</v-btn>
         </v-container>
       </v-form>
+    </v-card>
+  </v-container>
+  <v-container v-else>
+    <v-card>
+      {{ me.nickname }}로그인되었습니다
+      <v-btn @click="onLogOut">로그아웃</v-btn>
     </v-card>
   </v-container>
 </template>
@@ -26,9 +32,22 @@ export default {
       passwordRules: [(v) => !!v || "비밀번호는 필수입니다."],
     };
   },
+  computed: {
+    me() {
+      return this.$store.state.users.me; //모듈 users.js 생각해서 붙여줘야함
+    },
+  },
   methods: {
     onSubmitForm() {
-      this.$refs.form.validate();
+      if (this.$refs.form.validate()) {
+        this.$store.dispatch("users/logIn", {
+          email: this.email,
+          nickname: "제로초", //이건 알아낼수가 없으니 대충
+        });
+      }
+    },
+    onLogOut() {
+      this.$store.dispatch("users/logOut"); //슬래쉬로 파일명 작성 기억해야함
     },
   },
 };

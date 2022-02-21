@@ -34,10 +34,7 @@ export default {
       emailRules: [(v) => !!v || "이메일은 필수 입니다.", (v) => /.+@.+/.test(v) || "이메일이 유효하지 않습니다."],
       nicknameRules: [(v) => !!v || "닉네임은 필수입니다."],
       passwordRules: [(v) => !!v || "비밀번호는 필수입니다."],
-      passwordCheckRules: [
-        (v) => !!v || "비밀번호 확인은 필수입니다.",
-        (v) => v === this.password || "비밀번호가 일치하지 않습니다.",
-      ],
+      passwordCheckRules: [(v) => !!v || "비밀번호 확인은 필수입니다.", (v) => v === this.password || "비밀번호가 일치하지 않습니다."],
     };
   },
   head() {
@@ -49,7 +46,12 @@ export default {
     onSubmitForm() {
       // 이런건 vuetify에서 제공
       if (this.$refs.form.validate()) {
-        alert("회원가입시도");
+        // action은 dispatch, 뮤테이션은 commit
+        // users 모듈안에꺼라서 앞에 붙여야함
+        this.$store.dispatch("users/signUp", {
+          nickname: this.nickname,
+          email: this.email,
+        });
       } else {
         alert("유효하지 않습니다.");
       }

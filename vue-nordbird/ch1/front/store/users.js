@@ -1,6 +1,6 @@
-export const state = () => {
-  me: null;
-};
+export const state = () => ({
+  me: null,
+});
 
 // 뮤테이션안에는 비동기요청이 잇으면 안된다.
 // 단순 동기적인 작업

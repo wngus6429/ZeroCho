@@ -11,6 +11,10 @@ export const mutations = {
     const index = state.mainPosts.findIndex((v) => v.id === payload.id);
     state.mainPosts.splice(index, 1);
   },
+  addComment(state, payload) {
+    const index = state.mainPosts.findIndex((v) => v.id === payload.postId);
+    state.mainPosts[index].Comments.unshift(payload); //그 게시글에 댓글추가
+  },
 };
 
 export const actions = {
@@ -22,5 +26,8 @@ export const actions = {
   },
   remove({ commit }, payload) {
     commit("removeMainPost", payload);
+  },
+  addComment({ commit }, payload) {
+    commit("addComment", payload);
   },
 };

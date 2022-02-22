@@ -41,10 +41,12 @@ export default {
     // ...mapState('users', ['me'])
   },
   methods: {
-    onChangeTextarea() {
-      this.hideDetails = true;
-      this.success = false;
-      this.successMessages = "";
+    onChangeTextarea(value) {
+      if (value.length) {
+        this.hideDetails = true;
+        this.success = false;
+        this.successMessages = "";
+      }
     },
     onSubmitForm() {
       if (this.$refs.form.validate()) {

@@ -19,8 +19,6 @@
         </v-toolbar-items>
       </v-toolbar>
     </nav>
-    <div>{{ name }}</div>
-    <v-btn @click="onChangeName">바이바이</v-btn>
     <v-row no-gutters>
       <!-- 12가 분할하기 좋아서, <nuxt />가 화면 보이는곳 -->
       <v-col cols="12" md="3"> <LoginForm /> </v-col>

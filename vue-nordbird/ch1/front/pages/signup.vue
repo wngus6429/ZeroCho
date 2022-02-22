@@ -34,7 +34,10 @@ export default {
       emailRules: [(v) => !!v || "이메일은 필수 입니다.", (v) => /.+@.+/.test(v) || "이메일이 유효하지 않습니다."],
       nicknameRules: [(v) => !!v || "닉네임은 필수입니다."],
       passwordRules: [(v) => !!v || "비밀번호는 필수입니다."],
-      passwordCheckRules: [(v) => !!v || "비밀번호 확인은 필수입니다.", (v) => v === this.password || "비밀번호가 일치하지 않습니다."],
+      passwordCheckRules: [
+        (v) => !!v || "비밀번호 확인은 필수입니다.",
+        (v) => v === this.password || "비밀번호가 일치하지 않습니다.",
+      ],
     };
   },
   head() {
@@ -48,10 +51,17 @@ export default {
       if (this.$refs.form.validate()) {
         // action은 dispatch, 뮤테이션은 commit
         // users 모듈안에꺼라서 앞에 붙여야함
-        this.$store.dispatch("users/signUp", {
-          nickname: this.nickname,
-          email: this.email,
-        });
+        this.$store
+          .dispatch("users/signUp", {
+            nickname: this.nickname,
+            email: this.email,
+          }) //비동기는 then과 catch 써줘야 한다.
+          .then(this.$router.push("/"))
+          .catch(() => {
+            alert("에러가 발생");
+          });
+        // then catch대신에 async await으로도 된다.
+        // 대신 try catch 꼭 해주기
       } else {
         alert("유효하지 않습니다.");
       }

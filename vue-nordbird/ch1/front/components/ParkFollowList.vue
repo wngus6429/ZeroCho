@@ -1,8 +1,8 @@
 <template>
   <v-list>
-    <v-list-item v-for="user in propdata" :key="user.id">
-      <span>{{ user.nickname }}</span>
-      <v-icon @click="deletefunc(user.id)">mdi-minus-circle-outline</v-icon>
+    <v-list-item v-for="followingName in propdata" :key="followingName.id">
+      <span>{{ followingName }}</span>
+      <v-icon @click="deletefunc(followingName)">mdi-minus-circle-outline</v-icon>
     </v-list-item>
   </v-list>
 </template>

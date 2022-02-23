@@ -1,15 +1,7 @@
 export const state = () => ({
   me: null,
-  followingList: [
-    { id: 1, nickname: "박주현" },
-    { id: 2, nickname: "이다" },
-    { id: 3, nickname: "뉴비" },
-  ],
-  followerList: [
-    { id: 1, nickname: "팔로워" },
-    { id: 2, nickname: "리스트" },
-    { id: 3, nickname: "인뎅" },
-  ],
+  followingList: ["qkrwngus", "cjswo", "fldjfdla"],
+  followerList: ["박주현", "천재", "리얼임"],
 });
 
 // 뮤테이션안에는 비동기요청이 잇으면 안된다.
@@ -23,22 +15,18 @@ export const mutations = {
     state.me.nickname = payload.nickname;
   },
   removeFollowingOne(state, payload) {
-    // for (let i = 0; i < state.followingList.length; i++) {
-    //   if (payload.name === state.followingList[i]) {
-    //     state.followingList.splice(i, 1);
-    //   }
-    // }
-    const index = state.followingList.findIndex((v) => v.id === payload.id);
-    state.followingList.splice(index, 1);
+    for (let i = 0; i < state.followingList.length; i++) {
+      if (payload.name === state.followingList[i]) {
+        state.followingList.splice(i, 1);
+      }
+    }
   },
   removeFollowerOne(state, payload) {
-    // for (let i = 0; i < state.followerList.length; i++) {
-    //   if (payload.name === state.followerList[i]) {
-    //     state.followerList.splice(i, 1);
-    //   }
-    // }
-    const index = state.followerList.findIndex((v) => v.id === payload.id);
-    state.followerList.splice(index, 1);
+    for (let i = 0; i < state.followerList.length; i++) {
+      if (payload.name === state.followerList[i]) {
+        state.followerList.splice(i, 1);
+      }
+    }
   },
   addFollowingOne(state, payload) {
     state.followingList.push(payload);

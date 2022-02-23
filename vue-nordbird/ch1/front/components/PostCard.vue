@@ -4,8 +4,8 @@
       <v-img />
       <v-card-text>
         <div>
-          <h3>{{ post.User.nickname }}</h3>
-          <div>{{ post.content }}</div>
+          <h3>{{ $props.post.User.nickname }}</h3>
+          <div>{{ $props.post.content }}</div>
         </div>
       </v-card-text>
       <v-card-actions>

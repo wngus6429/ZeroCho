@@ -21,6 +21,7 @@
     </nav>
     <v-row no-gutters>
       <!-- 12가 분할하기 좋아서, <nuxt />가 화면 보이는곳 -->
+      <!-- xs 대신에 cols라고 보면됨, cols는 12고정 -->
       <v-col cols="12" md="3"> <LoginForm /> </v-col>
       <v-col cols="12" md="6"> <nuxt /> </v-col>
       <v-col cols="12" md="3"> <img src="@/public/윾.PNG" /> </v-col>

@@ -59,11 +59,11 @@ export default {
         nickname: this.nickname,
       });
     },
-    removeFollweing(id) {
-      this.$store.dispatch("users/removeFollowing", { id });
+    removeFollweing(followingName) {
+      this.$store.dispatch("users/removeFollowing", { name: followingName });
     },
-    removeFollower(id) {
-      this.$store.dispatch("users/removeFollower", { id });
+    removeFollower(followingName) {
+      this.$store.dispatch("users/removeFollower", { name: followingName });
     },
   },
 };

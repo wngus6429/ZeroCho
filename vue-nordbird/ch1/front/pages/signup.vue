@@ -45,6 +45,23 @@ export default {
       title: "회원가입",
     };
   },
+  computed: {
+    me() {
+      return this.$store.state.users.me;
+    },
+  },
+  watch: {
+    me(value, oldValue) {
+      if (value) {
+        // this.$router.push("/");
+        // 컴포넌트적으로는 nuxt-link
+        // $router.push는 프로그래밍적으로 넘김
+        this.$router.push({
+          path: "/",
+        });
+      }
+    },
+  },
   methods: {
     onSubmitForm() {
       // 이런건 vuetify에서 제공
@@ -68,6 +85,8 @@ export default {
       console.log(this.valid); //유효하면 true, 아니면 false
     },
   },
+  // 회원가입 하지 않은 사람만, 미들웨어로 검사를 할수 있다.
+  middleware: "anonymous",
 };
 </script>
 

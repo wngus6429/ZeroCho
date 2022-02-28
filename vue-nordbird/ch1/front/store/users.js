@@ -1,16 +1,15 @@
 export const state = () => ({
   me: null,
-  followingList: [
-    { id: 1, nickname: "박주현" },
-    { id: 2, nickname: "이다" },
-    { id: 3, nickname: "뉴비" },
-  ],
-  followerList: [
-    { id: 1, nickname: "팔로워" },
-    { id: 2, nickname: "리스트" },
-    { id: 3, nickname: "인뎅" },
-  ],
+  followingList: [],
+  followerList: [],
+  hasMoreFollowing: true,
+  hasMoreFollower: true,
 });
+
+const totalFollowers = 8;
+const totalFollowings = 6;
+const limit = 3;
+//실무에서는 limit이 아니라 lastid 방식 사용
 
 // 뮤테이션안에는 비동기요청이 잇으면 안된다.
 // 단순 동기적인 작업
@@ -46,6 +45,28 @@ export const mutations = {
   addFollowerOne(state, payload) {
     state.followerList.push(payload);
   },
+  loadFollowings(state) {
+    const diff = totalFollowings - state.followingList.length;
+    const fakeUsers = Array(diff > limit ? limit : diff)
+      .fill()
+      .map((v) => ({
+        id: Math.random().toString(),
+        nickname: Math.floor(Math.random() * 1000),
+      }));
+    state.followingList = state.followingList.concat(fakeUsers);
+    state.hasMoreFollowing = fakeUsers.length === limit;
+  },
+  loadFollowers(state) {
+    const diff = totalFollowers - state.followerList.length;
+    const fakeUsers = Array(diff > limit ? limit : diff)
+      .fill()
+      .map((v) => ({
+        id: Math.random().toString(),
+        nickname: Math.floor(Math.random() * 1000),
+      }));
+    state.followerList = state.followerList.concat(fakeUsers);
+    state.hasMoreFollower = fakeUsers.length === limit;
+  },
 };
 
 //비동기 작업, 복잡한 작업, context안에 기능이 많다.
@@ -74,5 +95,15 @@ export const actions = {
   },
   addFollower({ commit }, payload) {
     commit("addFollowerOne", payload);
+  },
+  loadFollowings({ commit, state }, payload) {
+    if (state.hasMoreFollowing) {
+      commit("loadFollowings");
+    }
+  },
+  loadFollowers({ commit, state }, payload) {
+    if (state.hasMoreFollower) {
+      commit("loadFollowers");
+    }
   },
 };

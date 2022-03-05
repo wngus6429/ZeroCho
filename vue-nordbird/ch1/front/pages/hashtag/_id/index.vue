@@ -42,7 +42,6 @@ export default {
   },
   methods: {
     onScroll() {
-      console.log("호가인");
       // 확내리면 그 숫자가 안될수도 있으니 부등호로
       if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
         if (this.hasMorePost) {

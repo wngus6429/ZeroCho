@@ -46,15 +46,15 @@ export default {
   components: {
     LoginForm,
   },
-  computed: {
-    name() {
-      return this.$store.state.posts.name;
-    },
-  },
   data() {
     return {
       hashtag: "",
     };
+  },
+  computed: {
+    name() {
+      return this.$store.state.posts.name;
+    },
   },
   methods: {
     onSearchHashtag() {

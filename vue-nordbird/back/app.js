@@ -4,7 +4,7 @@ const app = express();
 
 // 앞에 localhost:3000 숨겨짐
 app.get("/", (req, res) => {
-  res.send("안녕 백엔드");
+  res.send("안녕 백엔드 주현님");
   //   res.status(200).send('안녕백엔드')
 });
 

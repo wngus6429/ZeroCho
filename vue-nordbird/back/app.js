@@ -2,10 +2,21 @@ const express = require("express");
 
 const app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+// form을 통해서 전송할때 그 데이터를 해석해서 req.body에 넣어준다.
+// 이런걸 잘 알아야함.
+
 // 앞에 localhost:3000 숨겨짐
 app.get("/", (req, res) => {
-  res.send("안녕 백엔드 주현님");
+  res.send("안녕 백엔드 님");
   //   res.status(200).send('안녕백엔드')
+});
+
+app.post("/user", (req, res) => {
+  req.body.email;
+  req.body.password;
+  req.body.nickname;
 });
 
 app.listen(3000, () => {

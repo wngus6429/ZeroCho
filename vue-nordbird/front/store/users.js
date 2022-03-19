@@ -70,9 +70,18 @@ export const mutations = {
 };
 
 //비동기 작업, 복잡한 작업, context안에 기능이 많다.
+//앞에를 동작, 뒤를 자원 혹은 대상, 이렇게 두는 주소 체계를 restAPI라 부름
+//실제로 RestAPI를 지키는 회사는 드물다. 대부분은 타협 비스무리하게
 export const actions = {
   signUp({ commit }, payload) {
+    console.log(this.$axios); //axios접근가능, nuxtcconfig.js에서 연결해서 사용가능
     // 서버에 회원가입 요청을 보냄
+    this.$axios.post("/user", {
+      email: payload.email,
+      nickname: payload.nickname,
+      password: payload.password,
+    });
+    // 애매하면 post를 쓰는게 좋다.
     commit("setMe", payload);
   },
   logIn(context, payload) {

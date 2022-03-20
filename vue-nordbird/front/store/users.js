@@ -76,7 +76,7 @@ export const actions = {
   signUp({ commit }, payload) {
     console.log(this.$axios); //axios접근가능, nuxtcconfig.js에서 연결해서 사용가능
     // 서버에 회원가입 요청을 보냄
-    this.$axios.post("/user", {
+    this.$axios.post("user", {
       email: payload.email,
       nickname: payload.nickname,
       password: payload.password,

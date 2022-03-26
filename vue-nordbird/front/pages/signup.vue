@@ -72,6 +72,7 @@ export default {
           .dispatch("users/signUp", {
             nickname: this.nickname,
             email: this.email,
+            password: this.password,
           }) //비동기는 then과 catch 써줘야 한다.
           .then(this.$router.push("/"))
           .catch(() => {

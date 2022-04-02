@@ -16,7 +16,7 @@
   "plugins": ["import", "react-hooks", "jsx-a11y"],
   "rules": {
     "jsx-a11y/label-has-associated-control": "off",
-    "quotes": [2, "double", { "avoidEscape": false }],
+    "quotes": [2, "single", { "avoidEscape": false }],
     "jsx-a11y/anchor-is-valid": "off",
     "no-console": "off",
     "no-underscore-dangle": "off",
@@ -24,6 +24,8 @@
     "react/jsx-filename-extension": "off",
     "react/jsx-one-expression-per-line": "off",
     "object-curly-newline": "off",
-    "linebreak-style": 0
+    "linebreak-style": 0,
+    "spaced-comment": "off",
+    "jsx-quotes": "off"
   }
 }

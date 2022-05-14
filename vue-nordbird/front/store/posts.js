@@ -36,7 +36,7 @@ export const mutations = {
         id: Math.random().toString(),
         User: {
           id: 1,
-          nickname: "제로초",
+          nickname: '제로초',
         },
         content: `Hello infinite scroll~${Math.random().toString()}`,
         Comments: [],
@@ -50,20 +50,20 @@ export const mutations = {
 export const actions = {
   add({ commit }, payload) {
     // 서버에 게시글 등록 요청 보냄
-    commit("addMainPosts", payload);
+    commit('addMainPosts', payload);
     // commit("addMainPost", payload, { root: true });
     // root:true 이걸하면 스토어 index.js에 addMainPost를 부를수 있음
   },
   remove({ commit }, payload) {
-    commit("removeMainPost", payload);
+    commit('removeMainPost', payload);
   },
   addComment({ commit }, payload) {
-    commit("addComment", payload);
+    commit('addComment', payload);
   },
   loadPosts({ commit, state }, payload) {
     if (state.hasMorePost) {
       //이거 안스면 디도스 공격이지
-      commit("loadPosts");
+      commit('loadPosts');
     }
   },
 };

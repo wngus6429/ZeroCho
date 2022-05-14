@@ -1,12 +1,12 @@
-const express = require("express");
-const cors = require("cors");
-const bcrypt = require("bcrypt");
-const db = require("./models"); //model폴더 index.js의 db를 불러온거
+const express = require('express');
+const cors = require('cors');
+const bcrypt = require('bcrypt');
+const db = require('./models'); //model폴더 index.js의 db를 불러온거
 const app = express();
 
 db.sequelize.sync(); // 이게 있어야 DB 시작된다.
 
-app.use(cors("http://localhost:5000/"));
+app.use(cors('http://localhost:5000/'));
 // app.use는 req,res를 조작한다. 익스프레스 미들웨어,
 // app.get, app.post도 사실 미들웨어임.
 app.use(express.json());
@@ -15,21 +15,20 @@ app.use(express.urlencoded({ extended: false }));
 // 이런걸 잘 알아야함.
 
 // 앞에 localhost:3000 숨겨짐
-app.get("/", (req, res) => {
-  res.send("안녕 백엔드 님");
+app.get('/', (req, res) => {
+  res.send('안녕 백엔드 님');
   // res.status(200).send('안녕백엔드')
 });
 
-app.post("/user", async (req, res, next) => {
+app.post('/user', async (req, res, next) => {
   // await async는 trycatch로 감싸주자
   try {
-    console.log("req", req);
-    const hashedPassword = await bcrypt.hash(req.body.password, 11);
-    console.log(pass);
+    console.log('req', req);
+    const hashedPassword = await bcrypt.hash(req.body.password, 5);
     const newUser = await db.User.create({
       email: req.body.email,
-      password: hashedPassword,
       nickname: req.body.nickname,
+      password: hashedPassword,
     });
     res.status(201).json(newUser); //json으로 변환 응답
     // 200성공, 201은 성공적으로 생성됨.

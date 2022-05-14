@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   // 시퀄라이즈 문서 보는게 좋음.
   // 첫번쨰 객체(두번쨰 인수)는 타입정의, 세번째 인수는 설정 설정
   const User = sequelize.define(
-    "User",
+    'User',
     {
       email: {
         type: DataTypes.STRING(40),
@@ -15,14 +15,14 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false, //필수
       },
       password: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING(100),
         allowNull: false, //필수
       },
       // 시퀄라이즈가 두가지 더 추가해줌. createdAt, updatedAt 이런거, ID도 추가됨
     },
     {
-      charrset: "utf8",
-      collate: "utf8_general_ci", //한글저장됨
+      charrset: 'utf8',
+      collate: 'utf8_general_ci', //한글저장됨
     }
   );
   User.associate = (db) => {};

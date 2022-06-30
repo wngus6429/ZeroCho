@@ -1,12 +1,12 @@
-import React, { useCallback, useMemo } from "react";
-import { Form, Input } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import useinput from "../hooks/useinput";
-import { CHANGE_NICKNAME_REQUEST } from "../reducers/user";
+import React, { useCallback, useMemo } from 'react';
+import { Form, Input } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import useinput from '../hooks/useinput';
+import { CHANGE_NICKNAME_REQUEST } from '../reducers/user';
 
 const NicknameEditForm = () => {
   const { me } = useSelector((state) => state.user);
-  const [nickname, onChangeNickname] = useinput(me?.nickname || "");
+  const [nickname, onChangeNickname] = useinput(me?.nickname || '');
   const dispatch = useDispatch();
 
   const onSubmit = useCallback(() => {
@@ -16,16 +16,10 @@ const NicknameEditForm = () => {
     });
   }, [nickname]);
 
-  const style = useMemo(() => ({ marginBottom: "20px", border: "1px solid #d9d9d9", padding: "30px" }));
+  const style = useMemo(() => ({ marginBottom: '20px', border: '1px solid #d9d9d9', padding: '30px' }));
   return (
     <Form style={style}>
-      <Input.Search
-        value={nickname}
-        onChange={onChangeNickname}
-        addonBefore="닉네임"
-        enterButton="수정"
-        onSearch={onSubmit}
-      />
+      <Input.Search value={nickname} onChange={onChangeNickname} addonBefore='닉네임' enterButton='수정' onSearch={onSubmit} />
     </Form>
   );
 };

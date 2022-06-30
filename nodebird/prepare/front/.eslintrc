@@ -26,6 +26,9 @@
     "object-curly-newline": "off",
     "linebreak-style": 0,
     "spaced-comment": "off",
-    "jsx-quotes": "off"
+    "jsx-quotes": "off",
+    "quote": "off",
+    "react/self-closing-comp": "off",
+    "react/jsx-wrap-multilines": "off"
   }
 }

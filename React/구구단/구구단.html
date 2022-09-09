@@ -18,8 +18,8 @@
           this.state = {
             first: Math.ceil(Math.random() * 9),
             second: Math.ceil(Math.random() * 9),
-            value: "", //맨처음에는 당연 없으니까
-            result: "", //맨처음에는 당연 없으니까
+            value: '', //맨처음에는 당연 없으니까
+            result: '', //맨처음에는 당연 없으니까
           };
         }
         //입력 버튼을 누르게 되면 onSubmit 발동
@@ -30,15 +30,15 @@
               //setState에 return을 하는 함수를 넣음
               //prevState는 예전 상태값이라 생각, 예전 상태값을 다음 상태값에 활용 가능
               return {
-                result: "정답=" + prevState.value, //정답이 나왔으니 위에 질문은 다시 바뀌어야 하니
+                result: '정답=' + prevState.value, //정답이 나왔으니 위에 질문은 다시 바뀌어야 하니
                 first: Math.ceil(Math.random() * 9), //새로운 값으로 설정
                 second: Math.ceil(Math.random() * 9), //새로운 값으로 설정
-                value: "", //빈 공간 초기화
+                value: '', //빈 공간 초기화
               };
             });
             this.input.focus();
           } else {
-            this.setState({ result: "땡", value: "" }); //한번에 복수 변경 가능
+            this.setState({ result: '땡', value: '' }); //한번에 복수 변경 가능
           }
           this.input.focus();
         };
@@ -51,7 +51,7 @@
           //input안에서 입력 후 제출 후 자동 focus()
         };
         render() {
-          console.log("랜더링");
+          console.log('랜더링');
           return (
             //지금 바벨이 지원을 안해서. 따로 React.Fragment라 쳐야함. 바벨툴 설치해야함
             //React.Fragment를 사용하면 쓸데없는 div가 하나 줄어서 좋음
@@ -59,7 +59,7 @@
             <React.Fragment>
               {this.state.first} 곱하기 {this.state.second} 는?
               <form onSubmit={this.onSubmit}>
-                <input ref={this.onRefInput} type="number" value={this.state.value} onChange={this.onChange} />
+                <input ref={this.onRefInput} type='number' value={this.state.value} onChange={this.onChange} />
                 <button>입력!</button>
               </form>
               <div>{this.state.result}</div>
@@ -74,7 +74,7 @@
           <GuGudan />
           <GuGudan />
         </div>,
-        document.querySelector("#root")
+        document.querySelector('#root')
       );
     </script>
   </body>

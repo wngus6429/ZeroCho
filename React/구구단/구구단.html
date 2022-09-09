@@ -27,7 +27,7 @@
           e.preventDefault();
           if (parseInt(this.state.value) === this.state.first * this.state.second) {
             this.setState((prevState) => {
-              //setState에 return을 하는 함수를 넣음
+              //setState에 return을 하는 함수를 넣음, 위에 prevState안 썻으면 41줄 처럼 가능
               //prevState는 예전 상태값이라 생각, 예전 상태값을 다음 상태값에 활용 가능
               return {
                 result: '정답=' + prevState.value, //정답이 나왔으니 위에 질문은 다시 바뀌어야 하니

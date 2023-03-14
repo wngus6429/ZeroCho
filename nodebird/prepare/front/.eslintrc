@@ -32,3 +32,29 @@
     "react/jsx-wrap-multilines": "off"
   }
 }
+
+// 1. parser
+// babel-eslint: Babel을 사용하는 경우, ES6/ES7/ES8 문법을 분석할 수 있는 parser입니다.
+// 2. parserOptions
+// ecmaVersion: 사용하고 있는 ECMAScript 버전을 명시합니다. 이 설정 파일에서는 ECMAScript 2020을 사용하고 있습니다.
+// sourceType: 코드를 어떤 모드로 작성했는지 명시합니다. 이 설정 파일에서는 모듈 방식으로 작성한 코드를 사용하고 있습니다.
+// ecmaFeatures: 사용하는 자바스크립트 기능을 지정합니다. 이 설정 파일에서는 JSX 문법을 사용하고 있습니다.
+// 3. env
+// browser: 브라우저 환경에서 실행되는 코드를 위한 전역 변수를 자동으로 추가합니다.
+// node: Node.js 환경에서 실행되는 코드를 위한 전역 변수를 자동으로 추가합니다.
+// es6: ECMAScript 6 버전에서 추가된 전역 변수를 자동으로 추가합니다.
+// 4. extends
+// airbnb: airbnb에서 제공하는 JavaScript 스타일 가이드를 적용합니다.
+// 5. plugins
+// import: import/export 구문을 사용할 때 권장되는 규칙을 적용합니다.
+// react-hooks: React Hooks를 사용할 때 권장되는 규칙을 적용합니다.
+// jsx-a11y: 접근성 관련 규칙을 적용합니다.
+// 6. rules
+// jsx-a11y/label-has-associated-control: 접근성(Accessibility) 관련 규칙 중 label과 input의 관계가 설정되어 있는지 확인하는 규칙을 무시합니다.
+// quotes: 따옴표 사용에 관련된 규칙 중, 작은 따옴표를 사용하도록 규칙을 적용하되, escape 문자를 사용할 수 있도록 설정합니다.
+// jsx-a11y/anchor-is-valid: 접근성 관련 규칙 중 유효하지 않은 href 속성을 가지고 있는 a 태그를 사용하는 경우 경고를 무시합니다.
+// no-console: console.log()와 같은 메서드를 사용하는 경우 경고를 무시합니다.
+// no-underscore-dangle: 언더스코어(_)를 변수나 메서드 이름에 사용하는 경우 경고를 무시합니다.
+// react/forbid-prop-types: propTypes에서 특정 타입을 사용하는 것을 금지하는 규칙을 무시합니다.
+// react/jsx-filename-extension: JSX를 포함하는 파일의 확장자를 지정하지 않아도 되도록 규칙을 무시합니다.
+// react/jsx

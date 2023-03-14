@@ -69,7 +69,6 @@ const AppLayout = ({ children }) => {
           <img src="./react.jpg" width="100%" height="200px" />
           <img src="./next.png" width="100%" height="200px" />
           <img src="./secal.png" width="100%" height="200px" />
-          <img src="./AWS.png" width="100%" height="200px" />
         </Col>
         <Col xs={24} md={11}>
           {children}

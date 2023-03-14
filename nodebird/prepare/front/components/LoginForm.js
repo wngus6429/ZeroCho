@@ -17,7 +17,6 @@ const ButtonWrapper = styled.div`
 const FormWrapper = styled(Form)`
   padding: 10px;
   background-color: #d2f698;
-
   & label {
     font-size: 15px;
   }
@@ -41,6 +40,10 @@ const LoginForm = () => {
   }, [email, password]);
   //Saga 랑, reducer가 거의 동시에 실행된다 보면됨
   //강의 : saga 쪼개고 reducer와 연결하기 11분경
+  // useCallback 훅은 함수를 메모이제이션하여 불필요한 렌더링을 방지하고 성능을 최적화합니다.
+  // 이 함수가 실행되는 경우, email과 password가 변경되었을 때만 함수를 새로운 값으로 다시 메모이제이션합니다.
+  // 이렇게 함으로써, onSubmitForm 함수가 불필요하게 매번 새로 생성되는 것을 방지하고
+  // 이전에 생성된 함수를 재사용하여 성능을 향상시킵니다.
 
   return (
     <FormWrapper onFinish={onSubmitForm}>

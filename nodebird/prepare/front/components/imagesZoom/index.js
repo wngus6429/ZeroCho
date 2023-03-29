@@ -18,20 +18,20 @@ const ImagesZoom = ({ images, onClose }) => {
             initialSlide={0}
             afterChange={(slide) => setcurrentSlide(slide)}
             infinite
-            arrows={true}
+            arrows={false}
             slidesToShow={1}
             slidesToScroll={1}
           >
             {images.map((v) => (
               <ImgWrapper key={v.src}>
-                <img style={{ maxHeight: "600px" }} src={`http://localhost:3065/${v.src}`} alt={v.src} />
+                <img style={{ maxHeight: '75vh' }} src={`http://localhost:3065/${v.src}`} alt={v.src} />
               </ImgWrapper>
             ))}
           </Slick>
           <Indicator>
             <div>
               {currentSlide + 1}
-              {""}/{images.length}
+              {''}/{images.length}
             </div>
           </Indicator>
         </div>

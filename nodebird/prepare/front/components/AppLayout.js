@@ -67,8 +67,6 @@ const AppLayout = ({ children }) => {
         <Col xs={24} md={7}>
           {me ? <UserProfile /> : <LoginForm />}
           <img src='./react.jpg' width='100%' height='200px' />
-          <img src='./next.png' width='100%' height='200px' />
-          <img src='./secal.png' width='100%' height='200px' />
         </Col>
         <Col xs={24} md={11}>
           {children}

@@ -1,14 +1,15 @@
 import styled, { createGlobalStyle } from "styled-components";
 import { CloseOutlined } from "@ant-design/icons";
-//스타일은 중요한 부분이 아니기에 여기다 모음
-//거기에 export 했으니 다른데서 쉽게 가져다 쓸수 있음
+// 스타일은 중요한 부분이 아니기에 여기다 모음
+// 거기에 export 했으니 다른데서 쉽게 가져다 쓸수 있음
 
-//함수는 func`` 백틱 두개로 호출 할수도 있다
-//밑에 styled.div``은 함수ㅋㅋ
+// 함수는 func`` 백틱 두개로 호출 할수도 있다
+// 밑에 styled.div``은 함수ㅋㅋ
 
-//react-slick은 기본 세팅 CSS 값이 있는데 그걸 덮어씌워야함
-//antd 에 webkit-transform, transform 때문에 전체 화면이 안되는거임
-//transform 안에다가 fixed가 들어가면, fixed를 제대로 못 잡음
+// react-slick은 기본 세팅 CSS 값이 있는데 그걸 덮어씌워야함
+// antd 에 webkit-transform, transform 때문에 전체 화면이 안되는거임
+// transform 안에다가 fixed가 들어가면, fixed를 제대로 못 잡음
+// 스타일 컴포넌트 createGlobalStyle를 이용하면 덮어씌우기 가능
 export const Global = createGlobalStyle`
   .slick-slide{
   display:inline-block;
@@ -33,7 +34,7 @@ export const Header = styled.header`
   position: relative;
   padding: 0;
   text-align: center;
-  //&는 안에라는 뜻임
+  // &는 안에라는 뜻임, 즉 Header안에 있는 h1
   & h1 {
     margin: 0;
     font-size: 17px;
@@ -66,7 +67,7 @@ export const ImgWrapper = styled.div`
   }
 `;
 
-//복수의 사진 중에서 몇번째거를 보고 있는지 판별
+// 복수의 사진 중에서 몇번째거를 보고 있는지 판별
 export const Indicator = styled.div`
   text-align: center;
   & > div {
@@ -81,3 +82,4 @@ export const Indicator = styled.div`
     font-size: 15px;
   }
 `;
+

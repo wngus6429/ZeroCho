@@ -32,6 +32,7 @@ const Home = () => {
       //   document.documentElement.clientHeight, //화면에서 보이는 길이
       //   document.documentElement.scrollHeight //총 길이, 맨 밑에 내렸을때 위 두개 더한게 이거
       // );
+      //! 끝에서 300픽셀 뺸 길이보다 더 많이 내렸으면
       if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
         if (hasMorePosts && !loadPostsLoading) {
           //이미 다 불러왔거나, 아니면 불러오는 중이면 더 이상 LOADPOSTREQUEST를 하지 못하게

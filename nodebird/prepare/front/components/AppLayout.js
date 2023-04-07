@@ -64,11 +64,11 @@ const AppLayout = ({ children }) => {
         </Menu.Item>
       </Menu>
       <Row gutter={8}>
-        <Col xs={24} md={7}>
+        <Col xs={24} md={6}>
           {me ? <UserProfile /> : <LoginForm />}
           <img src='./react.jpg' width='100%' height='200px' />
         </Col>
-        <Col xs={24} md={11}>
+        <Col xs={24} md={12}>
           {children}
         </Col>
         <Col xs={24} md={6}>

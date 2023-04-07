@@ -1,9 +1,7 @@
-const DataTypes = require("sequelize");
+const DataTypes = require('sequelize');
 const { Model } = DataTypes;
 
-module.exports = class Image extends (
-  Model
-) {
+module.exports = class Image extends Model {
   static init(sequelize) {
     return super.init(
       {
@@ -14,16 +12,16 @@ module.exports = class Image extends (
         },
       },
       {
-        modelName: "Image",
-        tableName: "images",
-        charset: "utf8",
-        collate: "utf8_general_ci",
+        modelName: 'Image',
+        tableName: 'images',
+        charset: 'utf8',
+        collate: 'utf8_general_ci', //!한글저장
         sequelize,
       }
     );
   }
   static associate(db) {
-    db.Image.belongsTo(db.Post);
+    db.Image.belongsTo(db.Post); //! 게시글이 1 이미지가 다수
   }
 };
 

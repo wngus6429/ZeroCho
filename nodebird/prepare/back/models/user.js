@@ -1,9 +1,7 @@
-const DataTypes = require("sequelize");
+const DataTypes = require('sequelize');
 const { Model } = DataTypes;
 
-module.exports = class User extends (
-  Model
-) {
+module.exports = class User extends Model {
   static init(sequelize) {
     return super.init(
       {
@@ -21,22 +19,25 @@ module.exports = class User extends (
           type: DataTypes.STRING(100),
           allowNull: false, // 필수
         },
+        //비밀번호는 암호화하면 길어지기 때문에 여유롭게 잡은거
       },
       {
-        modelName: "User",
-        tableName: "users",
-        charset: "utf8",
-        collate: "utf8_general_ci", // 한글 저장
+        modelName: 'User',
+        tableName: 'users',
+        charset: 'utf8',
+        collate: 'utf8_general_ci', // 한글 저장
         sequelize,
       }
     );
   }
   static associate(db) {
-    db.User.hasMany(db.Post);
-    db.User.hasMany(db.Comment);
-    db.User.belongsToMany(db.Post, { through: "Like", as: "Liked" });
-    db.User.belongsToMany(db.User, { through: "Follow", as: "Followers", foreignKey: "FollowingId" });
-    db.User.belongsToMany(db.User, { through: "Follow", as: "Followings", foreignKey: "FollowerId" });
+    db.User.hasMany(db.Post); //! 사람이 포스트를 여러개 가질 수 있다
+    db.User.hasMany(db.Comment); //! 사람이 코멘트를 여러개 가질 수 있다
+    db.User.belongsToMany(db.Post, { through: 'Like', as: 'Liked' }); //좋아요 관계
+    //! 같은거 할떄는 foreignkey를 붙여줘야한다
+    //! through는 테이블 이름을 바꾸는거고 foreignkey는 컬럼의 아이디를 바꿧다.
+    db.User.belongsToMany(db.User, { through: 'Follow', as: 'Followers', foreignKey: 'FollowingId' });
+    db.User.belongsToMany(db.User, { through: 'Follow', as: 'Followings', foreignKey: 'FollowerId' });
   }
 };
 

@@ -225,7 +225,7 @@ function* signUp(action) {
       type: SIGN_UP_SUCCESS,
     });
   } catch (err) {
-    console.error(err);
+    console.error('회원가입에러', err);
     yield put({
       type: SIGN_UP_FAILURE,
       error: err.response.data,

@@ -170,7 +170,7 @@ function logInAPI(data) {
 //굳이 yield를 안 붙여도되지만 붙이는 이유가 테스트 때문, 동작 보장이 되는가?
 function* logIn(action) {
   try {
-    console.log('Saga User.js');
+    console.log('Saga Login');
     const result = yield call(logInAPI, action.data); //이렇게 결과값 요청후 받음
     // yield delay(1000); //서버 만들어 질때까지 delay로 비동기 효과 주기
     yield put({

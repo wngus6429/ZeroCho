@@ -1,5 +1,5 @@
-import { all, fork, put, takeLatest, throttle, call } from "redux-saga/effects";
-import axios from "axios";
+import { all, fork, put, takeLatest, throttle, call } from 'redux-saga/effects';
+import axios from 'axios';
 import {
   LIKE_POST_REQUEST,
   LIKE_POST_SUCCESS,
@@ -37,8 +37,8 @@ import {
   RETWEET_REQUEST,
   RETWEET_SUCCESS,
   RETWEET_FAILURE,
-} from "../reducers/post";
-import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from "../reducers/user";
+} from '../reducers/post';
+import { ADD_POST_TO_ME, REMOVE_POST_OF_ME } from '../reducers/user';
 
 function retWeetAPI(data) {
   return axios.post(`/post/${data}/retweet`);
@@ -60,7 +60,7 @@ function* retWeet(action) {
 }
 
 function uploadImagesAPI(data) {
-  return axios.post("/post/images", data); //{name:data} 이렇게 하면 json이 되어버린다
+  return axios.post('/post/images', data); //{name:data} 이렇게 하면 json이 되어버린다
 }
 function* uploadImages(action) {
   try {
@@ -196,7 +196,7 @@ function* loadPosts(action) {
 }
 
 function addPostAPI(data) {
-  return axios.post("/post", data); //form데이터는 {} 이런걸로 감싸면 안됨
+  return axios.post('/post', data); //form데이터는 {} 이런걸로 감싸면 안됨
   //뒷부분을 저렇게 해줘야 req.body 안에 들어간다
 }
 function* addPost(action) {
@@ -337,5 +337,5 @@ export default function* postSaga() {
 }
 
 // function* watchAddPost() {
-//     yield throttle("LOG_POST_REQUEST", addPost, 2000); //2초동안 리퀘스트 딱 1번만
+//     yield throttle('LOG_POST_REQUEST', addPost, 2000); //2초동안 리퀘스트 딱 1번만
 // }

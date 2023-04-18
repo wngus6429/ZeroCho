@@ -64,7 +64,9 @@ app.use('/post', postRouter); // 앞에 "/post"를 붙임으로 인해서
 app.use('/user', userRouter);
 app.use('/hashtag', hashtagRouter);
 
-// 에러처리 미들웨어는 여기쯤에 내부적으로 있음
+//! 에러처리 미들웨어는 여기쯤에 내부적으로 있음
+//! 직접 할수 있다.
+// app.use((err, req, res, next) => {})
 
 app.listen(3065, () => {
   console.log('서버 실행 중!');

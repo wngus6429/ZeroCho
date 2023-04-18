@@ -13,7 +13,7 @@ module.exports = () => {
     //! 이 부분은 라우터 실행되기 전에 항상 움직이는거임. 인증
     try {
       const user = await User.findOne({ where: { id } });
-      done(null, user); //req.user
+      done(null, user); //! req.user를 만든다.
     } catch (error) {
       console.error(error);
       done(error);

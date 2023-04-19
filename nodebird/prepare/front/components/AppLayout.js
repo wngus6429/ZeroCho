@@ -68,7 +68,7 @@ const AppLayout = ({ children }) => {
           {me ? <UserProfile /> : <LoginForm />}
           <img src='./react.jpg' width='100%' height='200px' />
         </Col>
-        <Col xs={24} md={12}>
+        <Col xs={24} md={12} style={{ backgroundColor: 'white' }}>
           {children}
         </Col>
         <Col xs={24} md={6}>

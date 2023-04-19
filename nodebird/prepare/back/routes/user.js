@@ -6,7 +6,7 @@ const { User, Post, Image, Comment } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const router = express.Router();
 
-// Get /user
+// Get /user, 이 요청은 브라우저 새로고침 할때마다 보냄
 router.get('/', async (req, res, next) => {
   console.log(req.headers); // 여기안에 쿠키가 들어있음
   try {
@@ -32,7 +32,8 @@ router.get('/', async (req, res, next) => {
     next(error);
   }
 });
-// attributes: ['id']는 아이디만 가져오게끔. 팔로잉, 팔로워 숫자만 알면 되는데 데이터 다 가져오면 렉 + 데이터 사용량 증가
+// attributes: ['id']는 아이디만 가져오게끔. 팔로잉, 팔로워 숫자만 알면 되는데
+// 데이터 다 가져오면 렉 + 데이터 사용량 증가
 // 서버에서 프론트로 필요한 데이터만 보내주는거임
 
 router.get('/followers', isLoggedIn, async (req, res, next) => {

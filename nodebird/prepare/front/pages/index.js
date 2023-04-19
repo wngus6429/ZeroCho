@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react'; //next는 이거 없어도됨
-import AppLayout from '../components/AppLayout';
-import { useDispatch, useSelector } from 'react-redux';
 import { END } from 'redux-saga';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import wrapper from '../store/configureStore';
+import AppLayout from '../components/AppLayout';
 import PostCard from '../components/PostCard';
 import PostForm from '../components/PostForm';
 import { LOAD_POSTS_REQUEST } from '../reducers/post';
 import { LOAD_MY_INFO_REQUEST } from '../reducers/user';
-import wrapper from '../store/configureStore';
 
 //next는 pages라는 폴더를 인식한다 그래서 그 파일을 개별적인 페이지 컴포넌트로 만들어짐
 
@@ -76,6 +76,7 @@ export const getServerSideProps = wrapper.getServerSideProps(async (context) => 
     axios.defaults.headers.Cookie = cookie;
   } //저희가 실제로 쿠키를 써서 요청을 보낼때만 잠깐 쿠키를 넣어놧다가 쿠키를 안써서 요청보낼때는 서버에서 공유하고 있는 쿠키를 제거하는 이부분이 제일 중요
   ////////////////////////////////////////////////////////////////////////////////////////
+  //! 이 부분이 새로고침 해도 로그인 유지 하게 해주는것, routes/user.js 의 router.get('/',
   context.store.dispatch({
     type: LOAD_MY_INFO_REQUEST,
   });

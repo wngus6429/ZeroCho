@@ -250,7 +250,7 @@ router.post('/:postId/comment', isLoggedIn, async (req, res, next) => {
         },
       ],
     });
-    res.status(201).json(fullComment); //이렇게 프론트로 돌려주고 그러면 saga, addpost 의 const result 이쪽에 들어감
+    res.status(201).json(fullComment); //이렇게 프론트로 돌려주고 그러면 saga, addPost 의 const result 이쪽에 들어감
   } catch (error) {
     console.error(error);
     next(error);

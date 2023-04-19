@@ -26,7 +26,7 @@ passportConfig();
 app.use(morgan('dev'));
 app.use(
   cors({
-    origin: 'http:// localhost:9000',
+    origin: 'http://localhost:9000',
     credentials: true, // 이게 있어야 쿠키를 전달 할 수 있다
   })
 );

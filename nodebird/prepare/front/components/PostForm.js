@@ -38,8 +38,8 @@ const PostForm = () => {
   }, [imageInput.current]);
 
   const onChangeImages = useCallback((e) => {
-    console.log('images', e.target.files); //여기안에 이미지 파일 정보가 들어있음
-    const imageFormData = new FormData(); //이미지를 multipart로 안 올리면 multer가 처리를 안함
+    console.log('images', e.target.files); // 여기안에 이미지 파일 정보가 들어있음
+    const imageFormData = new FormData(); //! 이미지를 multipart로 안 올리면 multer가 처리를 안함
     [].forEach.call(e.target.files, (f) => {
       imageFormData.append('image', f); //앞에 image는 키다 router에서 image 문자일치 해야함
     });
@@ -61,6 +61,7 @@ const PostForm = () => {
     <Form style={{ margin: '10px 0 20px' }} encType='multipart/form-data' onFinish={onSubmit}>
       <Input.TextArea value={text} onChange={onChangeText} maxLength={140} placeholder='어떤 신기한 일이 있었나요?' />
       <div>
+        {/* 이미지 선택해서 확인을 누르면 onChange 작동 */}
         <input type='file' name='image' multiple hidden ref={imageInput} onChange={onChangeImages} />
         <Button onClick={onClickImageUpload}>이미지 업로드</Button>
         <Button type='primary' style={{ float: 'right' }} htmlType='submit'>

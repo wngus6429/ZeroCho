@@ -6,7 +6,7 @@ const { User, Post, Image, Comment } = require('../models');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const router = express.Router();
 
-// Get /user, 이 요청은 브라우저 새로고침 할때마다 보냄
+//! Get /user, 이 요청은 브라우저 새로고침 할때마다 보냄, 로그인 유지
 router.get('/', async (req, res, next) => {
   console.log(req.headers); // 여기안에 쿠키가 들어있음
   try {
@@ -36,12 +36,13 @@ router.get('/', async (req, res, next) => {
 // 데이터 다 가져오면 렉 + 데이터 사용량 증가
 // 서버에서 프론트로 필요한 데이터만 보내주는거임
 
+//! Profile.js 참조 GET /user/followers
 router.get('/followers', isLoggedIn, async (req, res, next) => {
-  //  GET /user/followers
   try {
-    const user = await User.findOne({ where: { id: req.user.id } }); // 나 먼저 찾고
+    // 나 먼저 찾고
+    const user = await User.findOne({ where: { id: req.user.id } });
     if (!user) {
-      res.status(403).send('없는 사람을 찾으려고 하시네요?');
+      return res.status(403).send('없는 사람을 찾으려고 하시네요?');
     }
     const followers = await user.getFollowers({ limit: parseInt(req.query.limit, 10) });
     res.status(200).json(followers);
@@ -50,12 +51,14 @@ router.get('/followers', isLoggedIn, async (req, res, next) => {
     next(error);
   }
 });
+//! Profile.js 참조
 router.get('/followings', isLoggedIn, async (req, res, next) => {
   //  GET /user/followings
   try {
-    const user = await User.findOne({ where: { id: req.user.id } }); // 나 먼저 찾고
+    //! 나 먼저 찾고
+    const user = await User.findOne({ where: { id: req.user.id } });
     if (!user) {
-      res.status(403).send('없는 사람을 찾으려고 하시네요?');
+      return res.status(403).send('없는 사람을 찾으려고 하시네요?');
     }
     const followings = await user.getFollowings({ limit: parseInt(req.query.limit, 10) });
     res.status(200).json(followings);
@@ -65,7 +68,7 @@ router.get('/followings', isLoggedIn, async (req, res, next) => {
   }
 });
 
-// Get /user/1
+//! 특정한 유저 검색 Get /user/1
 router.get('/:userId', async (req, res, next) => {
   try {
     // 로그인 안 했는데 매번 새로고침시 작동하면 where요쪽 에러
@@ -95,6 +98,7 @@ router.get('/:userId', async (req, res, next) => {
   }
 });
 
+//! 특정 유저의 글 검색
 // GET /user/1/posts
 router.get('/:userId/posts', async (req, res, next) => {
   try {
@@ -109,10 +113,8 @@ router.get('/:userId/posts', async (req, res, next) => {
       limit: 10, // 10개만 가져와라
       order: [['createdAt', 'DESC']], // 처음에는 게시글 생성일 내림차순으로 정렬한다음
       include: [
-        {
-          model: User, // 작성자정보
-          attributes: ['id', 'nickname'], // 작성자 비밀번호 보이면 안되니
-        },
+        // 작성자 비밀번호 보이면 안되니
+        { model: User, attributes: ['id', 'nickname'] },
         { model: Image },
         {
           model: Comment,
@@ -152,7 +154,7 @@ router.get('/:userId/posts', async (req, res, next) => {
   }
 });
 
-// 애매해서 로그인 포스트 // POST // post/user/login
+//! 로그인 기능, 포스트 // POST // post/user/login
 // 이게 미들웨어 확장이라고 한다.
 router.post('/login', isNotLoggedIn, (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
@@ -193,7 +195,7 @@ router.post('/login', isNotLoggedIn, (req, res, next) => {
   })(req, res, next);
 }); // local 뒤의 부분은 passport폴더 local의 done 내용이 온거
 
-// !post/user/ 회원가입
+//! 회원가입 기능 post/user/
 router.post('/', isNotLoggedIn, async (req, res, next) => {
   console.log('회원가입');
   try {
@@ -218,6 +220,7 @@ router.post('/', isNotLoggedIn, async (req, res, next) => {
   }
 });
 
+//! 로그아웃
 router.post('/logout', isLoggedIn, (req, res, next) => {
   console.log(req.user);
   req.logout();
@@ -225,9 +228,10 @@ router.post('/logout', isLoggedIn, (req, res, next) => {
   res.send('ok');
 });
 
+//! 닉네임 수정
 router.patch('/nickname', isLoggedIn, async (req, res, next) => {
   try {
-    await User.update({ nickname: req.body.nickname }, { where: { id: req.user.id } }); // 수정은 업데이트
+    await User.update({ nickname: req.body.nickname }, { where: { id: req.user.id } });
     res.status(200).json({ nickname: req.body.nickname }); // 여긴 바뀐닉네임 ㅋ
   } catch (error) {
     console.error(error);
@@ -235,6 +239,7 @@ router.patch('/nickname', isLoggedIn, async (req, res, next) => {
   }
 });
 
+//! 팔로우
 router.patch('/:userId/follow', isLoggedIn, async (req, res, next) => {
   //  PATCH /user/1/follow
   try {
@@ -249,6 +254,8 @@ router.patch('/:userId/follow', isLoggedIn, async (req, res, next) => {
     next(error);
   }
 });
+
+//! 언팔로우
 router.delete('/:userId/follow', isLoggedIn, async (req, res, next) => {
   //  DELETE /user/1/follow
   try {
@@ -264,8 +271,8 @@ router.delete('/:userId/follow', isLoggedIn, async (req, res, next) => {
   }
 });
 
+//! 팔로워 삭제 DELETE /user/follower/2
 router.delete('/follower/:userId', isLoggedIn, async (req, res, next) => {
-  //  DELETE /user/follower/2
   try {
     const user = await User.findOne({ where: { id: req.params.userId } });
     if (!user) {

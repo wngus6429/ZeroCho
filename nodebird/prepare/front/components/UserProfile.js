@@ -1,8 +1,8 @@
-import React, { useCallback } from "react";
-import { Card, Avatar, Button } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import { logoutRequestAction } from "../reducers/user";
-import Link from "next/link";
+import React, { useCallback } from 'react';
+import { Card, Avatar, Button } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import Link from 'next/link';
+import { logoutRequestAction } from '../reducers/user';
 
 const UserProfile = () => {
   const { me, logOutLoading } = useSelector((state) => state.user);
@@ -14,9 +14,9 @@ const UserProfile = () => {
 
   return (
     <Card
-      style={{ backgroundColor: "#DEFEF9" }}
+      style={{ backgroundColor: '#DEFEF9' }}
       actions={[
-        <div key="twit">
+        <div key='twit'>
           <Link href={`/user/${me.id}`}>
             <a>
               짹짹
@@ -25,8 +25,8 @@ const UserProfile = () => {
             </a>
           </Link>
         </div>,
-        <div key="followings">
-          <Link href="/profile">
+        <div key='followings'>
+          <Link href='/profile'>
             <a>
               팔로잉
               <br />
@@ -34,8 +34,8 @@ const UserProfile = () => {
             </a>
           </Link>
         </div>,
-        <div key="followings">
-          <Link href="/profile">
+        <div key='followings'>
+          <Link href='/profile'>
             <a>
               팔로워
               <br />

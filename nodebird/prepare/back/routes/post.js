@@ -28,7 +28,7 @@ const upload = multer({
     },
   }),
   limits: { fileSize: 15 * 1024 * 1024 }, //15MB
-}); //대형 서비스되면 프론트에서 바로 클라우드로 가는 방법 써야함
+}); // 대형 서비스되면 프론트에서 바로 클라우드로 가는 방법 써야함
 
 router.post('/', isLoggedIn, upload.none(), async (req, res, next) => {
   try {
@@ -36,29 +36,28 @@ router.post('/', isLoggedIn, upload.none(), async (req, res, next) => {
     const post = await Post.create({
       content: req.body.content,
       UserId: req.user.id, //! passport/index 16줄에 req.user 생성
-    }); //slice(1)은 앞에 해시태그 #를 떼버리는거 , 소문자, 대문자 둘다 되게 하기 위해 소문자 toLowerCase
+    }); // slice(1)은 앞에 해시태그 #를 떼버리는거 , 소문자, 대문자 둘다 되게 하기 위해 소문자 toLowerCase
     if (hashtags) {
-      //해시태그 누가 등록 해뒀으면 등록하지말고, DB에 없으면 그때서야 등록하게 해야함/
+      //! 해시태그 누가 등록 해뒀으면 등록하지말고, DB에 없으면 그때서야 등록하게 해야함
       const result = await Promise.all(
         hashtags.map((tag) =>
           Hashtag.findOrCreate({
             where: { name: tag.slice(1).toLowerCase() },
           })
-        )
-      ); //뒤에 map한게 위에 findOrCreate때문, //[#노드, true],[#리액트, true] 두번째게 생성된건지 find된건지 불리언값
-      //배열에서 첫번째값만 가져오기위해
+        ) // [#노드, true],[#리액트, true] 두번째게 생성된건지 find된건지 불리언값
+      ); // 뒤에 map한게 위에 findOrCreate때문,
+      // 배열에서 첫번째값만 가져오기위해
       await post.addHashtags(result.map((v) => v[0]));
     }
     if (req.body.image) {
-      //이미지를 올린경우
-      //post에 내용을 추가하기 위한 코드들
+      // 이미지를 올린경우, post에 내용을 추가하기 위한 코드들
       if (Array.isArray(req.body.image)) {
-        //이미지를 여러개 올리면 image:[제로초.png, 부기초.png] 이런식으로 옴
+        // 이미지를 여러개 올리면 image:[제로초.png, 부기초.png] 이런식으로 옴
         const images = await Promise.all(req.body.image.map((image) => Image.create({ src: image })));
-        //create는 시퀄라이즈 . promise.all로 한방에 DB에 저장된다 // DB에는 파일주소만 현재
+        // create는 시퀄라이즈, promise.all로 한방에 DB에 저장된다 // DB에는 파일주소만 현재
         await post.addImages(images);
       } else {
-        //이미지를 하나만 올리면 image:제로초.png 배열이 아님
+        // 이미지를 하나만 올리면 image:제로초.png 배열이 아님
         const image = await Image.create({ src: req.body.image });
         await post.addImages(image);
       }
@@ -66,27 +65,13 @@ router.post('/', isLoggedIn, upload.none(), async (req, res, next) => {
     const fullPost = await Post.findOne({
       where: { id: post.id },
       include: [
-        {
-          model: Image,
-        },
-        {
-          model: Comment,
-          include: [
-            {
-              model: User, //댓글 작성자
-              attributes: ['id', 'nickname'],
-            },
-          ],
-        },
-        {
-          model: User, //게시글 작성자
-          attributes: ['id', 'nickname'],
-        },
-        {
-          model: User, //좋아요 누른사람
-          as: 'Likers', //이렇게 해야 구별이됨
-          attributes: ['id'],
-        },
+        { model: Image }, // 이미지 정보가 알아서 post.images로 들어감
+        // 댓글 작성자
+        { model: Comment, include: [{ model: User, attributes: ['id', 'nickname'] }] },
+        // 게시글 작성자
+        { model: User, attributes: ['id', 'nickname'] },
+        //! 이게 있어야 post.Likers가 생긴다. 좋아요 누른사람, as를 해야 구별이됨
+        { model: User, as: 'Likers', attributes: ['id'] },
       ],
     });
     console.log('게시글작성', fullPost);
@@ -97,8 +82,8 @@ router.post('/', isLoggedIn, upload.none(), async (req, res, next) => {
   }
 });
 
-//Post /post/images , array쓰는 이유는 여러장, single 쓰면 한장, 텍스트면 none
-//field는 이미지 올리는 칸이 2개 이상일 경우
+//! Post /post/images , array쓰는 이유는 여러장, single 쓰면 한장, 텍스트면 none
+//! field는 이미지 올리는 칸이 2개 이상일 경우
 router.post('/images', isLoggedIn, upload.array('image'), (req, res, next) => {
   //여기는 이미지 업로드 후에 실행된다
   console.log(req.files);
@@ -257,15 +242,15 @@ router.post('/:postId/comment', isLoggedIn, async (req, res, next) => {
   }
 });
 
-//PATCH /post/1/like
+// PATCH /post/1/like 좋아요
 router.patch('/:postId/like', isLoggedIn, async (req, res, next) => {
   try {
+    //! post 있는지 검사를 해야지
     const post = await Post.findOne({ where: { id: req.params.postId } });
-    //post 있는지 검사를 해야지
     if (!post) {
       return res.status(403).send('게시글이 존재하지 않습니다.');
     }
-    //포스트가 있따면
+    //! 포스트가 있다면
     await post.addLikers(req.user.id);
     res.json({ PostId: post.id, UserId: req.user.id });
   } catch (error) {
@@ -274,15 +259,15 @@ router.patch('/:postId/like', isLoggedIn, async (req, res, next) => {
   }
 });
 
-//DELETE /post/1/like
+// DELETE /post/1/unlike 좋아요 취소
 router.delete('/:postId/like', isLoggedIn, async (req, res, next) => {
   try {
+    //! post 있는지 검사를 해야지
     const post = await Post.findOne({ where: { id: req.params.postId } });
-    //post 있는지 검사를 해야지
     if (!post) {
       return res.status(403).send('게시글이 존재하지 않습니다.');
     }
-    await post.removeLikers(req.user.id); //여기다가 그냥 SQL 적어도됨. mysql2 확인
+    await post.removeLikers(req.user.id); // 여기다가 그냥 SQL 적어도됨. mysql2 확인
     res.json({ PostId: post.id, UserId: req.user.id });
   } catch (error) {
     console.error(error);
@@ -328,11 +313,11 @@ router.patch('/:postId', isLoggedIn, async (req, res, next) => {
 router.delete('/:postId', isLoggedIn, async (req, res, next) => {
   try {
     await Post.destroy({
-      //시퀄라이즈에서는 제거할때 destory를 쓴다 , 남이 삭제 못하게 2개로
+      //! 시퀄라이즈에서는 제거할때 destory를 쓴다, 남이 삭제 못하게 2개로
       where: {
         id: req.params.postId,
         UserId: req.user.id,
-      }, //게시글 id랑, 내가 쓸 게시글
+      }, // 게시글 id랑, 내가 쓸 게시글
     });
     res.status(200).json({ PostId: parseInt(req.params.postId, 10) });
   } catch (error) {

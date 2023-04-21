@@ -15,7 +15,6 @@ const FollowList = ({ header, data, onClickMore, loading }) => {
       });
     } else {
       dispatch({
-        //이건 팔로워
         type: REMOVE_FOLLOWER_REQUEST,
         data: id,
       });
@@ -43,7 +42,7 @@ const FollowList = ({ header, data, onClickMore, loading }) => {
           </Card>
         </List.Item>
       )}
-    ></List>
+    />
   );
 };
 //반복문 안에서 onclick있으면 반복문에 대한 데이터를 onClick으로 넘겨줘야함

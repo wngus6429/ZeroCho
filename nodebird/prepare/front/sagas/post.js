@@ -80,7 +80,7 @@ function* uploadImages(action) {
 
 function likePostAPI(data) {
   return axios.patch(`/post/${data}/like`);
-} //게시글의 일부분 수정하는거라 patch이다
+} //! 게시글의 일부분 수정하는거라 patch이다
 function* likePost(action) {
   try {
     const result = yield call(likePostAPI, action.data);

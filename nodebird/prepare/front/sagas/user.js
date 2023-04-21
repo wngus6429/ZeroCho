@@ -1,6 +1,7 @@
 import { all, fork, delay, put, takeLatest, call } from 'redux-saga/effects';
 //여기안에 delay, debounce, throttle, takeLastest, takeEvery, takeMaybe 같은것도 있음
 //지금 적은것들이 사가의 effect라 불림
+import axios from 'axios';
 import {
   LOAD_MY_INFO_REQUEST,
   LOAD_MY_INFO_SUCCESS,
@@ -36,7 +37,6 @@ import {
   REMOVE_FOLLOWER_SUCCESS,
   REMOVE_FOLLOWER_FAILURE,
 } from '../reducers/user';
-import axios from 'axios';
 //이거는 컴바인 리듀스 같은게 필요 없음.
 
 function removeFollowerAPI(data) {
@@ -95,7 +95,7 @@ function* loadFollowings(action) {
     });
   }
 }
-
+//! 닉네임 변경
 function changeNicknameAPI(data) {
   return axios.patch('/user/nickname', { nickname: data });
 }

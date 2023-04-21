@@ -1,8 +1,8 @@
-import React, { useCallback, useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import Link from "next/link";
-import { useSelector } from "react-redux";
-import { Input, Button } from "antd";
+import React, { useCallback, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import Link from 'next/link';
+import { useSelector } from 'react-redux';
+import { Input, Button } from 'antd';
 
 const { TextArea } = Input;
 const PostCardContent = ({ postData, editMode, onCancelUpdate, onChangePost }) => {
@@ -26,10 +26,10 @@ const PostCardContent = ({ postData, editMode, onCancelUpdate, onChangePost }) =
           <TextArea value={editText} onChange={onChangeText} />
           <Button.Group>
             <Button loading={updatePostLoading} onClick={onChangePost(editText)}>
-              修正
+              수정
             </Button>
-            <Button type="danger" onClick={onCancelUpdate}>
-              取り消し
+            <Button type='danger' onClick={onCancelUpdate}>
+              취소
             </Button>
           </Button.Group>
         </>

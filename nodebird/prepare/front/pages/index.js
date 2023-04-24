@@ -35,8 +35,9 @@ const Home = () => {
       //! 끝에서 300픽셀 뺸 길이보다 더 많이 내렸으면
       if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
         if (hasMorePosts && !loadPostsLoading) {
-          //이미 다 불러왔거나, 아니면 불러오는 중이면 더 이상 LOADPOSTREQUEST를 하지 못하게
-          const lastId = mainPosts[mainPosts.length - 1]?.id; //마지막 게시글의 ID /게시글이0일때를 고려해서 ?넣어줌
+          // 이미 다 불러왔거나, 아니면 불러오는 중이면 더 이상 LOADPOSTREQUEST를 하지 못하게
+          const lastId = mainPosts[mainPosts.length - 1]?.id;
+          //! 마지막 게시글의 ID , 게시글이 0(없을떄) 일때를 고려해서 ?넣어줌
           dispatch({
             type: LOAD_POSTS_REQUEST,
             lastId,

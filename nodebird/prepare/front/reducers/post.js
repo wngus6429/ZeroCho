@@ -256,6 +256,8 @@ const reducer = (state = initialState, action) =>
         draft.loadPostsDone = true;
         draft.mainPosts = draft.mainPosts.concat(action.data);
         draft.hasMorePosts = action.data.length === 10;
+        // 10개보다 적게 불러오면 그 뒤는 없는거니까, 10의 배수의 게시글 있을떄
+        // 그냥 스크롤 내리면 hasMorePosts가 false가 되니 노상관
         break;
       case LOAD_USER_POSTS_FAILURE:
       case LOAD_HASHTAG_POSTS_FAILURE:

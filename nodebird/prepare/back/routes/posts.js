@@ -10,8 +10,9 @@ router.get('/', async (req, res, next) => {
     const where = {}; // 초기로딩 ㅋㅋ 쿼리스트링 5분
     // lastId 에서 10개 받아오기, 지금 소스상 lastId보다 적은 숫자 10개 불러오기
     if (parseInt(req.query.lastId, 10)) {
-      // 초기 로딩이 아닐 때 // 스크롤 내려서 더 불러오는 상황
-      where.id = { [Op.lt]: parseInt(req.query.lastId, 10) }; // 보다 작은
+      // 뒤에 10은 parseInt임
+      //! 초기 로딩이 아닐 때, 더 불러와야 하는 상황, 스크롤 내려서 더 불러오는 상황
+      where.id = { [Op.lt]: parseInt(req.query.lastId, 10) }; //! 보다 작은 표현임
     } // lastId가 12면 12보다 작은거 부름
     // id가 라스트아이디보다 작은걸로 10개를 불러와라 // Op는 operator
     const posts = await Post.findAll({

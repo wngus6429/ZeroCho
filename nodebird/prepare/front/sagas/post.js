@@ -175,10 +175,10 @@ function* loadHashtagPosts(action) {
 }
 
 function loadPostsAPI(lastId) {
-  return axios.get(`/posts?lastId=${lastId || 0}`); //lastId가 undefined일 경우 0
-} //get에서 데이터를 넣을려면 주소뒤에 ?를 찍고 key는 값
-//주소만봐도 데이터가 담겨있어서 주소를 캐싱하면 데이터까지 같이 캐싱이됨
-//post. put.patch는 데이터캐싱이 안되는데 .get은 데이터캐싱도 할수 있어서 이점이 있다
+  return axios.get(`/posts?lastId=${lastId || 0}`); // lastId가 undefined일 경우 0
+} //! get에서 데이터를 넣을려면 주소뒤에 ?를 찍고 key는 값
+//! 주소만봐도 데이터가 담겨있어서 주소를 캐싱하면 데이터까지 같이 캐싱이됨
+//! post. put.patch는 데이터캐싱이 안되는데 .get은 데이터캐싱도 할수 있어서 이점이 있다
 function* loadPosts(action) {
   try {
     const result = yield call(loadPostsAPI, action.lastId);

@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Card, Popover, Avatar, List, Comment } from 'antd';
 import { RetweetOutlined, HeartOutlined, HeartTwoTone, MessageOutlined, EllipsisOutlined } from '@ant-design/icons';
+import Link from 'next/link';
+import moment from 'moment';
 import PostImages from './PostImages';
 import CommentForm from './CommentForm';
 import PostCardContent from './PostCardContent';
-import Link from 'next/link';
-import moment from 'moment';
 import { LIKE_POST_REQUEST, REMOVE_POST_REQUEST, UNLIKE_POST_REQUEST, RETWEET_REQUEST, UPDATE_POST_REQUEST } from '../reducers/post';
 import FollowButton from './FollowButton';
 
@@ -16,11 +16,12 @@ moment.locale('ko'); //한글로 바꿔줌
 const PostCard = ({ post }) => {
   const dispatch = useDispatch();
   const { removePostLoading } = useSelector((state) => state.post);
-  const [commentFormOpened, setcommentFormOpened] = useState(false);
+  const [commentFormOpened, setCommentFormOpened] = useState(false);
   const id = useSelector((state) => state.user.me?.id);
   const [editMode, setEditMode] = useState(false);
   //me.id가 있으면 그 데이터가 들어가고 없으면 undefined
   //옵셔널 체이닝 연산자라고 한다. optional chaining
+
   const onClickUpdate = useCallback(() => {
     setEditMode(true);
   }, []);
@@ -58,6 +59,11 @@ const PostCard = ({ post }) => {
       data: post.id,
     });
   }, [id]);
+
+  const onToggleComment = useCallback(() => {
+    setCommentFormOpened((prev) => !prev); //이렇게 하면 true는 false로 false는 true로 함
+  }, []);
+
   const onRemovePost = useCallback(() => {
     if (!id) {
       return alert('로그인이 필요합니다');
@@ -67,9 +73,6 @@ const PostCard = ({ post }) => {
       data: post.id,
     });
   }, [id]);
-  const onToggleComment = useCallback(() => {
-    setcommentFormOpened((prev) => !prev); //이렇게 하면 true는 false로 false는 true로 함
-  }, []);
 
   const onRetweet = useCallback(() => {
     if (!id) {
@@ -80,6 +83,7 @@ const PostCard = ({ post }) => {
       data: post.id,
     });
   }, [id]);
+
   //! 게시글 좋아요 누른 사람들 중에 내가 있는지
   const liked = post.Likers.find((v) => v.id === id);
   return (
@@ -110,11 +114,11 @@ const PostCard = ({ post }) => {
             <EllipsisOutlined />
           </Popover>,
         ]}
-        title={post.RetweetId ? `${post.User.nickname}님이 리트윗 하셨습니다` : null}
+        title={post.RetweetId ? `${post.User.nickname}님이 리트윗하셨습니다.` : null}
         extra={id && <FollowButton post={post} />}
       >
-        {post.RetweetId && post.Retweent ? (
-          //리트윗인 경우에는 카드안에 카드를 넣어준것임
+        {post.RetweetId && post.Retweet ? (
+          //! 리트윗인 경우에는 카드안에 카드를 넣어준것임
           <Card cover={post.Retweet.Images[0] && <PostImages images={post.Retweet.Images} />}>
             <div style={{ float: 'right' }}>{moment(post.createdAt).format('YYYY.MM.DD')}</div>
             <Card.Meta
@@ -161,7 +165,7 @@ const PostCard = ({ post }) => {
                 <Comment
                   author={item.User.nickname}
                   avatar={
-                    <Link href={`/user/${item.User.id}`}>
+                    <Link href={`/user/${item.User.id}`} prefetch={false}>
                       <a>
                         <Avatar>{item.User.nickname[0]}</Avatar>
                       </a>

@@ -130,7 +130,7 @@ function* loadPost(action) {
     console.error(err);
     yield put({
       type: LOAD_POST_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }
@@ -149,7 +149,7 @@ function* loadUserPosts(action) {
     console.error(err);
     yield put({
       type: LOAD_USER_POSTS_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }
@@ -169,7 +169,7 @@ function* loadHashtagPosts(action) {
     console.error(err);
     yield put({
       type: LOAD_HASHTAG_POSTS_FAILURE,
-      data: err.response.data,
+      error: err.response.data,
     });
   }
 }

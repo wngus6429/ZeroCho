@@ -145,7 +145,7 @@ router.get('/:postId', async (req, res, next) => {
 router.post('/:postId/retweet', isLoggedIn, async (req, res, next) => {
   try {
     const post = await Post.findOne({
-      where: { id: req.params.postId }, //위에가 :postId니까
+      where: { id: req.params.postId }, // 위에가 :postId니까
       include: [
         {
           model: Post,
@@ -154,13 +154,13 @@ router.post('/:postId/retweet', isLoggedIn, async (req, res, next) => {
       ],
     });
     if (!post) {
-      //post가 존재하지 않으면
+      // post가 존재하지 않으면
       return res.status(403).send('존재하지 않는 게시글입니다.');
-    } //자기개시글을 직접 리트윗하는것. 자기게시글을 남이 리트윗한것을 자기가 다시 리트윗 하는걸 막을거임
+    } //! 자기개시글을 직접 리트윗하는것. 자기게시글을 남이 리트윗한것을 자기가 다시 리트윗 하는걸 막을거임
     if (req.user.id === post.UserId || (post.Retweet && post.Retweet.UserId === req.user.id)) {
-      return res.status(403).send('자신의 글을 리트윗할 수 없습니다');
-    } //게시글이 리트윗한건지 찾아보고 그거면 리트윗아이디를 쓰고 아니면 null인 애들은 post.id를 쓰고
-    const retweetTargetId = post.RetweetId || post.id; //남의게시글을 다른 사람이 리트윗한거를 그걸 다시 리트윗 한거
+      return res.status(403).send('자신의 글은 리트윗할 수 없습니다.');
+    } //! 게시글이 리트윗한건지 찾아보고 그거면 리트윗아이디를 쓰고 아니면 null인 애들은 post.id를 쓰고
+    const retweetTargetId = post.RetweetId || post.id; // 남의게시글을 다른 사람이 리트윗한거를 그걸 다시 리트윗 한거
     const exPost = await Post.findOne({
       where: {
         UserId: req.user.id,
@@ -168,7 +168,7 @@ router.post('/:postId/retweet', isLoggedIn, async (req, res, next) => {
       },
     });
     if (exPost) {
-      return res.status(403).send('이미 리트윗 했습니다');
+      return res.status(403).send('이미 리트윗했습니다.');
     }
     const retweet = await Post.create({
       UserId: req.user.id,
@@ -194,6 +194,11 @@ router.post('/:postId/retweet', isLoggedIn, async (req, res, next) => {
         {
           model: User,
           attributes: ['id', 'nickname'],
+        },
+        {
+          model: User, // 좋아요 누른 사람
+          as: 'Likers',
+          attributes: ['id'],
         },
         {
           model: Image,

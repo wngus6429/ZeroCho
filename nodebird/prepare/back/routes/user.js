@@ -84,9 +84,10 @@ router.get('/:userId', async (req, res, next) => {
       ],
     });
     if (fullUserWithoutPassword) {
-      const data = fullUserWithoutPassword.toJSON(); // 시퀄라이즈에서 온 데이터는 toJson()으로 json으로 바꿔야함
-      data.Posts = data.Posts.length; // 개인정보 침해 예방
-      data.Followings = data.Followings.length;
+      //! 시퀄라이즈에서 온 데이터는 toJson()으로 json으로 바꿔야함
+      const data = fullUserWithoutPassword.toJSON();
+      data.Posts = data.Posts.length; //! id가 보이면 안되니까. 단순 length만 넘겨준다.
+      data.Followings = data.Followings.length; // 개인정보 침해 예방
       data.Followers = data.Followers.length;
       res.status(200).json(data); // 사용자가 있으면 보내주고
     } else {
@@ -222,7 +223,6 @@ router.post('/', isNotLoggedIn, async (req, res, next) => {
 
 //! 로그아웃
 router.post('/logout', isLoggedIn, (req, res, next) => {
-  console.log(req.user);
   req.logout();
   req.session.destroy();
   res.send('ok');

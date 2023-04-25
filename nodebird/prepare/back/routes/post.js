@@ -92,12 +92,12 @@ router.post('/images', isLoggedIn, upload.array('image'), (req, res, next) => {
 
 //SinglePost //GET /post/1   , 1번게시글 가져오기
 router.get('/:postId', async (req, res, next) => {
+  // GET /post/1
   try {
     const post = await Post.findOne({
       where: { id: req.params.postId },
     });
     if (!post) {
-      //post가 존재하지 않으면
       return res.status(404).send('존재하지 않는 게시글입니다.');
     }
     const fullPost = await Post.findOne({
@@ -130,7 +130,12 @@ router.get('/:postId', async (req, res, next) => {
         },
         {
           model: Comment,
-          include: [{ model: User, attributes: ['id', 'nickname'] }],
+          include: [
+            {
+              model: User,
+              attributes: ['id', 'nickname'],
+            },
+          ],
         },
       ],
     });

@@ -88,8 +88,8 @@ const User = () => {
 };
 
 export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
-  const cookie = context.req ? context.req.headers.cookie : "";
-  axios.defaults.headers.Cookie = "";
+  const cookie = context.req ? context.req.headers.cookie : '';
+  axios.defaults.headers.Cookie = '';
   if (context.req && cookie) {
     axios.defaults.headers.Cookie = cookie;
   }
@@ -106,7 +106,7 @@ export const getServerSideProps = wrapper.getServerSideProps(async (context) => 
   });
   context.store.dispatch(END);
   await context.store.sagaTask.toPromise();
-  console.log("getState", context.store.getState().post.mainPosts);
+  console.log('getState', context.store.getState().post.mainPosts);
   return { props: {} };
 });
 

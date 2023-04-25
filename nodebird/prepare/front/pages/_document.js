@@ -10,8 +10,7 @@ export default class MyDocument extends Document {
     const sheet = new ServerStyleSheet();
     const originalRenderPage = ctx.renderPage;
     try {
-      ctx.renderPage = () =>
-        originalRenderPage({
+      ctx.renderPage = () => originalRenderPage({
           enhanceApp: (App) => (props) => sheet.collectStyles(<App {...props} />),
         }); //이 try부분으로 원래 Document기능에다가 스타일 컴포넌트를 서버사이드랜더링 할수 있게 해주는 기능
       const initialProps = await Document.getInitialProps(ctx);

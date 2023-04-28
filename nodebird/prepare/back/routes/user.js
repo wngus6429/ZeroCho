@@ -127,23 +127,12 @@ router.get('/:userId/posts', async (req, res, next) => {
             },
           ],
         },
-        {
-          model: User, // 좋아요 누른사람
-          as: 'Likers',
-          attributes: ['id'],
-        },
+        // 좋아요 누른사람
+        { model: User, as: 'Likers', attributes: ['id'] },
         {
           model: Post,
           as: 'Retweet',
-          include: [
-            {
-              model: User,
-              attributes: ['id', 'nickname'],
-            },
-            {
-              model: Image,
-            },
-          ],
+          include: [{ model: User, attributes: ['id', 'nickname'] }, { model: Image }],
         },
       ],
     });

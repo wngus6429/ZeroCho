@@ -106,36 +106,14 @@ router.get('/:postId', async (req, res, next) => {
         {
           model: Post,
           as: 'Retweet',
-          include: [
-            {
-              model: User,
-              attributes: ['id', 'nickname'],
-            },
-            {
-              model: Image,
-            },
-          ],
+          include: [{ model: User, attributes: ['id', 'nickname'] }, { model: Image }],
         },
-        {
-          model: User,
-          attributes: ['id', 'nickname'],
-        },
-        {
-          model: User,
-          as: 'Likers',
-          attributes: ['id', 'nickname'],
-        },
-        {
-          model: Image,
-        },
+        { model: User, attributes: ['id', 'nickname'] },
+        { model: User, as: 'Likers', attributes: ['id', 'nickname'] },
+        { model: Image },
         {
           model: Comment,
-          include: [
-            {
-              model: User,
-              attributes: ['id', 'nickname'],
-            },
-          ],
+          include: [{ model: User, attributes: ['id', 'nickname'] }],
         },
       ],
     });
@@ -186,32 +164,13 @@ router.post('/:postId/retweet', isLoggedIn, async (req, res, next) => {
         {
           model: Post,
           as: 'Retweet',
-          include: [
-            {
-              model: User,
-              attributes: ['id', 'nickname'],
-            },
-            {
-              model: Image,
-            },
-          ],
+          include: [{ model: User, attributes: ['id', 'nickname'] }, { model: Image }],
         },
-        {
-          model: User,
-          attributes: ['id', 'nickname'],
-        },
-        {
-          model: User, // 좋아요 누른 사람
-          as: 'Likers',
-          attributes: ['id'],
-        },
-        {
-          model: Image,
-        },
-        {
-          model: Comment,
-          include: [{ model: User, attributes: ['id', 'nickname'] }],
-        },
+        { model: User, attributes: ['id', 'nickname'] },
+        // 좋아요 누른 사람
+        { model: User, as: 'Likers', attributes: ['id'] },
+        { model: Image },
+        { model: Comment, include: [{ model: User, attributes: ['id', 'nickname'] }] },
       ],
     });
     res.status(201).json(retweetWithPrevPost);

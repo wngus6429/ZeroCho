@@ -1,12 +1,10 @@
-const express = require("express");
-const { Op } = require("sequelize");
-
-const { Post, Hashtag, Image, Comment, User } = require("../models");
-
+const express = require('express');
+const { Op } = require('sequelize');
+const { Post, Hashtag, Image, Comment, User } = require('../models');
 const router = express.Router();
 
 //GET /hashtag/노드 /해시태그 검색
-router.get("/:hashtag", async (req, res, next) => {
+router.get('/:hashtag', async (req, res, next) => {
   try {
     const where = {}; //초기로딩 ㅋㅋ 쿼리스트링 5분
     if (parseInt(req.query.lastId, 10)) {
@@ -17,13 +15,13 @@ router.get("/:hashtag", async (req, res, next) => {
     const posts = await Post.findAll({
       where,
       limit: 10, //10개만 가져와라
-      order: [["createdAt", "DESC"]],
+      order: [['createdAt', 'DESC']],
       include: [
         //include한 애를 조건으로 적용할 수 있다
         { model: Hashtag, where: { name: decodeURIComponent(req.params.hashtag) } },
         {
           model: User, //작성자정보
-          attributes: ["id", "nickname"], //작성자 비밀번호 보이면 안되니
+          attributes: ['id', 'nickname'], //작성자 비밀번호 보이면 안되니
         },
         { model: Image },
         {
@@ -31,27 +29,16 @@ router.get("/:hashtag", async (req, res, next) => {
           include: [
             {
               model: User,
-              attributes: ["id", "nickname"], //작성자 비밀번호 보이면 안되니
+              attributes: ['id', 'nickname'], //작성자 비밀번호 보이면 안되니
             },
           ],
         },
-        {
-          model: User, //좋아요 누른사람
-          as: "Likers",
-          attributes: ["id"],
-        },
+        //좋아요 누른사람
+        { model: User, as: 'Likers', attributes: ['id'] },
         {
           model: Post,
-          as: "Retweet",
-          include: [
-            {
-              model: User,
-              attributes: ["id", "nickname"],
-            },
-            {
-              model: Image,
-            },
-          ],
+          as: 'Retweet',
+          include: [{ model: User, attributes: ['id', 'nickname'] }, { model: Image }],
         },
       ],
     });

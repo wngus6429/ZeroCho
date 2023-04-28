@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/router";
-import { END } from "redux-saga";
-import axios from "axios";
-import { LOAD_HASHTAG_POSTS_REQUEST } from "../../reducers/post";
-import PostCard from "../../components/PostCard";
-import wrapper from "../../store/configureStore";
-import { LOAD_MY_INFO_REQUEST } from "../../reducers/user";
-import AppLayout from "../../components/AppLayout";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
+import { END } from 'redux-saga';
+import axios from 'axios';
+import { LOAD_HASHTAG_POSTS_REQUEST } from '../../reducers/post';
+import PostCard from '../../components/PostCard';
+import wrapper from '../../store/configureStore';
+import { LOAD_MY_INFO_REQUEST } from '../../reducers/user';
+import AppLayout from '../../components/AppLayout';
 // hashtag/[tag]
 const Hashtag = () => {
   const dispatch = useDispatch();
@@ -17,10 +17,7 @@ const Hashtag = () => {
 
   useEffect(() => {
     const onScroll = () => {
-      if (
-        window.pageYOffset + document.documentElement.clientHeight >
-        document.documentElement.scrollHeight - 300
-      ) {
+      if (window.pageYOffset + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300) {
         if (hasMorePosts && !loadPostsLoading) {
           dispatch({
             type: LOAD_HASHTAG_POSTS_REQUEST,
@@ -30,9 +27,9 @@ const Hashtag = () => {
         }
       }
     };
-    window.addEventListener("scroll", onScroll);
+    window.addEventListener('scroll', onScroll);
     return () => {
-      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener('scroll', onScroll);
     };
   }, [mainPosts.length, hasMorePosts, tag, loadPostsLoading]);
 
@@ -48,8 +45,8 @@ const Hashtag = () => {
 
 export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
   console.log(context);
-  const cookie = context.req ? context.req.headers.cookie : "";
-  axios.defaults.headers.Cookie = "";
+  const cookie = context.req ? context.req.headers.cookie : '';
+  axios.defaults.headers.Cookie = '';
   if (context.req && cookie) {
     axios.defaults.headers.Cookie = cookie;
   }

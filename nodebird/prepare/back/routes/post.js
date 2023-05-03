@@ -190,6 +190,8 @@ router.post('/:postId/comment', isLoggedIn, async (req, res, next) => {
       //post가 존재하지 않으면
       return res.status(403).send('존재하지 않는 게시글입니다.');
     }
+    console.log('시발바디',req.body);
+    console.log('시발유저',req.user.id);
     const comment = await Comment.create({
       content: req.body.content,
       PostId: parseInt(req.params.postId, 10),
@@ -197,14 +199,9 @@ router.post('/:postId/comment', isLoggedIn, async (req, res, next) => {
     });
     const fullComment = await Comment.findOne({
       where: { id: comment.id },
-      include: [
-        {
-          model: User,
-          attributes: ['id', 'nickname'],
-        },
-      ],
+      include: [{ model: User, attributes: ['id', 'nickname']}],
     });
-    res.status(201).json(fullComment); //이렇게 프론트로 돌려주고 그러면 saga, addPost 의 const result 이쪽에 들어감
+    res.status(201).json(fullComment);
   } catch (error) {
     console.error(error);
     next(error);

@@ -13,6 +13,8 @@ router.get('/', async (req, res, next) => {
       // 뒤에 10은 parseInt임
       //! 초기 로딩이 아닐 때, 더 불러와야 하는 상황, 스크롤 내려서 더 불러오는 상황
       where.id = { [Op.lt]: parseInt(req.query.lastId, 10) }; //! 보다 작은 표현임
+      //! 객체에서 [Op.lt]는 작은 것을 의미하는 연산자 중 하나인 "<" 연산자를 나타냄. 
+      //! 따라서, where.id는 id가 req.query.lastId보다 작은 레코드를 검색하는 데 사용
     } // lastId가 12면 12보다 작은거 부름
     // id가 라스트아이디보다 작은걸로 10개를 불러와라 // Op는 operator
     const posts = await Post.findAll({

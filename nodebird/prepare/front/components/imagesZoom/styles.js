@@ -1,5 +1,5 @@
-import styled, { createGlobalStyle } from "styled-components";
-import { CloseOutlined } from "@ant-design/icons";
+import styled, { createGlobalStyle } from 'styled-components';
+import { CloseOutlined } from '@ant-design/icons';
 // 스타일은 중요한 부분이 아니기에 여기다 모음
 // 거기에 export 했으니 다른데서 쉽게 가져다 쓸수 있음
 
@@ -7,12 +7,12 @@ import { CloseOutlined } from "@ant-design/icons";
 // 밑에 styled.div``은 함수ㅋㅋ
 
 // react-slick은 기본 세팅 CSS 값이 있는데 그걸 덮어씌워야함
-// antd 에 webkit-transform, transform 때문에 전체 화면이 안되는거임
+//! antd 에 webkit-transform, transform 때문에 전체 화면이 안되는거임
 // transform 안에다가 fixed가 들어가면, fixed를 제대로 못 잡음
 // 스타일 컴포넌트 createGlobalStyle를 이용하면 덮어씌우기 가능
 export const Global = createGlobalStyle`
   .slick-slide{
-  display:inline-block;
+    display:inline-block;
   }
   .ant-card-cover {
     transform:none !important;

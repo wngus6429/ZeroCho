@@ -263,8 +263,8 @@ function* removePost(action) {
 }
 
 function addCommentAPI(data) {
-  return axios.post(`/post/${data.postId}/comment`, data); //post/1/comment
-}
+  return axios.post(`/post/${data.postId}/comment`, data);
+} //post/1/comment
 function* addComment(action) {
   try {
     const result = yield call(addCommentAPI, action.data);

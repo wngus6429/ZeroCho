@@ -35,7 +35,7 @@ const Post = () => {
           <PostCard post={singlePost} />
         </>
       ) : (
-        <h1 style={{ textAlign: 'center', marginTop: '50px' }}>데이터가 없습니다</h1>
+        <h1 style={{ textAlign: 'center', marginTop: '50px' }}>데이터가 없습니다. 3초후 이동</h1>
       )}
     </AppLayout>
   );

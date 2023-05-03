@@ -1,17 +1,15 @@
 import React, { useCallback } from 'react'; //없어도됨
 import Proptypes from 'prop-types';
 import Link from 'next/link'; //next 자체적 라우터
-import { Menu, Input, Row, Col } from 'antd';
+import { Menu, Input, Row, Col, Card } from 'antd';
 import 'antd/dist/antd.css';
-import styled from 'styled-components';
-import UserProfile from '../components/UserProfile';
-import LoginForm from '../components/LoginForm';
 import { useSelector } from 'react-redux'; //리액트랑 리덕스 연결
 import Router from 'next/router'; //프로그래밍적으로 주소를 옮길떄는 router사용
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import useinput from '../hooks/useinput';
+import UserProfile from './UserProfile';
+import LoginForm from './LoginForm';
 
-import { Card } from 'antd';
 const { Meta } = Card;
 
 const SearchInput = styled(Input.Search)`
@@ -37,9 +35,8 @@ background-repeat: repeat;
 `;
 
 const AppLayout = ({ children }) => {
-  //const [isLoggedIn, setIsLoggedIn] = useState(false); //리덕스가 있어서
-  const { me } = useSelector((state) => state.user); //isLoggedIn이 바뀌면 알아서 applayout이 리랜더링
-  // const { isLoggedIn } = useSelector((state) => state.user); //구조분해 할당방법, 성능차이 쬐금 남
+  const { me } = useSelector((state) => state.user); // isLoggedIn이 바뀌면 알아서 applayout이 리랜더링
+  // const { isLoggedIn } = useSelector((state) => state.user); // 구조분해 할당방법, 성능차이 쬐금 남
   const [searchInput, onChangeSearchInput] = useinput('');
 
   const onSearch = useCallback(() => {
@@ -89,7 +86,7 @@ const AppLayout = ({ children }) => {
 };
 
 AppLayout.propTypes = {
-  children: Proptypes.node.isRequired, //리액트의 node
+  children: Proptypes.node.isRequired, // 리액트의 node
 };
 
 export default AppLayout;

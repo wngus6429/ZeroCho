@@ -1,7 +1,7 @@
-import React, { useCallback, useState } from "react";
-import PropTypes from "prop-types";
-import { PlusOutlined } from "@ant-design/icons";
-import ImagesZoom from "./imagesZoom"; //폴더부르면 자동 index.js부름
+import React, { useCallback, useState } from 'react';
+import PropTypes from 'prop-types';
+import { PlusOutlined } from '@ant-design/icons';
+import ImagesZoom from './imagesZoom'; //폴더부르면 자동 index.js부름
 
 const PostImages = ({ images }) => {
   const [showImagesZoom, setshowImagesZoom] = useState(false);
@@ -16,8 +16,8 @@ const PostImages = ({ images }) => {
     return (
       <>
         <img
-          role="presentation"
-          style={{ maxHeight: "400px", width: "200px" }}
+          role='presentation'
+          style={{ maxHeight: '400px', width: '200px' }}
           src={`http://localhost:3065/${images[0].src}`}
           alt={images[0].src}
           onClick={onZoom}
@@ -30,15 +30,15 @@ const PostImages = ({ images }) => {
     return (
       <>
         <img
-          role="presentation"
-          style={{ width: "50%", display: "inline-block" }}
+          role='presentation'
+          style={{ width: '50%', display: 'inline-block' }}
           src={`http://localhost:3065/${images[0].src}`}
           alt={images[0].src}
           onClick={onZoom}
         />
         <img
-          role="presentation"
-          style={{ width: "50%", display: "inline-block" }}
+          role='presentation'
+          style={{ width: '50%', display: 'inline-block' }}
           src={`http://localhost:3065/${images[1].src}`}
           alt={images[1].src}
           onClick={onZoom}
@@ -51,15 +51,15 @@ const PostImages = ({ images }) => {
     <>
       <div>
         <img
-          role="presentation"
-          style={{ width: "50%" }}
+          role='presentation'
+          style={{ width: '50%' }}
           src={`http://localhost:3065/${images[0].src}`}
           alt={images[0].src}
           onClick={onZoom}
         />
         <div
-          role="presentation"
-          style={{ display: "inline-block", width: "50%", textAlign: "center", verticalAlign: "middle" }}
+          role='presentation'
+          style={{ display: 'inline-block', width: '50%', textAlign: 'center', verticalAlign: 'middle' }}
           onClick={onZoom}
         >
           <PlusOutlined />
@@ -78,4 +78,4 @@ PostImages.propTypes = {
 };
 
 export default PostImages;
-//이미지에 대한 설명을 alt에 보통 적음. 시각장애인 한테 도움, role="presentation"도 시각장애인한테 정보
+//이미지에 대한 설명을 alt에 보통 적음. 시각장애인 한테 도움, role='presentation"도 시각장애인한테 정보

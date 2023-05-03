@@ -1,17 +1,19 @@
 const express = require('express');
+const router = express.Router();
 const { Op } = require('sequelize');
 const { Post, Hashtag, Image, Comment, User } = require('../models');
-const router = express.Router();
 
 //GET /hashtag/노드 /해시태그 검색
 router.get('/:hashtag', async (req, res, next) => {
   try {
-    const where = {}; //초기로딩 ㅋㅋ 쿼리스트링 5분
+    const where = {}; // 초기로딩 ㅋㅋ 쿼리스트링 5분
     if (parseInt(req.query.lastId, 10)) {
-      //초기 로딩이 아닐 때 //스크롤 내려서 더 불러오는 상황
+      // 초기 로딩이 아닐 때 //스크롤 내려서 더 불러오는 상황
       where.id = { [Op.lt]: parseInt(req.query.lastId, 10) }; //보다 작은
+      //! 객체에서 [Op.lt]는 작은 것을 의미하는 연산자 중 하나인 "<" 연산자를 나타냄. 
+      //! 따라서, where.id는 id가 req.query.lastId보다 작은 레코드를 검색하는 데 사용
     } // 21 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 //lastId가 12면 12보다 작은거 부름
-    //id가 라스트아이디보다 작은걸로 10개를 불러와라 //Op는 operator
+    // id가 라스트아이디보다 작은걸로 10개를 불러와라 // Op는 operator
     const posts = await Post.findAll({
       where,
       limit: 10, //10개만 가져와라
@@ -26,12 +28,8 @@ router.get('/:hashtag', async (req, res, next) => {
         { model: Image },
         {
           model: Comment,
-          include: [
-            {
-              model: User,
-              attributes: ['id', 'nickname'], //작성자 비밀번호 보이면 안되니
-            },
-          ],
+          include: [{ model: User, attributes: ['id', 'nickname']}],
+          // 작성자 비밀번호 보이면 안되니
         },
         //좋아요 누른사람
         { model: User, as: 'Likers', attributes: ['id'] },

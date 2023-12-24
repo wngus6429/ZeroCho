@@ -1,21 +1,21 @@
 type World = "world" | "hell";
-const a: World = "world";
+const q: World = "world";
 
-const b = `hello ${a}`;
+const bb = `hello ${q}`;
 // type Greeting = 'hello world';
 // 타입에서도 템플릿 리터럴 (백틱) 사용이 가능하다.
 type Greeting = `hello ${World}`;
-const c: Greeting = "hello hell";
+const cc: Greeting = "hello hell";
 
 let arr: string[] = [];
 let arr2: Array<string> = [];
 function rest(...args: string[]) {
-  console.log(args); // [1,2,3]
+  console.log(args); // ['1','2','3']
 }
 rest("1", "2", "3");
 
 function rest2(a, ...args: string[]) {
-  console.log(a, args); // 1, [2,3]
+  console.log(a, args); // 1, ['2','3']
 }
 rest2("1", "2", "3");
 

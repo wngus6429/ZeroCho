@@ -1,6 +1,6 @@
-let a = "hello";
-a = 444;
-const a: number = 5;
+let aa = "hello";
+aa = 444;
+const ab: number = 5;
 // function add(x: number, y: number): number {
 //   return x + y;
 // }
@@ -17,7 +17,7 @@ try {
   error;
 }
 
-// const head:Element = document.querySelector('#head')!;
+// const head:Element = document.querySelector('#head')
 // console.log(head);
 
 // <div id="header"></div>
@@ -25,7 +25,7 @@ try {
 //* 근데 비추천임. !를 쓰는것보다 if 조건문을 아래에 쓰자
 // const head = document.querySelector('#head')!;
 const head = document.querySelector("#head");
-// head.innerHTML = 'hello'; //이렇게 하면 에러남. null나올수도 있다고
+// head.innerHTML = "hello"; //이렇게 하면 에러남. null나올수도 있다고
 if (head) {
   head.innerHTML = "Hello";
 }

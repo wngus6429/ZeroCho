@@ -19,3 +19,4 @@ const hh: AA = {
 // bbb가 void가 됨 , 뒤에꺼는 내가 책임진다, as 같은거 쓰는게 낫다.
 const bbb = hh.talk() as unknown as number;
 // const bbb = <number>hh.talk();
+bbb.toString();

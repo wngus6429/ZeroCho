@@ -32,7 +32,7 @@ export default function page() {
               </g>
             </svg>
           </button>
-          <div>로그인하세요. i폴더</div>
+          <div>로그인하세요. @modal폴더</div>
         </div>
         <form onSubmit={onSubmit}>
           <div className={style.modalBody}>

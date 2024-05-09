@@ -1,3 +1,10 @@
-export default function layout({ children }) {
-  return <div>홈레이아웃{children}</div>;
+import { ReactNode } from "react";
+
+export default function layout({ children }: { children: ReactNode }) {
+  return (
+    <div>
+      홈레이아웃
+      {children}
+    </div>
+  );
 }

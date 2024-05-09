@@ -1,5 +1,3 @@
-import React from "react";
-
-export default function page() {
-  return <div>page</div>;
+export default function Home() {
+  return <main>회원가입 모달</main>;
 }

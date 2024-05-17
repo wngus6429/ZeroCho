@@ -1,8 +1,7 @@
 .container {
   display: flex;
   flex-direction: row;
-  background-color: rgb(var(--background-end-rgb));
-  /*  100dvw; 100dvh 새로운 단위생김, 스마트폰이나 주소창 토글 전체화면 지원 더 좋음*/
+  background-color: #fff;
   width: 100dvw;
   height: 100dvh;
 }
@@ -65,24 +64,4 @@
 }
 .login:hover {
   background-color: rgba(29, 155, 240, 0.1);
-}
-@media all and (min-width: 1000px) {
-  .container {
-    flex-direction: row;
-    padding: 0;
-  }
-  .left {
-    flex: 1;
-    justify-content: center;
-  }
-  .left img {
-    width: 450px;
-    height: 550px;
-  }
-  .right {
-    justify-content: center;
-  }
-  .right h1 {
-    font-size: 64px;
-  }
 }

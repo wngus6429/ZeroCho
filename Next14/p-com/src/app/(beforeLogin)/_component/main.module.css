@@ -11,6 +11,10 @@
   justify-content: center;
   align-items: center;
 }
+.left img {
+  height: 70vh;
+  width: auto;
+}
 .right {
   flex: 1;
   display: flex;

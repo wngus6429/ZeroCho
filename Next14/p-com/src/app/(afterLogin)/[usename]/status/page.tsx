@@ -1,3 +1,5 @@
-export default function page() {
-  return <div>page</div>;
+import React from "react";
+
+export default function Home() {
+  return <main>프로필페이지</main>;
 }

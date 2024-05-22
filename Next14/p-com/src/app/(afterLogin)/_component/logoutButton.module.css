@@ -25,6 +25,7 @@
 .logOutUserName {
   margin: 0 12px;
 }
+/* 첫번째 div를 선택한다는 말임 */
 .logOutUserName > div:first-child {
   font-weight: bold;
 }

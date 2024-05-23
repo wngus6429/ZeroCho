@@ -4,6 +4,7 @@ import { ChangeEventHandler, FormEventHandler, useRef, useState } from "react";
 import style from "./postForm.module.css";
 
 export default function PostForm() {
+  // 이런 형식으로 하는거 기억, 자스랑 타스랑 다름
   const imageRef = useRef<HTMLInputElement>(null);
   const [content, setContent] = useState("");
   const me = {
@@ -20,7 +21,7 @@ export default function PostForm() {
   };
 
   const onClickButton = () => {
-    imageRef.current?.click();
+    imageRef.current?.click(); // imageRef.current가 있으면 클릭이됨
   };
 
   return (
@@ -35,6 +36,7 @@ export default function PostForm() {
           value={content}
           onChange={onChange}
           placeholder="무슨 일이 일어나고 있나요?"
+          maxLength={500}
         />
         <div className={style.postButtonSection}>
           <div className={style.footerButtons}>

@@ -18,7 +18,8 @@ type Props = {
     Images: any[],
   }
 }
-
+// 서버컴포넌트는 클라이언트 컴포넌트 자식일떄
+// children이나 props로 보낸다.
 export default function PostArticle({ children, post}: Props) {
   const router = useRouter();
   const onClick = () => {

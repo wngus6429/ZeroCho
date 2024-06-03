@@ -13,6 +13,7 @@ export default function ActionButtons() {
 
   return (
     <div className={style.actionButtons}>
+        {/* 하나의 div가 클래스를 여러개 가질수 있음. */}
       <div className={cx(style.commentButton, { [style.commented]: commented })}>
         <button onClick={onClickComment}>
           <svg width={24} viewBox="0 0 24 24" aria-hidden="true">

@@ -27,6 +27,7 @@ export default function PostArticle({ children, post}: Props) {
   }
 
   return (
+    // onClickCapture 이벤트 캡쳐링, 클릭이벤트 a 태그 등등 겹치면 써보면됨
     <article onClickCapture={onClick} className={style.post}>
       {children}
     </article>

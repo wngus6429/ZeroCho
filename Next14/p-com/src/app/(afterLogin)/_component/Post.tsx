@@ -63,15 +63,15 @@ export default function Post({ noImage }: Props) {
           </div>
           <div>{target.content}</div>
           <div>
-            {target.Images && target.Images.length > 0 && (
+            {/* {target.Images && target.Images.length > 0 && (
               <Link
                 href={`/${target.User.id}/status/${target.postId}/photo/${target.Images[0].imageId}`}
                 className={style.postImageSection}
               >
                 <img src={target.Images[0]?.link} alt="" />
               </Link>
-            )}
-            {/* <PostImages post={target} /> */}
+            )} */}
+            <PostImages post={target} />
           </div>
           <ActionButtons />
         </div>

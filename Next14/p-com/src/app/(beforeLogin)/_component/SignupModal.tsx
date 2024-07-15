@@ -45,24 +45,28 @@ export default function SignupModal() {
     }
     let shouldRedirect = false;
 
+    console.log("화긴요", `${process.env.NEXT_PUBLIC_BASE_URL}/api/users`);
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_MOCKING}`, {
-        method: "post",
-        body: formData,
-        credentials: "include",
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/users`,
+        {
+          method: "post",
+          body: formData,
+          credentials: "include", // 이게 있어야 쿠키가 전달이됨
+        }
+      );
       console.log(response.status);
       if (response.status === 403) {
-        return { message: "유저가 존재함" };
+        return { message: "user_exists" };
       }
       console.log(await response.json());
       shouldRedirect = true;
     } catch (error) {
       console.log(error);
+      return;
     }
     if (shouldRedirect) {
       redirect("/home"); // redirect는 try catch문 안에서 쓰면 안됨
-      return;
     }
   };
 
@@ -80,25 +84,53 @@ export default function SignupModal() {
                 <label className={style.inputLabel} htmlFor="id">
                   아이디
                 </label>
-                <input id="id" name="id" className={style.input} type="text" placeholder="" required />
+                <input
+                  id="id"
+                  name="id"
+                  className={style.input}
+                  type="text"
+                  placeholder=""
+                  required
+                />
               </div>
               <div className={style.inputDiv}>
                 <label className={style.inputLabel} htmlFor="name">
                   닉네임
                 </label>
-                <input id="name" name="name" className={style.input} type="text" placeholder="" required />
+                <input
+                  id="name"
+                  name="name"
+                  className={style.input}
+                  type="text"
+                  placeholder=""
+                  required
+                />
               </div>
               <div className={style.inputDiv}>
                 <label className={style.inputLabel} htmlFor="password">
                   비밀번호
                 </label>
-                <input id="password" name="password" className={style.input} type="password" placeholder="" required />
+                <input
+                  id="password"
+                  name="password"
+                  className={style.input}
+                  type="password"
+                  placeholder=""
+                  required
+                />
               </div>
               <div className={style.inputDiv}>
                 <label className={style.inputLabel} htmlFor="image">
                   프로필
                 </label>
-                <input id="image" name="image" required className={style.input} type="file" accept="image/*" />
+                <input
+                  id="image"
+                  name="image"
+                  required
+                  className={style.input}
+                  type="file"
+                  accept="image/*"
+                />
               </div>
             </div>
             <div className={style.modalFooter}>

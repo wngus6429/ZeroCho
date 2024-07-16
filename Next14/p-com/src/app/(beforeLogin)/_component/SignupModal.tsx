@@ -1,74 +1,75 @@
+"use client";
 import style from "./signup.module.css";
-// import onSubmit from "../_lib/signup";
+import { onSubmit } from "../_lib/signup";
 import BackButton from "@/app/(beforeLogin)/_component/BackButton";
-// import { useFormState, useFormStatus } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 import { redirect } from "next/navigation";
 
-// function showMessage(messasge: string | null | undefined) {
-//   if (messasge === "no_id") {
-//     return "아이디를 입력하세요.";
-//   }
-//   if (messasge === "no_name") {
-//     return "닉네임을 입력하세요.";
-//   }
-//   if (messasge === "no_password") {
-//     return "비밀번호를 입력하세요.";
-//   }
-//   if (messasge === "no_image") {
-//     return "이미지를 업로드하세요.";
-//   }
-//   if (messasge === "user_exists") {
-//     return "이미 사용 중인 아이디입니다.";
-//   }
-//   return "";
-// }
+function showMessage(messasge: string | null | undefined) {
+  if (messasge === "no_id") {
+    return "아이디를 입력하세요.";
+  }
+  if (messasge === "no_name") {
+    return "닉네임을 입력하세요.";
+  }
+  if (messasge === "no_password") {
+    return "비밀번호를 입력하세요.";
+  }
+  if (messasge === "no_image") {
+    return "이미지를 업로드하세요.";
+  }
+  if (messasge === "user_exists") {
+    return "이미 사용 중인 아이디입니다.";
+  }
+  return "";
+}
 
 export default function SignupModal() {
   // name을 인식해서 데이터를 가져옴
-  // const [state, formAction] = useFormState(onSubmit, { message: null });
-  // const { pending } = useFormStatus();
+  const [state, formAction] = useFormState(onSubmit, { message: null }); // 뒤는 초기값
+  const { pending } = useFormStatus();
 
-  const submit = async (formData: FormData) => {
-    "use server";
-    console.log("씨발");
-    if (!formData.get("id")) {
-      return "아이디를 입력하세요.";
-    }
-    if (!formData.get("name")) {
-      return "닉네임을 입력하세요.";
-    }
-    if (!formData.get("password")) {
-      return "비밀번호를 입력하세요.";
-    }
-    if (!formData.get("image")) {
-      return "이미지를 업로드하세요.";
-    }
-    let shouldRedirect = false;
+  // const submit = async (formData: FormData) => {
+  //   "use server";
+  //   console.log("씨발");
+  //   if (!formData.get("id")) {
+  //     return "아이디를 입력하세요.";
+  //   }
+  //   if (!formData.get("name")) {
+  //     return "닉네임을 입력하세요.";
+  //   }
+  //   if (!formData.get("password")) {
+  //     return "비밀번호를 입력하세요.";
+  //   }
+  //   if (!formData.get("image")) {
+  //     return "이미지를 업로드하세요.";
+  //   }
+  //   let shouldRedirect = false;
 
-    console.log("화긴요", `${process.env.NEXT_PUBLIC_BASE_URL}/api/users`);
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/users`,
-        {
-          method: "post",
-          body: formData,
-          credentials: "include", // 이게 있어야 쿠키가 전달이됨
-        }
-      );
-      console.log(response.status);
-      if (response.status === 403) {
-        return { message: "user_exists" };
-      }
-      console.log(await response.json());
-      shouldRedirect = true;
-    } catch (error) {
-      console.log(error);
-      return;
-    }
-    if (shouldRedirect) {
-      redirect("/home"); // redirect는 try catch문 안에서 쓰면 안됨
-    }
-  };
+  //   console.log("화긴요", `${process.env.NEXT_PUBLIC_BASE_URL}/api/users`);
+  //   try {
+  //     const response = await fetch(
+  //       `${process.env.NEXT_PUBLIC_BASE_URL}/api/users`,
+  //       {
+  //         method: "post",
+  //         body: formData,
+  //         credentials: "include", // 이게 있어야 쿠키가 전달이됨
+  //       }
+  //     );
+  //     console.log(response.status);
+  //     if (response.status === 403) {
+  //       return { message: "user_exists" };
+  //     }
+  //     console.log(await response.json());
+  //     shouldRedirect = true;
+  //   } catch (error) {
+  //     console.log(error);
+  //     return;
+  //   }
+  //   if (shouldRedirect) {
+  //     redirect("/home"); // redirect는 try catch문 안에서 쓰면 안됨
+  //   }
+  // };
 
   return (
     <>
@@ -78,7 +79,7 @@ export default function SignupModal() {
             <BackButton />
             <div>계정을 생성하세요.</div>
           </div>
-          <form action={submit}>
+          <form action={formAction}>
             <div className={style.modalBody}>
               <div className={style.inputDiv}>
                 <label className={style.inputLabel} htmlFor="id">
@@ -134,11 +135,14 @@ export default function SignupModal() {
               </div>
             </div>
             <div className={style.modalFooter}>
-              <button type="submit" className={style.actionButton}>
-                {/* <button type="submit" className={style.actionButton} disabled={pending}> */}
+              <button
+                type="submit"
+                className={style.actionButton}
+                disabled={pending}
+              >
                 가입하기
               </button>
-              {/* <div className={style.error}>{showMessage(state?.message)}</div> */}
+              <div className={style.error}>{showMessage(state?.message)}</div>
             </div>
           </form>
         </div>

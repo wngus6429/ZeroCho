@@ -10,5 +10,6 @@ export async function middleware() {
 
 // See "Matching Paths" below to learn more
 export const config = {
+    // 미들웨어를 적용할곳, 로그인 해야하는곳
   matcher: ["/compose/tweet", "/home", "/explore", "/messages", "/search"],
 };

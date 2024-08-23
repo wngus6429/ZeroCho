@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-// import { signIn } from "@/auth";
+import { signIn } from "@/auth";
 
 // export default async (prevState: any, formData: FormData) => {
 export const onSubmit = async (prevState: any, formData: FormData) => {
@@ -36,11 +36,12 @@ export const onSubmit = async (prevState: any, formData: FormData) => {
     }
     console.log(await response.json());
     shouldRedirect = true;
-    // await signIn("credentials", {
-    //   username: formData.get("id"),
-    //   password: formData.get("password"),
-    //   redirect: false,
-    // });
+    // 회원가입하고 바로 로그인 되게끔
+    await signIn("credentials", {
+      username: formData.get("id"),
+      password: formData.get("password"),
+      redirect: false,
+    });
   } catch (err) {
     console.error(err);
     return { message: null };

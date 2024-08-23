@@ -1,20 +1,58 @@
 "use client";
 // 프라이빗 폴더안의 파일
 import style from "@/app/(beforeLogin)/_component/login.module.css";
-import { useState } from "react";
+//이건 서버 환경에서
+// import { signIn } from "@/auth";
+// 이건 클라 환경에서
+import { signIn } from "next-auth/react";
+import { redirect, useRouter } from "next/navigation";
+import {
+  ChangeEvent,
+  ChangeEventHandler,
+  FormEventHandler,
+  useState,
+} from "react";
 
 // 다른 페이지에서, 링크에서 접속 했을때는 가로채기 라우트실행 @modal 쪽
 // i 밑에 폴더는 브라우저에서 직접 접근하거나, 주소를 쳐서 접근하거나, 새로고침 하거나
 export default function LoginModal() {
-  const [id, setId] = useState();
-  const [password, setPassword] = useState();
-  const [message, setMessage] = useState();
-  const onSubmit = () => {};
-  const onClickClose = () => {};
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const router = useRouter(); // useRouter 훅 사용
 
-  const onChangeId = () => {};
+  const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
+    e.preventDefault();
+    setMessage("");
+    try {
+      console.log(id, password);
+      await signIn("credentials", {
+        // nextauth에서 username과 password는 고정이다
+        username: id,
+        password,
+        redirect: false, // true로 하면 서버에서 리다이렉트함
+      });
+      router.replace("/home");
+    } catch (error) {
+      console.error(error);
+      setMessage("아이디와 비밀번호가 일치하지 않습니다.");
+    }
+  };
+  const onClickClose = () => {
+    router.back();
+  };
 
-  const onChangePassword = () => {};
+  const onChangeId: ChangeEventHandler<HTMLInputElement> = (
+    e: ChangeEvent<HTMLInputElement>
+  ): void => {
+    setId(e.target.value);
+  };
+
+  const onChangePassword: ChangeEventHandler<HTMLInputElement> = (
+    e: ChangeEvent<HTMLInputElement>
+  ): void => {
+    setPassword(e.target.value);
+  };
 
   return (
     <div className={style.modalBackground}>

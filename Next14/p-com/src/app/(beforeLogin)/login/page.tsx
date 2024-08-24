@@ -1,13 +1,17 @@
 "use client";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
-import Link from "next/link";
-import zLogo from "../../../../public/zlogo.jpg";
-import styles from "@/app/page.module.css"; //! module.css를 통해서 다른 파일이랑 구별을 해준다
 import Main from "../_component/Main";
+import { useSession } from "next-auth/react";
 
 export default function Login() {
   const router = useRouter();
+  const { data: session } = useSession();
+
+  if (session?.user) {
+    router.replace("/home");
+    return null;
+  }
+
   router.replace("/i/flow/login");
   return <Main />;
 }

@@ -5,8 +5,15 @@
 // sass,
 // cssmodule 간단하다
 // vanilla extract -> 윈도우와 문제 있음.
+import { redirect } from "next/navigation";
 import Main from "./_component/Main";
+import { auth } from "@/auth";
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth();
+  if (session?.user) {
+    redirect("/home");
+    return null;
+  }
   return <Main />;
 }

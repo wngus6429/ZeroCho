@@ -8,15 +8,17 @@ import ActionButtons from "@/app/(afterLogin)/_component/ActionButtons";
 import PostArticle from "@/app/(afterLogin)/_component/PostArticle";
 import { faker } from "@faker-js/faker";
 import PostImages from "@/app/(afterLogin)/_component/PostImages";
+import { Post as IPost } from "@/model/Post";
 
 dayjs.locale("ko");
 dayjs.extend(relativeTime);
 
 type Props = {
   noImage?: boolean;
+  post?: IPost;
 };
-export default function Post({ noImage }: Props) {
-  const target = {
+export default function Post({ noImage, post }: Props) {
+  let target = {
     postId: 1,
     User: {
       id: "elonmusk",
@@ -27,6 +29,12 @@ export default function Post({ noImage }: Props) {
     createdAt: new Date(),
     Images: [] as any[],
   };
+  if (post) {
+    target = post;
+  }
+  // if (post.Original) {
+  //   target = post.Original;
+  // }
   // 확률 반반으로 이미지가 있거나 없거나.
   // noImage쓰면 이미지가 뜨지 않음
   if (Math.random() > 0.5 && !noImage) {
@@ -59,7 +67,9 @@ export default function Post({ noImage }: Props) {
               <span className={style.postUserId}>@{target.User.id}</span>
               &nbsp; · &nbsp;
             </Link>
-            <span className={style.postDate}>{dayjs(target.createdAt).fromNow(true)}</span>
+            <span className={style.postDate}>
+              {dayjs(target.createdAt).fromNow(true)}
+            </span>
           </div>
           <div>{target.content}</div>
           <div>

@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  InfiniteData,
-  useInfiniteQuery,
-  useQuery,
-} from "@tanstack/react-query";
+import { InfiniteData, useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { getPostRecommends } from "@/app/(afterLogin)/home/_lib/getPostRecommends";
 import { Fragment, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
@@ -16,6 +12,8 @@ export default function PostRecommends() {
   const { data } = useQuery<IPost[]>({
     queryKey: ["posts", "recommends"],
     queryFn: getPostRecommends,
+    staleTime: 60 * 1000, // 0초뒤에 fresh에서 -> stale, 1분동안은 fresh 상태임
+    gcTime: 300 * 1000,
   });
 
   return data?.map((post: IPost) => {

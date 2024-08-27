@@ -1,8 +1,4 @@
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from "@tanstack/react-query";
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import Post from "../_component/Post";
 import PostForm from "./_component/PostForm";
 import Tab from "./_component/Tab";
@@ -10,6 +6,7 @@ import TabProvider from "./_component/TabProvider";
 import style from "./home.module.css";
 import PostRecommends from "./_component/PostRecommends";
 import { getPostRecommends } from "./_lib/getPostRecommends";
+import TabDecider from "./_component/TabDecider";
 
 export default async function Home() {
   const queryClient = new QueryClient();
@@ -28,8 +25,7 @@ export default async function Home() {
         <TabProvider>
           <Tab />
           <PostForm />
-          dd
-          <PostRecommends />
+          <TabDecider />
           {Array.from({ length: postCount }).map((_, index) => (
             <Post key={index} />
           ))}

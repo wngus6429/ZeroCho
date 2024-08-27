@@ -1,14 +1,12 @@
 export async function getFollowingPosts() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts/followings`,
-    {
-      next: {
-        tags: ["posts", "followings"],
-      },
-      credentials: "include",
-      cache: "no-store",
-    }
-  );
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/followingPosts`, {
+    // 이건 Next 서버쪽에서 캐싱하는거임
+    next: {
+      tags: ["posts", "followingPosts"],
+    },
+    credentials: "include",
+    cache: "no-store",
+  });
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
 

@@ -26,9 +26,7 @@ export default async function Home() {
           <Tab />
           <PostForm />
           <TabDecider />
-          {Array.from({ length: postCount }).map((_, index) => (
-            <Post key={index} />
-          ))}
+          <PostRecommends />
         </TabProvider>
       </HydrationBoundary>
     </main>

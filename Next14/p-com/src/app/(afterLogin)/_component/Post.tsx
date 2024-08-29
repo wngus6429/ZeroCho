@@ -6,7 +6,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";
 import ActionButtons from "@/app/(afterLogin)/_component/ActionButtons";
 import PostArticle from "@/app/(afterLogin)/_component/PostArticle";
-import { faker } from "@faker-js/faker";
+// import { faker } from "@faker-js/faker";
 import PostImages from "@/app/(afterLogin)/_component/PostImages";
 import { Post as IPost } from "@/model/Post";
 
@@ -15,36 +15,25 @@ dayjs.extend(relativeTime);
 
 type Props = {
   noImage?: boolean;
-  post?: IPost;
+  post: IPost;
 };
 export default function Post({ noImage, post }: Props) {
-  let target = {
-    postId: 1,
-    User: {
-      id: "elonmusk",
-      nickname: "Elon Musk",
-      image: "/yRsRRjGO.jpg",
-    },
-    content: "클론코딩 라이브로 하니 너무 힘들어요 ㅠㅠ",
-    createdAt: new Date(),
-    Images: [] as any[],
-  };
-  if (post) {
-    target = post;
-  }
+  const target = post;
   // if (post.Original) {
   //   target = post.Original;
   // }
   // 확률 반반으로 이미지가 있거나 없거나.
   // noImage쓰면 이미지가 뜨지 않음
-  if (Math.random() > 0.5 && !noImage) {
-    target.Images.push(
-      { imageId: 1, link: faker.image.urlLoremFlickr() },
-      { imageId: 2, link: faker.image.urlLoremFlickr() },
-      { imageId: 3, link: faker.image.urlLoremFlickr() },
-      { imageId: 4, link: faker.image.urlLoremFlickr() }
-    );
-  }
+  // if (Math.random() > 0.5 && !noImage) {
+  //   target.Images.push(
+  //     { imageId: 1, link: faker.image.urlLoremFlickr() },
+  //     { imageId: 2, link: faker.image.urlLoremFlickr() },
+  //     { imageId: 3, link: faker.image.urlLoremFlickr() },
+  //     { imageId: 4, link: faker.image.urlLoremFlickr() }
+  //   );
+  // }
+
+  console.log("target", target);
 
   return (
     // article 하나때문에 useClient 하기 싫어서
@@ -67,22 +56,14 @@ export default function Post({ noImage, post }: Props) {
               <span className={style.postUserId}>@{target.User.id}</span>
               &nbsp; · &nbsp;
             </Link>
-            <span className={style.postDate}>
-              {dayjs(target.createdAt).fromNow(true)}
-            </span>
+            <span className={style.postDate}>{dayjs(target.createdAt).fromNow(true)}</span>
           </div>
           <div>{target.content}</div>
-          <div>
-            {/* {target.Images && target.Images.length > 0 && (
-              <Link
-                href={`/${target.User.id}/status/${target.postId}/photo/${target.Images[0].imageId}`}
-                className={style.postImageSection}
-              >
-                <img src={target.Images[0]?.link} alt="" />
-              </Link>
-            )} */}
-            <PostImages post={target} />
-          </div>
+          {!noImage && (
+            <div>
+              <PostImages post={target} />
+            </div>
+          )}
           <ActionButtons />
         </div>
       </div>

@@ -16,9 +16,7 @@ export default function PostRecommends() {
     gcTime: 300 * 1000,
   });
 
-  return data?.map((post: IPost) => {
-    <Post key={post.postId} post={post} />;
-  });
+  return data?.map((post) => <Post key={post.postId} post={post} />);
 }
 
 // export default function PostRecommends() {

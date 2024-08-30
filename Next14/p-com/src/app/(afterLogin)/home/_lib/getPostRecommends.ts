@@ -1,14 +1,12 @@
 type Props = { pageParam?: number };
+
 export async function getPostRecommends({ pageParam }: Props) {
-  const res = await fetch(
-    // `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts/recommends?cursor=${pageParam}`,
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/postRecommends`,
-    {
-      next: {
-        tags: ["posts", "recommends"],
-      },
-    }
-  );
+  // 5, 10, 15 이런식으로 불린다.
+  const res = await fetch(`http://localhost:9090/api/postRecommends?cursor=${pageParam}`, {
+    next: {
+      tags: ["posts", "recommends"],
+    },
+  });
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
 

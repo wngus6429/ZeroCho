@@ -10,7 +10,7 @@ import { getSinglePost } from "@/app/(afterLogin)/[username]/status/[id]/_lib/ge
 type Props = {
   id: string;
 };
-export default function ImageZone({ id }: Props) {
+export default function  ImageZone({ id }: Props) {
   const { data: post, error } = useQuery<IPost, Object, IPost, [_1: string, _2: string]>({
     queryKey: ["posts", id],
     queryFn: getSinglePost,

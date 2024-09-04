@@ -1,17 +1,19 @@
 "use client";
 
-import { InfiniteData, useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { InfiniteData, useInfiniteQuery, useQuery, useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { getPostRecommends } from "@/app/(afterLogin)/home/_lib/getPostRecommends";
 import { Fragment, useEffect } from "react";
 import Post from "@/app/(afterLogin)/_component/Post";
 import { Post as IPost } from "@/model/Post";
 import { useInView } from "react-intersection-observer";
+import styles from "../home.module.css";
 
 export default function PostRecommends() {
   // useInfiniteQuery는 이렇게 관리함 [[1,2,3,4,5], [6,7,8,9,10], [11,12,13,14,15]] 2차원배열
   // 오른쪽 끝에 number 타입은 initialPageParam 혹은 getNextPageParam 용이다.
   // hasNextPage에서 다음 페이지 없는거 감지하면 false가 된다. 5개씩 부르는데. 5개 미만으로 오면 끝인걸로 알지
-  const { data, fetchNextPage, hasNextPage, isFetching } = useInfiniteQuery<
+  // const { data, fetchNextPage, hasNextPage, isFetching, isPending } = useInfiniteQuery<
+  const { data, fetchNextPage, hasNextPage, isFetching, isPending } = useSuspenseInfiniteQuery<
     IPost[],
     object,
     InfiniteData<IPost[]>,
@@ -37,6 +39,31 @@ export default function PostRecommends() {
       !isFetching && hasNextPage && fetchNextPage();
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
+
+  if (isPending) {
+    return (
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <svg className={styles.loader} height="100%" viewBox="0 0 32 32" width={40}>
+          <circle
+            cx="16"
+            cy="16"
+            fill="none"
+            r="14"
+            strokeWidth="4"
+            style={{ stroke: "rgb(29, 155, 240)", opacity: 0.2 }}
+          ></circle>
+          <circle
+            cx="16"
+            cy="16"
+            fill="none"
+            r="14"
+            strokeWidth="4"
+            style={{ stroke: "rgb(29, 155, 240)", strokeDasharray: 80, strokeDashoffset: 60 }}
+          ></circle>
+        </svg>
+      </div>
+    );
+  }
 
   return (
     <>

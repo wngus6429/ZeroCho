@@ -6,13 +6,23 @@ import PostRecommends from "./_component/PostRecommends";
 import { Suspense } from "react";
 import Loading from "./loading";
 import TabDeciderSuspense from "./_component/TabDeciderSuspense";
+import { auth } from "@/auth";
+import { QueryClient } from "@tanstack/react-query";
+import { getPostRecommends } from "./_lib/getPostRecommends";
 
 export default async function Home() {
+  const session = await auth();
+  // const queryClient = new QueryClient();
+  // await queryClient.prefetchInfiniteQuery({
+  //   queryKey: ["posts", "recommends"],
+  //   queryFn: getPostRecommends,
+  //   initialPageParam: 0,
+  // });
   return (
     <main className={style.main}>
       <TabProvider>
         <Tab />
-        <PostForm />
+        <PostForm me={session} />
         <Suspense fallback={<Loading />}>
           <TabDeciderSuspense />
         </Suspense>

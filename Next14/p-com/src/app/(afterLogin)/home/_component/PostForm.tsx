@@ -51,16 +51,18 @@ export default function PostForm({ me }: Props) {
           return shallow;
         });
         // 팔로잉쪽에 보냄
-        queryClient.setQueryData(["posts", "followings"], (prevData: { pages: Post[][] }) => {
-          // 불변성 지킨다고 그런거임
-          const shallow = {
-            ...prevData,
-            pages: [...prevData.pages],
-          };
-          shallow.pages[0] = [...shallow.pages[0]];
-          shallow.pages[0].unshift(newPost);
-          return shallow;
-        });
+        if (queryClient.getQueryData(["posts", "followings"])) {
+          queryClient.setQueryData(["posts", "followings"], (prevData: { pages: Post[][] }) => {
+            // 불변성 지킨다고 그런거임
+            const shallow = {
+              ...prevData,
+              pages: [...prevData.pages],
+            };
+            shallow.pages[0] = [...shallow.pages[0]];
+            shallow.pages[0].unshift(newPost);
+            return shallow;
+          });
+        }
       }
     } catch (err) {
       alert("업로드 중 에러가 발생했습니다.");

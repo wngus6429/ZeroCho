@@ -10,11 +10,12 @@ export default async function TabDeciderSuspense() {
   await queryClient.prefetchInfiniteQuery({
     queryKey: ["posts", "recommends"],
     queryFn: getPostRecommends,
-    initialPageParam: 0, // 커서값, 무조건 처음에는 0
+    initialPageParam: 0, // 처음엔 커서값을 0으로 설정
   });
   const dehydratedState = dehydrate(queryClient);
 
   return (
+    // HydrationBoundary로 감싸서 클라이언트가 이 상태를 재사용할 수 있도록 함
     <HydrationBoundary state={dehydratedState}>
       <TabDecider />
     </HydrationBoundary>

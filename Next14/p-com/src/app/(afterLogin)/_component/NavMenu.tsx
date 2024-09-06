@@ -8,7 +8,7 @@ import { useSession } from "next-auth/react";
 export default function NavMenu() {
   const segment = useSelectedLayoutSegment(); // Next에서 제공, 폴더 이름이 나오는거
   const { data: me } = useSession();
-  console.log(segment); // home, explore, message, zerocho0 등등 바뀜
+  // console.log(segment); // home, explore, message, zerocho0 등등 바뀜
   // compose/tweet 들어가면 compose만 나옴 앞에꺼만 따옴
   //* useSelectedLayoutSegments() 쓰면 ['compose', 'tweet'] 이렇게 나옴
 

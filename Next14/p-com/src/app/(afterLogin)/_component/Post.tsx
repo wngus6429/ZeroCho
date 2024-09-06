@@ -33,8 +33,6 @@ export default function Post({ noImage, post }: Props) {
   //   );
   // }
 
-  console.log("target", target);
-
   return (
     // article 하나때문에 useClient 하기 싫어서
     // 클라이언트 컴포넌트 만들고 children에 서버컴포넌트를 넣은거임

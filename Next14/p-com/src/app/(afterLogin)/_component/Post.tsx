@@ -9,6 +9,7 @@ import PostArticle from "@/app/(afterLogin)/_component/PostArticle";
 // import { faker } from "@faker-js/faker";
 import PostImages from "@/app/(afterLogin)/_component/PostImages";
 import { Post as IPost } from "@/model/Post";
+import { MouseEventHandler } from "react";
 
 dayjs.locale("ko");
 dayjs.extend(relativeTime);
@@ -33,6 +34,10 @@ export default function Post({ noImage, post }: Props) {
   //   );
   // }
 
+  const stopPropagation: MouseEventHandler<HTMLAnchorElement> = (e) => {
+    e.stopPropagation();
+  };
+
   return (
     // article 하나때문에 useClient 하기 싫어서
     // 클라이언트 컴포넌트 만들고 children에 서버컴포넌트를 넣은거임
@@ -41,7 +46,7 @@ export default function Post({ noImage, post }: Props) {
     <PostArticle post={target}>
       <div className={style.postWrapper}>
         <div className={style.postUserSection}>
-          <Link href={`/${target.User.id}`} className={style.postUserImage}>
+          <Link href={`/${target.User.id}`} className={style.postUserImage} onClick={stopPropagation}>
             <img src={target.User.image} alt={target.User.nickname} />
             <div className={style.postShade} />
           </Link>

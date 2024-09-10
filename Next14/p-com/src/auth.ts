@@ -12,10 +12,39 @@ export const {
     signIn: "/i/flow/login",
     newUser: "/i/flow/signup",
   },
+  callbacks: {
+    jwt({ token }) {
+      // console.log("auth.ts jwt", token);
+      return token;
+    },
+    session({ session, newSession, user }) {
+      // console.log("auth.ts session", session, newSession, user);
+      return session;
+    },
+  },
+  events: {
+    signOut(data) {
+      console.log("auth.ts events signout", "session" in data && data.session, "token" in data && data.token);
+      fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
+      // if ('session' in data) {
+      //   data.session = null;
+      // }
+      // if ('token' in data) {
+      //   data.token = null;
+      // }
+    },
+    session(data) {
+      // console.log("auth.ts events session", "session" in data && data.session, "token" in data && data.token);
+    },
+  },
   providers: [
     // 밑에 카카오, 네이버, 구글 등 같은거 프로바이더 추가해서 가능
     CredentialsProvider({
       async authorize(credentials) {
+        console.log("credentials", credentials);
         const authResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/login`, {
           method: "POST",
           headers: {
@@ -42,9 +71,9 @@ export const {
         // 여기의 유저정보는 지금 누가 로그인 헀는지
         // 이거 자주 활용해서 중요한거임 ㅋㅋㅋ
         const user = await authResponse.json();
-        console.log("user", user);
+        console.log("유저정보", user);
         return {
-          email: user.userId,
+          email: user.id,
           name: user.nickname,
           image: user.image,
           ...user,

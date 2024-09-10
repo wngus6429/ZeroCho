@@ -53,7 +53,7 @@ export default function Post({ noImage, post }: Props) {
         </div>
         <div className={style.postBody}>
           <div className={style.postMeta}>
-            <Link href={`/${target.User.id}`}>
+            <Link href={`/${target.User.id}`} onClick={stopPropagation}>
               <span className={style.postUserName}>{target.User.nickname}</span>
               &nbsp;
               <span className={style.postUserId}>@{target.User.id}</span>
@@ -67,7 +67,7 @@ export default function Post({ noImage, post }: Props) {
               <PostImages post={target} />
             </div>
           )}
-          <ActionButtons />
+          <ActionButtons post={target} />
         </div>
       </div>
     </PostArticle>

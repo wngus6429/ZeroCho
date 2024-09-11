@@ -138,13 +138,20 @@ export default function ActionButtons({ white, post }: Props) {
   });
 
   const unheart = useMutation({
-    // fetch를 쓰는 이유는 쿠키를 보내기 위해서
+    // mutationFn은 실제로 서버에 요청을 보내는 함수입니다.
+    // 데이터베이스나 API와의 상호작용을 담당하는 비동기 함수입니다.
     mutationFn: () => {
       return fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts/${postId}/heart`, {
         method: "delete",
         credentials: "include",
       });
     },
+    // onMutate는 서버 요청이 실행되기 전에,
+    // 즉 mutationFn이 호출되기 전에 클라이언트 쪽에서 동기적으로 실행됩니다.
+    // 이 함수는 서버의 실제 응답이 오기 전에, 클라이언트에서 미리 데이터를 업데이트하는
+    //  데 사용됩니다. 이를 Optimistic Update라고 부르며, 사용자 경험을 향상시키기 위한
+    //  기법입니다. 즉, 서버의 응답을 기다리지 않고, 사용자가 곧바로 UI의 변화를 확인할
+    //  수 있게 합니다.
     onMutate() {
       const queryCache = queryClient.getQueryCache();
       const queryKeys = queryCache.getAll().map((cache) => cache.queryKey);

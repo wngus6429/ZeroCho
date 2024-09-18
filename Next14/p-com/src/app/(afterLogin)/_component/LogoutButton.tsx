@@ -1,28 +1,30 @@
 "use client";
 
-import { signOut, useSession } from "next-auth/react";
 import style from "./logoutButton.module.css";
-import { redirect, useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 import { Session } from "@auth/core/types";
+import { useQueryClient } from "@tanstack/react-query";
 
 type Props = {
   me: Session | null;
 };
 export default function LogoutButton({ me }: Props) {
-  const router = useRouter();
-  // client 에서만 useSession부르면 데이터 불러옴
-  // const { data: me } = useSession();
-  // const me = {
-  //   // 임시로 내 정보 있는것처럼
-  //   id: "JuhyunPark",
-  //   nickname: "주현님",
-  //   image: "/5Udwvqim.jpg",
-  // };
+  // RQProver 안에 있어야 queryClient 사용이 가능하다
+  const queryClient = useQueryClient();
 
   const onLogout = () => {
-    // 서버리다이렉트는 꺼야함
-    signOut({ redirect: false }).then(() => {
-      router.replace("/");
+    queryClient.invalidateQueries({
+      queryKey: ["posts"],
+    });
+    queryClient.invalidateQueries({
+      queryKey: ["users"],
+    });
+    signOut({ callbackUrl: "/" }).then(() => {
+      fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
+      // router.replace("/");
     });
   };
 

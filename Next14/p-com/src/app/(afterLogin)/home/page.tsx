@@ -9,15 +9,21 @@ import TabDeciderSuspense from "./_component/TabDeciderSuspense";
 import { auth } from "@/auth";
 import { QueryClient } from "@tanstack/react-query";
 import { getPostRecommends } from "./_lib/getPostRecommends";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "트위터 홈",
+  description: "Home에 왔음",
+};
 
 export default async function Home() {
   const session = await auth();
-  // const queryClient = new QueryClient();
-  // await queryClient.prefetchInfiniteQuery({
-  //   queryKey: ["posts", "recommends"],
-  //   queryFn: getPostRecommends,
-  //   initialPageParam: 0,
-  // });
+  const queryClient = new QueryClient();
+  await queryClient.prefetchInfiniteQuery({
+    queryKey: ["posts", "recommends"],
+    queryFn: getPostRecommends,
+    initialPageParam: 0,
+  });
   return (
     <main className={style.main}>
       <TabProvider>

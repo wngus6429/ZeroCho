@@ -4,12 +4,14 @@ import style from "./logoutButton.module.css";
 import { signOut } from "next-auth/react";
 import { Session } from "@auth/core/types";
 import { useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 type Props = {
   me: Session | null;
 };
 export default function LogoutButton({ me }: Props) {
   // RQProver 안에 있어야 queryClient 사용이 가능하다
+  const router = useRouter();
   const queryClient = useQueryClient();
 
   const onLogout = () => {
@@ -24,7 +26,8 @@ export default function LogoutButton({ me }: Props) {
         method: "POST",
         credentials: "include",
       });
-      // router.replace("/");
+      router.refresh(); // 로그아웃 후 새로 로그인 했는데. 로그인 정보가 남아있어서 새로고침을 해준다.
+      router.replace("/");
     });
   };
 

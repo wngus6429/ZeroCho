@@ -3,6 +3,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
+import { UsersModule } from './users/users.module';
+import { WorkspacesModule } from './workspaces/workspaces.module';
+import { ChannelsModule } from './channels/channels.module';
+import { DmsModule } from './dms/dms.module';
 
 const getEnv = async () => {
   // await axios.get('비밀키요청') 이런식으로도 가능, 외부서버에서 AWS에서 비밀키를 가져옴
@@ -15,7 +19,7 @@ const getEnv = async () => {
 @Module({
   // 이걸로 .env 파일을 읽어올 수 있음
   // imports: [ConfigModule.forRoot({ isGlobal: true, load: [getEnv] })],
-  imports: [ConfigModule.forRoot()],
+  imports: [ConfigModule.forRoot(), UsersModule, WorkspacesModule, ChannelsModule, DmsModule],
   controllers: [AppController],
   providers: [AppService],
 })

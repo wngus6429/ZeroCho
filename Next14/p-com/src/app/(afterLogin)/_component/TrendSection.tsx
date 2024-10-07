@@ -26,7 +26,7 @@ export default function TrendSection() {
         <div className={style.trend}>
           <h3>나를 위한 트렌드</h3>
           {data?.map((trend, index) => (
-            <Trend key={index} trend={trend} key={trend.tagId} />
+            <Trend key={index} trend={trend} />
           ))}
         </div>
       </div>

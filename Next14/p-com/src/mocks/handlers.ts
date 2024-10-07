@@ -15,12 +15,10 @@ const User = [
   { id: "leoturtle", nickname: "레오", image: faker.image.avatar() },
 ];
 
-const delay = (ms) =>
-  new Promise((res) => {
-    setTimeout(res, ms);
-  });
-
-const Posts = [];
+// const delay = (ms) =>
+//   new Promise((res) => {
+//     setTimeout(res, ms);
+//   });
 
 export const handlers = [
   http.post("/api/login", () => {
@@ -63,7 +61,7 @@ export const handlers = [
     const url = new URL(request.url);
     // cursor가 없다면 기본 값이 0이 되게끔
     const cursor = parseInt(url.searchParams.get("cursor") as string) || 0;
-    await delay(1500);
+    // await delay(1500);
     return HttpResponse.json([
       {
         postId: cursor + 1,
@@ -115,7 +113,7 @@ export const handlers = [
     ]);
   }),
   http.get("/api/followingPosts", async ({ request }) => {
-    await delay(1500);
+    // await delay(1500);
     return HttpResponse.json([
       {
         postId: 1,

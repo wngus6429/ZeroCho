@@ -28,48 +28,6 @@ export default function SignupModal() {
   const [state, formAction] = useFormState(onSubmit, { message: null }); // 뒤는 초기값
   const { pending } = useFormStatus();
 
-  // const submit = async (formData: FormData) => {
-  //   "use server";
-  //   console.log("씨발");
-  //   if (!formData.get("id")) {
-  //     return "아이디를 입력하세요.";
-  //   }
-  //   if (!formData.get("name")) {
-  //     return "닉네임을 입력하세요.";
-  //   }
-  //   if (!formData.get("password")) {
-  //     return "비밀번호를 입력하세요.";
-  //   }
-  //   if (!formData.get("image")) {
-  //     return "이미지를 업로드하세요.";
-  //   }
-  //   let shouldRedirect = false;
-
-  //   console.log("화긴요", `${process.env.NEXT_PUBLIC_BASE_URL}/api/users`);
-  //   try {
-  //     const response = await fetch(
-  //       `${process.env.NEXT_PUBLIC_BASE_URL}/api/users`,
-  //       {
-  //         method: "post",
-  //         body: formData,
-  //         credentials: "include", // 이게 있어야 쿠키가 전달이됨
-  //       }
-  //     );
-  //     console.log(response.status);
-  //     if (response.status === 403) {
-  //       return { message: "user_exists" };
-  //     }
-  //     console.log(await response.json());
-  //     shouldRedirect = true;
-  //   } catch (error) {
-  //     console.log(error);
-  //     return;
-  //   }
-  //   if (shouldRedirect) {
-  //     redirect("/home"); // redirect는 try catch문 안에서 쓰면 안됨
-  //   }
-  // };
-
   return (
     <>
       <div className={style.modalBackground}>

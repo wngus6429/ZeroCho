@@ -10,7 +10,7 @@ import { getSinglePost } from "@/app/(afterLogin)/[username]/status/[id]/_lib/ge
 type Props = {
   id: string;
 };
-export default function  ImageZone({ id }: Props) {
+export default function ImageZone({ id }: Props) {
   const { data: post, error } = useQuery<IPost, Object, IPost, [_1: string, _2: string]>({
     queryKey: ["posts", id],
     queryFn: getSinglePost,
@@ -27,7 +27,7 @@ export default function  ImageZone({ id }: Props) {
       <div className={style.image} style={{ backgroundImage: `url(${post.Images[0].link})` }} />
       <div className={style.buttonZone}>
         <div className={style.buttonInner}>
-          <ActionButtons white />
+          <ActionButtons white post={post} />
         </div>
       </div>
     </div>

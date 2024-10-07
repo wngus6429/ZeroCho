@@ -2,7 +2,6 @@
 
 import { redirect } from "next/navigation";
 import { signIn } from "@/auth";
-import axios from "axios";
 
 // export default async (prevState: any, formData: FormData) => {
 export const onSubmit = async (prevState: any, formData: FormData) => {

@@ -1,4 +1,3 @@
-"use client";
 import { redirect } from "next/navigation";
 import Main from "../_component/Main";
 import { auth } from "@/auth";

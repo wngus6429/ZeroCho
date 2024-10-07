@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  ChangeEventHandler,
-  FormEvent,
-  FormEventHandler,
-  useRef,
-  useState,
-} from "react";
+import { ChangeEventHandler, FormEvent, FormEventHandler, useRef, useState } from "react";
 import style from "./postForm.module.css";
 import { Session } from "@auth/core/types";
 import TextareaAutosize from "react-textarea-autosize";
@@ -20,9 +14,7 @@ type Props = {
 export default function PostForm({ me }: Props) {
   // 이런 형식으로 하는거 기억, 자스랑 타스랑 다름
   const imageRef = useRef<HTMLInputElement>(null);
-  const [preview, setPreview] = useState<
-    Array<{ dataUrl: string; file: File } | null>
-  >([]);
+  const [preview, setPreview] = useState<Array<{ dataUrl: string; file: File } | null>>([]);
   const [content, setContent] = useState("");
   const queryClient = useQueryClient();
 
@@ -45,32 +37,26 @@ export default function PostForm({ me }: Props) {
       setContent("");
       setPreview([]);
       if (queryClient.getQueryData(["posts", "recommends"])) {
-        queryClient.setQueryData(
-          ["posts", "recommends"],
-          (prevData: { pages: Post[][] }) => {
-            const shallow = {
-              ...prevData,
-              pages: [...prevData.pages],
-            };
-            shallow.pages[0] = [...shallow.pages[0]];
-            shallow.pages[0].unshift(newPost);
-            return shallow;
-          }
-        );
+        queryClient.setQueryData(["posts", "recommends"], (prevData: { pages: Post[][] }) => {
+          const shallow = {
+            ...prevData,
+            pages: [...prevData.pages],
+          };
+          shallow.pages[0] = [...shallow.pages[0]];
+          shallow.pages[0].unshift(newPost);
+          return shallow;
+        });
       }
       if (queryClient.getQueryData(["posts", "followings"])) {
-        queryClient.setQueryData(
-          ["posts", "followings"],
-          (prevData: { pages: Post[][] }) => {
-            const shallow = {
-              ...prevData,
-              pages: [...prevData.pages],
-            };
-            shallow.pages[0] = [...shallow.pages[0]];
-            shallow.pages[0].unshift(newPost);
-            return shallow;
-          }
-        );
+        queryClient.setQueryData(["posts", "followings"], (prevData: { pages: Post[][] }) => {
+          const shallow = {
+            ...prevData,
+            pages: [...prevData.pages],
+          };
+          shallow.pages[0] = [...shallow.pages[0]];
+          shallow.pages[0].unshift(newPost);
+          return shallow;
+        });
       }
     },
     onError(error) {
@@ -91,22 +77,29 @@ export default function PostForm({ me }: Props) {
       p && formData.append("images", p.file);
     });
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`,
-        {
-          method: "post",
-          credentials: "include",
-          body: formData,
-        }
-      );
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`, {
+        method: "post",
+        credentials: "include",
+        body: formData,
+      });
       if (response.status === 201) {
         setContent("");
         setPreview([]);
         const newPost = await response.json();
         // 추천에 보냄
-        queryClient.setQueryData(
-          ["posts", "recommends"],
-          (prevData: { pages: Post[][] }) => {
+        queryClient.setQueryData(["posts", "recommends"], (prevData: { pages: Post[][] }) => {
+          // 불변성 지킨다고 그런거임
+          const shallow = {
+            ...prevData,
+            pages: [...prevData.pages],
+          };
+          shallow.pages[0] = [...shallow.pages[0]];
+          shallow.pages[0].unshift(newPost);
+          return shallow;
+        });
+        // 팔로잉쪽에 보냄
+        if (queryClient.getQueryData(["posts", "followings"])) {
+          queryClient.setQueryData(["posts", "followings"], (prevData: { pages: Post[][] }) => {
             // 불변성 지킨다고 그런거임
             const shallow = {
               ...prevData,
@@ -115,23 +108,7 @@ export default function PostForm({ me }: Props) {
             shallow.pages[0] = [...shallow.pages[0]];
             shallow.pages[0].unshift(newPost);
             return shallow;
-          }
-        );
-        // 팔로잉쪽에 보냄
-        if (queryClient.getQueryData(["posts", "followings"])) {
-          queryClient.setQueryData(
-            ["posts", "followings"],
-            (prevData: { pages: Post[][] }) => {
-              // 불변성 지킨다고 그런거임
-              const shallow = {
-                ...prevData,
-                pages: [...prevData.pages],
-              };
-              shallow.pages[0] = [...shallow.pages[0]];
-              shallow.pages[0].unshift(newPost);
-              return shallow;
-            }
-          );
+          });
         }
       }
     } catch (err) {
@@ -175,10 +152,7 @@ export default function PostForm({ me }: Props) {
     <form className={style.postForm} onSubmit={mutation.mutate}>
       <div className={style.postUserSection}>
         <div className={style.postUserImage}>
-          <img
-            src={me?.user?.image as string}
-            alt={me?.user?.email as string}
-          />
+          <img src={me?.user?.image as string} alt={me?.user?.email as string} />
         </div>
       </div>
       <div className={style.postInputSection}>
@@ -192,11 +166,7 @@ export default function PostForm({ me }: Props) {
           {preview.map(
             (v, index) =>
               v && (
-                <div
-                  key={index}
-                  style={{ flex: 1 }}
-                  onClick={onRemoveImage(index)}
-                >
+                <div key={index} style={{ flex: 1 }} onClick={onRemoveImage(index)}>
                   <img
                     src={v.dataUrl}
                     alt="미리보기"
@@ -213,19 +183,8 @@ export default function PostForm({ me }: Props) {
         <div className={style.postButtonSection}>
           <div className={style.footerButtons}>
             <div className={style.footerButtonLeft}>
-              <input
-                type="file"
-                name="imageFiles"
-                multiple
-                hidden
-                ref={imageRef}
-                onChange={onUpload}
-              />
-              <button
-                className={style.uploadButton}
-                type="button"
-                onClick={onClickButton}
-              >
+              <input type="file" name="imageFiles" multiple hidden ref={imageRef} onChange={onUpload} />
+              <button className={style.uploadButton} type="button" onClick={onClickButton}>
                 <svg width={24} viewBox="0 0 24 24" aria-hidden="true">
                   <g>
                     <path d="M3 5.5C3 4.119 4.119 3 5.5 3h13C19.881 3 21 4.119 21 5.5v13c0 1.381-1.119 2.5-2.5 2.5h-13C4.119 21 3 19.881 3 18.5v-13zM5.5 5c-.276 0-.5.224-.5.5v9.086l3-3 3 3 5-5 3 3V5.5c0-.276-.224-.5-.5-.5h-13zM19 15.414l-3-3-5 5-3-3-3 3V18.5c0 .276.224.5.5.5h13c.276 0 .5-.224.5-.5v-3.086zM9.75 7C8.784 7 8 7.784 8 8.75s.784 1.75 1.75 1.75 1.75-.784 1.75-1.75S10.716 7 9.75 7z"></path>

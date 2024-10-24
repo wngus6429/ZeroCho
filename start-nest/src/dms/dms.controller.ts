@@ -1,7 +1,29 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('DM')
 @Controller('api/workspaces/:url/dms') // 라우트파라미터
 export class DmsController {
+  @ApiParam({
+    name: 'url',
+    required: true,
+    description: '워크스페이스 url',
+  })
+  @ApiParam({
+    name: 'id',
+    required: true,
+    description: '사용자 아이디',
+  })
+  @ApiQuery({
+    name: 'perPage',
+    required: true,
+    description: '한 번에 가져올 개수',
+  })
+  @ApiQuery({
+    name: 'page',
+    required: true,
+    description: '불러올 페이지',
+  })
   @Get(':id/chats') // 쿼리스트링
   getChat(@Query() query, @Param() param) {
     // getChat(@Query() query, @Param('id') id, @Param('url') url) {
@@ -10,7 +32,7 @@ export class DmsController {
   }
 
   @Post(':id/chats')
-  postChat(@Body() body: dto) {}
+  postChat(@Body() body) {}
 }
 
 // 라우트 파라미터와 쿼리 스트링은 URL에서 데이터를 전달하는 방식으로, 각각의 특징과 용도가 다릅니다. 주요 차이점은 다음과 같습니다:

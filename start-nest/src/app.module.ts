@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { WorkspacesModule } from './workspaces/workspaces.module';
 import { ChannelsModule } from './channels/channels.module';
 import { DmsModule } from './dms/dms.module';
+import { UsersService } from './users/users.service';
 
 const getEnv = async () => {
   // await axios.get('비밀키요청') 이런식으로도 가능, 외부서버에서 AWS에서 비밀키를 가져옴
@@ -19,9 +20,15 @@ const getEnv = async () => {
 @Module({
   // 이걸로 .env 파일을 읽어올 수 있음
   // imports: [ConfigModule.forRoot({ isGlobal: true, load: [getEnv] })],
-  imports: [ConfigModule.forRoot(), UsersModule, WorkspacesModule, ChannelsModule, DmsModule],
+  imports: [
+    ConfigModule.forRoot(),
+    UsersModule,
+    WorkspacesModule,
+    ChannelsModule,
+    DmsModule,
+  ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, UsersService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): any {

@@ -4,10 +4,7 @@ import { AppService } from './app.service';
 // @Controller('abc')
 @Controller() // 공통주소
 export class AppController {
-  constructor(
-    private readonly appService: AppService,
-    @Inject('CUSTOM_KEY') private readonly customValue,
-  ) {}
+  constructor(private readonly appService: AppService) {}
 
   @Get() // GET /abc/hello 세부주소 설정
   getHello() {

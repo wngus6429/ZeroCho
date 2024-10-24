@@ -1,10 +1,12 @@
 import { Injectable } from '@nestjs/common';
+import { UsersService } from './users/users.service';
 // import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AppService {
+  constructor(private usersService: UsersService) {}
   async getHello() {
-    return process.env.NAME;
+    this.usersService.getUsers();
   }
 }
 

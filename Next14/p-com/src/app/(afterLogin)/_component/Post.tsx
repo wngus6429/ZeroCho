@@ -61,11 +61,7 @@ export default function Post({ noImage, post }: Props) {
       )}
       <div className={style.postWrapper}>
         <div className={style.postUserSection}>
-          <Link
-            href={`/${target.User.id}`}
-            className={style.postUserImage}
-            onClick={stopPropagation}
-          >
+          <Link href={`/${target.User.id}`} className={style.postUserImage} onClick={stopPropagation}>
             <img src={target.User.image} alt={target.User.nickname} />
             <div className={style.postShade} />
           </Link>
@@ -78,17 +74,11 @@ export default function Post({ noImage, post }: Props) {
               <span className={style.postUserId}>@{target.User.id}</span>
               &nbsp; · &nbsp;
             </Link>
-            <span className={style.postDate}>
-              {dayjs(target.createdAt).fromNow(true)}
-            </span>
+            <span className={style.postDate}>{dayjs(target.createdAt).fromNow(true)}</span>
           </div>
           {target.Parent && (
             <div>
-              <Link
-                href={`/${target.Parent.User.id}`}
-                style={{ color: "rgb(29, 155, 240)" }}
-                onClick={stopPropagation}
-              >
+              <Link href={`/${target.Parent.User.id}`} style={{ color: "rgb(29, 155, 240)" }} onClick={stopPropagation}>
                 @{target.Parent.User.id}
               </Link>{" "}
               님에게 보내는 답글

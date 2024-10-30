@@ -4,6 +4,6 @@ import { DmsService } from './dms.service';
 
 @Module({
   controllers: [DmsController],
-  providers: [DmsService]
+  providers: [DmsService],
 })
 export class DmsModule {}

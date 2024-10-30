@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  Res,
+  UseInterceptors,
+} from '@nestjs/common';
 import { JoinRequestDto } from './dto/join.request.dto';
 import { UsersService } from './users.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -7,7 +15,7 @@ import { User } from 'src/common/decorators/user.decorator';
 import { UndefinedToNullInterceptor } from 'src/common/intercepters/undefinedToNull.interceptor';
 
 // 컨트롤러에서는 최대한 req 안 쓰는게 좋음
-@UserInterceptors(UndefinedToNullInterceptor) // 모든 컨트롤러에 결과가 undefined인건 null로 바꿈
+@UseInterceptors(UndefinedToNullInterceptor) // 모든 컨트롤러에 결과가 undefined인건 null로 바꿈
 @ApiTags('USER')
 @Controller('api/users')
 export class UsersController {
@@ -60,9 +68,4 @@ export class UsersController {
     res.clearCookie('connect.sid', { httpOnly: true });
     res.send('ok');
   }
-}
-function UserInterceptors(
-  undefinedToNullInterceptor: any,
-): (target: typeof UsersController) => void | typeof UsersController {
-  throw new Error('Function not implemented.');
 }

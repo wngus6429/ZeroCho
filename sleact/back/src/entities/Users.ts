@@ -18,7 +18,9 @@ import { Mentions } from './Mentions';
 import { WorkspaceMembers } from './WorkspaceMembers';
 import { Workspaces } from './Workspaces';
 import { ApiProperty } from '@nestjs/swagger';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
+// 엔티티가 테이블이라고 보면됨
 // Entitiy를 Dto로도 사용가능
 // 유저랑 워크스페이스랑 다대다 관계
 @Index('email', ['email'], { unique: true })
@@ -31,6 +33,8 @@ export class Users {
   @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
+  @IsEmail()
+  @IsNotEmpty()
   @ApiProperty({
     example: 'wngus@gmail.com',
     description: '이메일',
@@ -38,6 +42,8 @@ export class Users {
   @Column('varchar', { name: 'email', unique: true, length: 30 })
   email: string;
 
+  @IsString()
+  @IsNotEmpty()
   @ApiProperty({
     example: '주현님',
     description: '닉네임',
@@ -45,6 +51,13 @@ export class Users {
   @Column('varchar', { name: 'nickname', length: 30 })
   nickname: string;
 
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({
+    example: 'nodejsbook',
+    description: '비밀번호',
+    required: true,
+  })
   @Column('varchar', { name: 'password', length: 100, select: false })
   password: string;
 

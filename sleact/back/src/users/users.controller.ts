@@ -2,10 +2,13 @@ import {
   Body,
   Controller,
   Get,
+  HttpException,
   Post,
   Req,
   Res,
   UseInterceptors,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { JoinRequestDto } from './dto/join.request.dto';
 import { UsersService } from './users.service';
@@ -45,8 +48,8 @@ export class UsersController {
   })
   @ApiOperation({ summary: '회원가입' }) // swagger 문서화
   @Post()
-  postUsers(@Body() body: JoinRequestDto) {
-    this.userService.postUsers(body.email, body.nickname, body.password);
+  async join(@Body() data: JoinRequestDto) {
+    this.userService.join(data.email, data.nickname, data.password);
   }
 
   @ApiResponse({

@@ -2,11 +2,14 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import cookieParser from 'cookie-parser';
+import { HttpExceptionFilter } from './httpException.FIlter';
 declare const module: any;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const port = process.env.PORT || 3000;
+  // 모든 http exception을 여기서 잡아서 처리함
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   // Nest가 그냥 이렇게 쓰면 된다고 알려줌
   const config = new DocumentBuilder()

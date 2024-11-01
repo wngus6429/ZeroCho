@@ -48,8 +48,9 @@ export class UsersController {
   })
   @ApiOperation({ summary: '회원가입' }) // swagger 문서화
   @Post()
-  async join(@Body() data: JoinRequestDto) {
-    this.userService.join(data.email, data.nickname, data.password);
+  async join(@Body() body: JoinRequestDto) {
+    console.log('바디', body);
+    await this.userService.join(body.email, body.nickname, body.password);
   }
 
   @ApiResponse({

@@ -69,52 +69,52 @@ export default function PostForm({ me }: Props) {
     setContent(e.target.value);
   };
 
-  const onSubmit: FormEventHandler = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append("content", content);
-    preview.forEach((p) => {
-      p && formData.append("images", p.file);
-    });
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`, {
-        method: "post",
-        credentials: "include",
-        body: formData,
-      });
-      if (response.status === 201) {
-        setContent("");
-        setPreview([]);
-        const newPost = await response.json();
-        // 추천에 보냄
-        queryClient.setQueryData(["posts", "recommends"], (prevData: { pages: Post[][] }) => {
-          // 불변성 지킨다고 그런거임
-          const shallow = {
-            ...prevData,
-            pages: [...prevData.pages],
-          };
-          shallow.pages[0] = [...shallow.pages[0]];
-          shallow.pages[0].unshift(newPost);
-          return shallow;
-        });
-        // 팔로잉쪽에 보냄
-        if (queryClient.getQueryData(["posts", "followings"])) {
-          queryClient.setQueryData(["posts", "followings"], (prevData: { pages: Post[][] }) => {
-            // 불변성 지킨다고 그런거임
-            const shallow = {
-              ...prevData,
-              pages: [...prevData.pages],
-            };
-            shallow.pages[0] = [...shallow.pages[0]];
-            shallow.pages[0].unshift(newPost);
-            return shallow;
-          });
-        }
-      }
-    } catch (err) {
-      alert("업로드 중 에러가 발생했습니다.");
-    }
-  };
+  // const onSubmit: FormEventHandler = async (e) => {
+  //   e.preventDefault();
+  //   const formData = new FormData();
+  //   formData.append("content", content);
+  //   preview.forEach((p) => {
+  //     p && formData.append("images", p.file);
+  //   });
+  //   try {
+  //     const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/posts`, {
+  //       method: "post",
+  //       credentials: "include",
+  //       body: formData,
+  //     });
+  //     if (response.status === 201) {
+  //       setContent("");
+  //       setPreview([]);
+  //       const newPost = await response.json();
+  //       // 추천에 보냄
+  //       queryClient.setQueryData(["posts", "recommends"], (prevData: { pages: Post[][] }) => {
+  //         // 불변성 지킨다고 그런거임
+  //         const shallow = {
+  //           ...prevData,
+  //           pages: [...prevData.pages],
+  //         };
+  //         shallow.pages[0] = [...shallow.pages[0]];
+  //         shallow.pages[0].unshift(newPost);
+  //         return shallow;
+  //       });
+  //       // 팔로잉쪽에 보냄
+  //       if (queryClient.getQueryData(["posts", "followings"])) {
+  //         queryClient.setQueryData(["posts", "followings"], (prevData: { pages: Post[][] }) => {
+  //           // 불변성 지킨다고 그런거임
+  //           const shallow = {
+  //             ...prevData,
+  //             pages: [...prevData.pages],
+  //           };
+  //           shallow.pages[0] = [...shallow.pages[0]];
+  //           shallow.pages[0].unshift(newPost);
+  //           return shallow;
+  //         });
+  //       }
+  //     }
+  //   } catch (err) {
+  //     alert("업로드 중 에러가 발생했습니다.");
+  //   }
+  // };
 
   const onClickButton = () => {
     imageRef.current?.click(); // imageRef.current가 있으면 클릭이됨

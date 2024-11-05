@@ -17,6 +17,7 @@ import { DMs } from './entities/DMs';
 import { Mentions } from './entities/Mentions';
 import { WorkspaceMembers } from './entities/WorkspaceMembers';
 import { Workspaces } from './entities/Workspaces';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   // 이걸로 .env 파일을 읽어올 수 있음
@@ -26,6 +27,7 @@ import { Workspaces } from './entities/Workspaces';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
+    AuthModule,
     UsersModule,
     WorkspacesModule,
     ChannelsModule,

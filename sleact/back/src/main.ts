@@ -4,6 +4,8 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import cookieParser from 'cookie-parser';
 import { HttpExceptionFilter } from './httpException.FIlter';
 import { ValidationPipe } from '@nestjs/common';
+import passport from 'passport';
+import session from 'express-session';
 declare const module: any;
 
 async function bootstrap() {
@@ -24,6 +26,20 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   app.use(cookieParser());
+  app.use(
+    session({
+      resave: false,
+      saveUninitialized: false,
+      secret: process.env.COOKIE_SECRET,
+      cookie: {
+        httpOnly: true,
+      },
+    }),
+  );
+  app.use(passport.initialize());
+  // 토큰 기반으로 할거면 아래 필요없음
+  // 지금은 세션 기반으로 하기 때문에 필요함
+  app.use(passport.session());
   await app.listen(port);
   console.log(`작동중 Listening on port ${port}`);
   ``;
@@ -31,15 +47,5 @@ async function bootstrap() {
     module.hot.accept();
     module.hot.dispose(() => app.close());
   }
-  // app.use(
-  //   session({
-  //     resave: false,
-  //     saveUninitialized: false,
-  //     secret: process.env.COOKIE_SECRET,
-  //     cookie: {
-  //       httpOnly: true,
-  //     },
-  //   }),
-  // );
 }
 bootstrap();

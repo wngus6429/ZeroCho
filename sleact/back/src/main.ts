@@ -13,6 +13,9 @@ async function bootstrap() {
   const port = process.env.PORT || 3000;
   // 모든 http exception을 여기서 잡아서 처리함
   app.useGlobalPipes(new ValidationPipe());
+  // app.useGlobalPipes(new ValidationPipe({
+  //   transform:true  npm i class-transformer 해줘야함
+  // }));
   app.useGlobalFilters(new HttpExceptionFilter());
 
   // Nest가 그냥 이렇게 쓰면 된다고 알려줌

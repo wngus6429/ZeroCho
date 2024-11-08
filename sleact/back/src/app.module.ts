@@ -57,7 +57,12 @@ import { AuthModule } from './auth/auth.module';
       keepConnectionAlive: true, // 자꾸 저장하면 서버 재시작하는데 DB 끊기니까 이걸로 연결 유지
       charset: 'utf8mb4_general_ci', // 이모티콘까지 가능
     }),
-    TypeOrmModule.forFeature([Users]),
+    TypeOrmModule.forFeature([
+      Users,
+      Workspaces,
+      WorkspaceMembers,
+      ChannelMembers,
+    ]),
   ],
   controllers: [AppController],
   providers: [AppService, UsersService],

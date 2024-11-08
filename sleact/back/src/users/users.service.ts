@@ -6,8 +6,10 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from 'src/entities/Users';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import bcrypt from 'bcrypt';
+import { WorkspaceMembers } from 'src/entities/WorkspaceMembers';
+import { ChannelMembers } from 'src/entities/ChannelMembers';
 
 @Injectable()
 export class UsersService {
@@ -15,6 +17,11 @@ export class UsersService {
     // 레포지토리는 서비스랑 테이블인 엔티티를 연결해줌
     @InjectRepository(Users)
     private usersRepository: Repository<Users>,
+    @InjectRepository(WorkspaceMembers)
+    private workspacesMembersRepository: Repository<WorkspaceMembers>,
+    @InjectRepository(ChannelMembers)
+    private channelMembersRepository: Repository<ChannelMembers>,
+    private dataSource: DataSource,
   ) {}
 
   getUsers() {}
@@ -33,16 +40,35 @@ export class UsersService {
     // if (!password) {
     //   throw new BadRequestException('비밀번호가 없습니다.');
     // }
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
     const user = await this.usersRepository.findOne({ where: { email } });
     console.log('user', user);
     if (user) {
       throw new UnauthorizedException('이미 존재하는 사용자입니다.');
     }
     const hashedPassword = await bcrypt.hash(password, 12);
-    await this.usersRepository.save({
-      email,
-      nickname,
-      password: hashedPassword,
-    });
+    try {
+      const returned = await queryRunner.manager.getRepository(Users).save({
+        email,
+        nickname,
+        password: hashedPassword,
+      });
+      await queryRunner.manager.getRepository(WorkspaceMembers).save({
+        UserId: returned.id,
+        WorkspaceId: 1,
+      });
+      await queryRunner.manager.getRepository(ChannelMembers).save({
+        UserId: returned.id,
+        ChannelId: 1,
+      });
+      await queryRunner.commitTransaction(); // 커밋
+      return true;
+    } catch (error) {
+      await queryRunner.rollbackTransaction(); // 롤백
+    } finally {
+      await queryRunner.release(); // 꼭 필요함
+    }
   }
 }

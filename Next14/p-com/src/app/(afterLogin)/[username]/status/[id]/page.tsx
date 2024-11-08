@@ -18,6 +18,21 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: `Z에서 ${user.nickname} 님 : ${post.content}`,
     description: post.content,
+    openGraph: {
+      title: `Z에서 ${user.nickname} 님 : ${post.content}`,
+      description: post.content,
+      images: post.Images?.map((v) => ({
+        url: `https://z.nodebird.com${v.link}`, // /upload
+        width: 400,
+        height: 400,
+      })) || [
+        {
+          url: `https://z.nodebird.com${user.image}`, // /upload
+          width: 400,
+          height: 400,
+        },
+      ],
+    },
   };
 }
 

@@ -1,0 +1,78 @@
+.main {
+    min-height: 100dvh;
+    border-color: rgb(239, 243, 244);
+    border-right-width: 1px;
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-right-style: solid;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+@media all and (min-width: 687px) {
+    .main {
+        width: 600px;
+    }
+}
+.header {
+    height: 53px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+}
+
+.header h3 {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.room {
+    padding: 16px;
+    display: flex;
+    flex-direction: row;
+    transition-property: background-color;
+    transition-duration: 0.2s;
+    border-color: rgb(239, 243, 244);
+    cursor: pointer;
+}
+.room:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+.roomUserImage, .roomUserImage img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 16px;
+}
+
+.roomChatInfo {
+    display: flex;
+    flex-direction: column;
+    color: #536471;
+    font-size: 15px;
+
+}
+.roomChatInfo b {
+    color: black;
+}
+@media (prefers-color-scheme: dark) {
+    .main {
+        border-color: rgb(47, 51, 54);
+    }
+    .room {
+        border-color: rgb(47, 51, 54);
+    }
+    .room:hover {
+        background: rgb(29,155,240,0.1);
+    }
+    .roomChatInfo {
+        color: rgb(231, 233, 234);
+    }
+    .roomChatInfo .roomUserInfo span {
+        color: rgb(113, 118, 123);
+    }
+    .roomChatInfo b {
+        color: white;
+    }
+}

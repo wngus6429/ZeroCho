@@ -1,11 +1,7 @@
 import style from "./profile.module.css";
 import Post from "@/app/(afterLogin)/_component/Post";
 import BackButton from "@/app/(afterLogin)/_component/BackButton";
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from "@tanstack/react-query";
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import UserPosts from "./_component/UserPosts";
 import UserInfo from "./_component/UserInfo";
 import { getUserPosts } from "./_lib/getUserPosts";
@@ -20,6 +16,17 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: `${user.nickname} (${user.id}) / Z`,
     description: `${user.nickname} (${user.id}) 프로필`,
+    openGraph: {
+      title: `${user.nickname} (${user.id}) / Z`,
+      description: `${user.nickname} (${user.id}) 프로필`,
+      images: [
+        {
+          url: `https://z.nodebird.com${user.image}`, // /upload
+          width: 400,
+          height: 400,
+        },
+      ],
+    },
   };
 }
 

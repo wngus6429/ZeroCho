@@ -6,7 +6,7 @@ import SignupModal from "@/app/(beforeLogin)/_component/SignupModal";
 export default function Page() {
   return (
     <>
-      난 가로채기지롱 ㅋㅋ
+      @modal에 SignUp컴포넌트
       <SignupModal />
     </>
   );

@@ -18,6 +18,7 @@ export default async function AfterLoginLayout({ children, modal }: Props) {
     <div className={style.container}>
       {/* RQProver 안에 있어야 queryClient 사용이 가능하다 */}
       <RQProvider>
+        {/* 왼쪽 */}
         <header className={style.leftSectionWrapper}>
           <section className={style.leftSection}>
             <div className={style.leftSectionFixed}>
@@ -54,6 +55,7 @@ export default async function AfterLoginLayout({ children, modal }: Props) {
         </header>
         <div className={style.rightSectionWrapper}>
           <div className={style.rightSectionInner}>
+            {/* 가운데 메인화면 */}
             <main className={style.main}>{children}</main>
             <section className={style.rightSection}>
               <RightSearchZone />

@@ -18,12 +18,6 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   const session = await auth();
-  const queryClient = new QueryClient();
-  await queryClient.prefetchInfiniteQuery({
-    queryKey: ["posts", "recommends"],
-    queryFn: getPostRecommends,
-    initialPageParam: 0,
-  });
   return (
     <main className={style.main}>
       <TabProvider>

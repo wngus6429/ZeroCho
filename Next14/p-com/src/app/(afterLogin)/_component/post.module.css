@@ -12,7 +12,6 @@
 .post:hover {
   background-color: rgba(0, 0, 0, 0.03);
 }
-
 .postWrapper {
   display: flex;
   flex-direction: row;
@@ -28,12 +27,10 @@
 .postReposted svg {
   fill: rgb(83, 100, 113);
 }
-
 .postUserSection {
   margin-right: 12px;
   width: 40px;
 }
-
 .postUserImage {
   position: relative;
   display: inline-block;
@@ -41,7 +38,6 @@
   height: 40px;
   border-radius: 20px;
 }
-
 .postShade {
   display: inline-block;
   width: 40px;
@@ -59,7 +55,6 @@
   height: 40px;
   border-radius: 20px;
 }
-
 .postUserName {
   font-weight: bold;
 }
@@ -70,10 +65,6 @@
 .postDate:hover {
   text-decoration: underline;
 }
-
-.postImageSection {
-}
-
 .postBody {
   display: flex;
   flex-direction: column;
@@ -82,12 +73,10 @@
 .postUserName:hover {
   text-decoration: underline;
 }
-
 .postMeta {
   display: flex;
   flex-direction: row;
 }
-
 .postImageSection {
   display: inline-block;
   margin-top: 12px;

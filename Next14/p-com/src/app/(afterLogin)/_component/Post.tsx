@@ -1,15 +1,16 @@
 import style from "./post.module.css";
 import Link from "next/link";
-import dayjs from "dayjs";
-//! 몇분전 글이 쓰여졌다 등등 활용, 옛날에는 모먼트를 많이썻다함
-import relativeTime from "dayjs/plugin/relativeTime";
-import "dayjs/locale/ko";
 import ActionButtons from "@/app/(afterLogin)/_component/ActionButtons";
 import PostArticle from "@/app/(afterLogin)/_component/PostArticle";
 // import { faker } from "@faker-js/faker";
 import PostImages from "@/app/(afterLogin)/_component/PostImages";
 import { Post as IPost } from "@/model/Post";
 import { MouseEventHandler } from "react";
+
+import dayjs from "dayjs";
+//! 몇분전 글이 쓰여졌다 등등 활용, 옛날에는 모먼트를 많이썻다함
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/ko";
 
 dayjs.locale("ko");
 dayjs.extend(relativeTime);

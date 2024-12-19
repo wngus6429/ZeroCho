@@ -12,6 +12,8 @@ import RQProvider from "@/app/(afterLogin)/_component/RQProvider";
 import FollowRecommendSection from "@/app/(afterLogin)/_component/FollowRecommendSection";
 
 type Props = { children: ReactNode; modal: ReactNode };
+// 여기 모달은 게시하기 버튼을 눌렀을 때 나오는 모달이다.
+// 뒤에 배경 그대로 있고 모달이 뜨는 형태
 export default async function AfterLoginLayout({ children, modal }: Props) {
   const session = await auth();
   return (

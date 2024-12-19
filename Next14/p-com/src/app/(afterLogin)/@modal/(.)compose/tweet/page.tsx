@@ -1,5 +1,4 @@
 "use client";
-
 import style from "./modal.module.css";
 import { ChangeEventHandler, FormEvent, FormEventHandler, useRef, useState } from "react";
 import { useSession } from "next-auth/react";

@@ -119,11 +119,11 @@ export default function NavMenu() {
           </div>
         </Link>
       </li>
-      {me?.user?.id && (
+      {me?.user?.email && (
         <li>
-          <Link href={`/${me?.user?.email}`}>
+          <Link href={`/${me?.user.email}`}>
             <div className={style.navPill}>
-              {segment === me.user?.email ? (
+              {segment === me.user.email ? (
                 <>
                   <svg
                     width={26}

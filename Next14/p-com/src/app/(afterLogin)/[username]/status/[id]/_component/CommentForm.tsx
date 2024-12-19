@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { ChangeEventHandler, useRef, useState } from "react";
 import style from "./commentForm.module.css";
 import { useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
@@ -14,8 +14,12 @@ export default function CommentForm({ id }: Props) {
   const { data: me } = useSession();
 
   const onClickButton = () => {};
-  const onSubmit = () => {};
-  const onChange = () => {};
+  const onSubmit = () => {
+    setContent("");
+  };
+  const onChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
+    setContent(e.target.value);
+  };
 
   const queryClient = useQueryClient();
   const post = queryClient.getQueryData(["posts", id]);

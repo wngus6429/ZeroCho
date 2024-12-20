@@ -1,5 +1,4 @@
 "use client";
-
 import style from "./rightSearchZone.module.css";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React from "react";

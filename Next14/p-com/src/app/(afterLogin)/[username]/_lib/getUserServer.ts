@@ -7,7 +7,7 @@ export const getUserServer = async ({ queryKey }: { queryKey: [string, string] }
       tags: ["users", username],
     },
     credentials: "include",
-    headers: { Cookie: cookies().toString() },
+    headers: { Cookie: (await cookies()).toString() },
     cache: "no-store",
   });
   // The return value is *not* serialized

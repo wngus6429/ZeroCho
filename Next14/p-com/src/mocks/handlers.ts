@@ -20,8 +20,9 @@ const User = [
 //     setTimeout(res, ms);
 //   });
 
+const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 export const handlers = [
-  http.post("/api/login", () => {
+  http.post(`${baseUrl}/api/login`, () => {
     console.log("로그인");
     return HttpResponse.json(
       {
@@ -34,10 +35,11 @@ export const handlers = [
         headers: {
           "Set-Cookie": "connect.sid=msw-cookie;HttpOnly;Path=/",
         },
+        status: 403, // status도 가능함
       }
     );
   }),
-  http.post("/api/logout", () => {
+  http.post(`${baseUrl}/api/logout`, () => {
     console.log("로그아웃");
     return new HttpResponse(null, {
       headers: {
@@ -57,7 +59,7 @@ export const handlers = [
       },
     });
   }),
-  http.get("/api/postRecommends", async ({ request }) => {
+  http.get(`${baseUrl}/api/postRecommends`, async ({ request }) => {
     const url = new URL(request.url);
     // cursor가 없다면 기본 값이 0이 되게끔
     const cursor = parseInt(url.searchParams.get("cursor") as string) || 0;
@@ -112,7 +114,7 @@ export const handlers = [
       },
     ]);
   }),
-  http.get("/api/followingPosts", async ({ request }) => {
+  http.get(`${baseUrl}/api/followingPosts`, async ({ request }) => {
     // await delay(1500);
     return HttpResponse.json([
       {
@@ -153,7 +155,7 @@ export const handlers = [
     ]);
   }),
   // : 이 붙어있으면 바뀔수 있다는거임. params
-  http.get("/api/search/:tag", ({ request, params }) => {
+  http.get(`${baseUrl}/api/search/:tag`, ({ request, params }) => {
     const { tag } = params;
     return HttpResponse.json([
       {
@@ -193,7 +195,7 @@ export const handlers = [
       },
     ]);
   }),
-  http.get("/api/users/:userId/posts", ({ request, params }) => {
+  http.get(`${baseUrl}/api/users/:userId/posts`, ({ request, params }) => {
     const { userId } = params;
     return HttpResponse.json([
       {
@@ -233,7 +235,7 @@ export const handlers = [
       },
     ]);
   }),
-  http.get("/api/users/:userId", ({ request, params }): StrictResponse<any> => {
+  http.get(`${baseUrl}/api/users/:userId`, ({ request, params }): StrictResponse<any> => {
     const { userId } = params;
     const found = User.find((v) => v.id === userId);
     if (found) {
@@ -246,7 +248,7 @@ export const handlers = [
       }
     );
   }),
-  http.get("/api/posts/:postId", ({ request, params }): StrictResponse<any> => {
+  http.get(`${baseUrl}/api/posts/:postId`, ({ request, params }): StrictResponse<any> => {
     const { postId } = params;
     if (parseInt(postId as string) > 10) {
       return HttpResponse.json(
@@ -268,7 +270,7 @@ export const handlers = [
       createdAt: generateDate(),
     });
   }),
-  http.get("/api/posts/:postId/comments", ({ request, params }) => {
+  http.get(`${baseUrl}/api/posts/:postId/comments`, ({ request, params }) => {
     const { postId } = params;
     return HttpResponse.json([
       {
@@ -308,10 +310,10 @@ export const handlers = [
       },
     ]);
   }),
-  http.get("/api/followRecommends", ({ request }) => {
+  http.get(`${baseUrl}/api/followRecommends`, ({ request }) => {
     return HttpResponse.json(User);
   }),
-  http.get("/api/trends", ({ request }) => {
+  http.get(`${baseUrl}/api/trends`, ({ request }) => {
     return HttpResponse.json([
       { tagId: 1, title: "제로초", count: 1264 },
       { tagId: 2, title: "원초", count: 1264 },

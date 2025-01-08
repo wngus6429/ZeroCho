@@ -1,18 +1,34 @@
-"use client"
+"use client";
 
 import style from "./logoutButton.module.css";
-import {signOut, useSession} from "next-auth/react";
-import {useRouter} from "next/navigation";
+import { signOut } from "next-auth/react";
+import { Session } from "@auth/core/types";
+import { useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
-export default function LogoutButton() {
+type Props = {
+  me: Session | null;
+};
+export default function LogoutButton({ me }: Props) {
+  // RQProver 안에 있어야 queryClient 사용이 가능하다
   const router = useRouter();
-  const { data: me } = useSession();
+  const queryClient = useQueryClient();
 
   const onLogout = () => {
-    signOut({ redirect: false })
-      .then(() => {
-        router.replace('/');
+    queryClient.invalidateQueries({
+      queryKey: ["posts"],
+    });
+    queryClient.invalidateQueries({
+      queryKey: ["users"],
+    });
+    signOut({ callbackUrl: "/" }).then(() => {
+      fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/logout`, {
+        method: "POST",
+        credentials: "include",
       });
+      router.refresh(); // 로그아웃 후 새로 로그인 했는데. 로그인 정보가 남아있어서 새로고침을 해준다.
+      router.replace("/");
+    });
   };
 
   if (!me?.user) {
@@ -22,12 +38,12 @@ export default function LogoutButton() {
   return (
     <button className={style.logOutButton} onClick={onLogout}>
       <div className={style.logOutUserImage}>
-        <img src={me.user?.image as string} alt={me.user?.email as string}/>
+        <img src={me.user?.image as string} alt={me.user?.email as string} />
       </div>
       <div className={style.logOutUserName}>
         <div>{me.user?.name}</div>
         <div>@{me.user?.email}</div>
       </div>
     </button>
-  )
+  );
 }

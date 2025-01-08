@@ -1,31 +1,36 @@
+"use client";
 import style from "./signup.module.css";
-import { onSubmit } from "../_lib/signup";
+import onSubmit from "../_lib/signup";
 import BackButton from "@/app/(beforeLogin)/_component/BackButton";
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormStatus, useFormState } from "react-dom";
 
-function showMessage(messasge: string | null | undefined) {
-  if (messasge === "no_id") {
+function showMessage(message: string | null | undefined) {
+  if (message === "no_id") {
     return "아이디를 입력하세요.";
   }
-  if (messasge === "no_name") {
+  if (message === "no_name") {
     return "닉네임을 입력하세요.";
   }
-  if (messasge === "no_password") {
+  if (message === "no_password") {
     return "비밀번호를 입력하세요.";
   }
-  if (messasge === "no_image") {
+  if (message === "no_image") {
     return "이미지를 업로드하세요.";
   }
-  if (messasge === "user_exists") {
+  if (message === "user_exists") {
     return "이미 사용 중인 아이디입니다.";
   }
-  return "";
+  if (message === "nickname must be a string") {
+    return "닉네임이 필요합니다.";
+  }
+  return message;
 }
 
 export default function SignupModal() {
-  // name을 인식해서 데이터를 가져옴
-  const [state, formAction] = useFormState(onSubmit, { message: null }); // 뒤는 초기값
+  const [state, formAction] = useFormState(onSubmit, { message: null });
   const { pending } = useFormStatus();
+
+  console.log("state", state);
 
   return (
     <>
@@ -41,25 +46,57 @@ export default function SignupModal() {
                 <label className={style.inputLabel} htmlFor="id">
                   아이디
                 </label>
-                <input id="id" name="id" className={style.input} type="text" placeholder="" required />
+                <input
+                  id="id"
+                  name="id"
+                  className={style.input}
+                  type="text"
+                  placeholder=""
+                  required
+                  defaultValue={state.id as string}
+                />
               </div>
               <div className={style.inputDiv}>
                 <label className={style.inputLabel} htmlFor="name">
                   닉네임
                 </label>
-                <input id="name" name="name" className={style.input} type="text" placeholder="" required />
+                <input
+                  id="name"
+                  name="name"
+                  className={style.input}
+                  type="text"
+                  placeholder=""
+                  required
+                  defaultValue={state.nickname as string}
+                />
               </div>
               <div className={style.inputDiv}>
                 <label className={style.inputLabel} htmlFor="password">
                   비밀번호
                 </label>
-                <input id="password" name="password" className={style.input} type="password" placeholder="" required />
+                <input
+                  id="password"
+                  name="password"
+                  className={style.input}
+                  type="password"
+                  placeholder=""
+                  required
+                  defaultValue={state.password as string}
+                />
               </div>
               <div className={style.inputDiv}>
                 <label className={style.inputLabel} htmlFor="image">
                   프로필
                 </label>
-                <input id="image" name="image" required className={style.input} type="file" accept="image/*" />
+                <input
+                  id="image"
+                  name="image"
+                  required
+                  className={style.input}
+                  type="file"
+                  accept="image/*"
+                  defaultValue={state.image as string}
+                />
               </div>
             </div>
             <div className={style.modalFooter}>

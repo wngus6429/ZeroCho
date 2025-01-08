@@ -1,5 +1,4 @@
 "use client";
-
 import style from "@/app/(beforeLogin)/_component/signup.module.css";
 import { useRouter } from "next/navigation";
 

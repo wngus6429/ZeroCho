@@ -3,8 +3,7 @@
 import { redirect } from "next/navigation";
 import { signIn } from "@/auth";
 
-// export default async (prevState: any, formData: FormData) => {
-export const onSubmit = async (prevState: any, formData: FormData) => {
+export default async (prevState: { message: string | null }, formData: FormData) => {
   if (!formData.get("id") || !(formData.get("id") as string)?.trim()) {
     return { message: "no_id" };
   }
@@ -28,6 +27,14 @@ export const onSubmit = async (prevState: any, formData: FormData) => {
     console.log(response.status);
     if (response.status === 403) {
       return { message: "user_exists" };
+    } else if (response.status === 400) {
+      return {
+        message: (await response.json()).data[0],
+        id: formData.get("id"),
+        nickname: formData.get("nickname"),
+        password: formData.get("password"),
+        image: formData.get("image"),
+      };
     }
     console.log(await response.json());
     shouldRedirect = true;
@@ -43,6 +50,7 @@ export const onSubmit = async (prevState: any, formData: FormData) => {
   }
 
   if (shouldRedirect) {
-    redirect("/home"); // try/catch문 안에서 X
+    redirect("/home"); // try/catch문 안에서 사용하면 안됨.
   }
+  return { message: null };
 };

@@ -1,4 +1,3 @@
-"use client";
 import style from "./signup.module.css";
 import { onSubmit } from "../_lib/signup";
 import BackButton from "@/app/(beforeLogin)/_component/BackButton";

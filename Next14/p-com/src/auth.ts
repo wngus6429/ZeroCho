@@ -1,3 +1,55 @@
+// import NextAuth, { CredentialsSignin } from "next-auth";
+// import CredentialsProvider from "next-auth/providers/credentials";
+
+// export const {
+//   handlers: { GET, POST },
+//   auth,
+//   signIn,
+// } = NextAuth({
+//   pages: {
+//     // 직접 만든 페이지를 로그인 창으로서 등록한다.
+//     signIn: "/i/flow/login",
+//     newUser: "/i/flow/signup",
+//   },
+//   providers: [
+//     CredentialsProvider({
+//       //? credentials는 로그인할 때 입력한 정보
+//       async authorize(credentials) {
+//         const authResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/login`, {
+//           method: "POST",
+//           headers: {
+//             "Content-Type": "application/json",
+//           },
+//           body: JSON.stringify({
+//             // credentials안에 username, password가 고정으로 들어가있음
+//             id: credentials.username,
+//             password: credentials.password,
+//           }),
+//         });
+
+//         if (!authResponse.ok) {
+//           const credentialsSignin = new CredentialsSignin();
+//           if (authResponse.status === 404) {
+//             credentialsSignin.code = "no_user";
+//           } else if (authResponse.status === 401) {
+//             credentialsSignin.code = "wrong_password";
+//           }
+//           throw credentialsSignin;
+//         }
+
+//         const user = await authResponse.json();
+//         console.log("user", user);
+//         return {
+//           email: user.id,
+//           name: user.nickname,
+//           image: user.image,
+//           ...user,
+//         };
+//       },
+//     }),
+//   ],
+// });
+
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { cookies } from "next/headers";

@@ -7,8 +7,6 @@ import { Suspense } from "react";
 import Loading from "./loading";
 import TabDeciderSuspense from "./_component/TabDeciderSuspense";
 import { auth } from "@/auth";
-import { QueryClient } from "@tanstack/react-query";
-import { getPostRecommends } from "./_lib/getPostRecommends";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

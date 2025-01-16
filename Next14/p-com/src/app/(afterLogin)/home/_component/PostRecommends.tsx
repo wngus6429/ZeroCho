@@ -24,8 +24,9 @@ export default function PostRecommends() {
     queryFn: getPostRecommends,
     initialPageParam: 0, //  1,2,3,4,5 여기서 5가 lastId가 되겠지
     getNextPageParam: (lastPage) => lastPage.at(-1)?.postId, // 글 삭제도 생각해줘야하니, 마지막 게시글의 포스트아이디
-    staleTime: 60 * 1000, // 0초뒤에 fresh에서 -> stale, 1분동안은 fresh 상태임
-    gcTime: 300 * 1000,
+    staleTime: 60 * 1000, // 이 값이 0 이면 0초뒤에 fresh에서 -> stale,
+    // 지금 값은 1분동안은 fresh 상태임, infinite는 캐쉬 무제한
+    gcTime: 300 * 1000, // 캐시타임이 5분이면 gcTime이 5분이 지나면 캐시가 삭제됨
   });
 
   // useInView는 react-intersection-observer 훅으로,

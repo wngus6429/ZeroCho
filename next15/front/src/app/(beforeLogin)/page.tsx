@@ -6,6 +6,7 @@
 // vanilla extract -> 윈도우와 문제 있음.
 import { redirect } from "next/navigation";
 import Main from "./_component/Main";
+// 서버 컴포넌트이니 "@/auth"; 사용
 import { auth } from "@/auth";
 
 export default async function Home() {

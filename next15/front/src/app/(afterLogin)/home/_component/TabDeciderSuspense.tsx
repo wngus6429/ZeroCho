@@ -12,6 +12,9 @@ export default async function TabDeciderSuspense() {
     queryFn: getPostRecommends,
     initialPageParam: 0, // 처음엔 커서값을 0으로 설정
   });
+  // queryClient.getQueryData(["posts", "recommends"]); 이런식으로 데이터를 불러옴
+  // queryClient.setQueryData(["posts", "recommends"], data); 이런식으로 데이터를 수정
+
   const dehydratedState = dehydrate(queryClient);
 
   console.log("dehydratedState", dehydratedState);

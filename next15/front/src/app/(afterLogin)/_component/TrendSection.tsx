@@ -1,5 +1,4 @@
 "use client";
-
 import style from "./trendSection.module.css";
 import Trend from "@/app/(afterLogin)/_component/Trend";
 import { usePathname } from "next/navigation";
@@ -17,16 +16,16 @@ export default function TrendSection() {
     gcTime: 300 * 1000,
     enabled: !!session?.user, // 로그인한 사람이 있어야 enabled
   });
-
   const pathname = usePathname();
+
   if (pathname === "/explore") return null;
   if (session?.user) {
     return (
       <div className={style.trendBg}>
         <div className={style.trend}>
           <h3>나를 위한 트렌드</h3>
-          {data?.map((trend, index) => (
-            <Trend key={index} trend={trend} />
+          {data?.map((trend) => (
+            <Trend trend={trend} key={trend.title} />
           ))}
         </div>
       </div>

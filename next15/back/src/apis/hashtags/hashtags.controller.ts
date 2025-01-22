@@ -18,7 +18,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { LoggedInGuard } from '../../auth/logged-in-guard';
-import {TrendsDto} from "./dto/trends.dto";
+import { TrendsDto } from './dto/trends.dto';
 
 @ApiTags('해시태그 관련')
 @Controller('hashtags')
@@ -46,6 +46,7 @@ export class HashtagsController {
   })
   @UseGuards(LoggedInGuard)
   getTrends() {
+    console.log('아이씨발');
     return this.hashtagsService.getTrends();
   }
 

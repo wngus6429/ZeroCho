@@ -1,5 +1,4 @@
 "use client";
-
 import Trend from "@/app/(afterLogin)/_component/Trend";
 import { useQuery } from "@tanstack/react-query";
 import { Hashtag } from "@/model/Hashtag";

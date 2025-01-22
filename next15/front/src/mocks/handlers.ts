@@ -195,7 +195,7 @@ export const handlers = [
       },
     ]);
   }),
-  http.get(`${baseUrl}/api/users/:userId/posts`, ({ request, params }) => {
+  http.get(`${baseUrl}/api/users/:userId/posts/:postId`, ({ request, params }) => {
     const { userId } = params;
     return HttpResponse.json([
       {

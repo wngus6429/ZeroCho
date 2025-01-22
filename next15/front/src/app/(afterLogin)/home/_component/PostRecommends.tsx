@@ -38,11 +38,28 @@ export default function PostRecommends() {
   });
 
   useEffect(() => {
-    if (inView) {
-      // fetching이 끝나고 다음페이지가 있을떄 실행
-      !isFetching && hasNextPage && fetchNextPage();
+    // fetching이 끝나고 다음페이지가 있을떄 실행
+    if (inView && !isFetching && hasNextPage) {
+      fetchNextPage(); // 상태 업데이트는 이 조건이 모두 충족될 때만 실행
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
+
+  // useEffect(() => {
+  //   // Debounce the fetchNextPage call to prevent rapid multiple calls
+  //   let timeoutId: NodeJS.Timeout;
+
+  //   if (inView && !isFetching && hasNextPage) {
+  //     timeoutId = setTimeout(() => {
+  //       fetchNextPage();
+  //     }, 100);
+  //   }
+
+  //   return () => {
+  //     if (timeoutId) {
+  //       clearTimeout(timeoutId);
+  //     }
+  //   };
+  // }, [inView, isFetching, hasNextPage, fetchNextPage]);
 
   if (isPending) {
     return (
@@ -69,9 +86,9 @@ export default function PostRecommends() {
     );
   }
 
+  console.log("data", data);
   return (
     <>
-      {/* 데이터가 있는 경우에만 map */}
       {data?.pages.map((page, i) => (
         <Fragment key={i}>
           {page.map((post) => (

@@ -1,5 +1,4 @@
 "use client";
-
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getUserPosts } from "../_lib/getUserPosts";
 import Post from "@/app/(afterLogin)/_component/Post";
@@ -18,6 +17,7 @@ export default function UserPosts({ username }: Props) {
   const queryClient = useQueryClient();
   const user = queryClient.getQueryData(["users", username]);
   console.log("user", user);
+
   if (user) {
     return data?.map((post) => <Post key={post.postId} post={post} />);
   }

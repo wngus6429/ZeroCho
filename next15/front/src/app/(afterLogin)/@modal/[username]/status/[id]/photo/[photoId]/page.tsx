@@ -1,5 +1,4 @@
 import CommentForm from "@/app/(afterLogin)/[username]/status/[id]/_component/CommentForm";
-import ActionButtons from "@/app/(afterLogin)/_component/ActionButtons";
 import style from "./photoModal.module.css";
 import PhotoModalCloseButton from "@/app/(afterLogin)/@modal/[username]/status/[id]/photo/[photoId]/_component/PhotoModalCloseButton";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
@@ -11,10 +10,11 @@ import Comments from "@/app/(afterLogin)/[username]/status/[id]/_component/Comme
 import ImageZone from "@/app/(afterLogin)/@modal/[username]/status/[id]/photo/[photoId]/_component/ImageZone";
 
 type Props = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
-export default async function Default({ params }: Props) {
-  const { id } = params;
+// 사진만 클릭해서 확대한곳
+export default async function Default(props: Props) {
+  const { id } = await props.params;
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({ queryKey: ["posts", id], queryFn: getSinglePost });
   await queryClient.prefetchQuery({ queryKey: ["posts", id, "comments"], queryFn: getComments });

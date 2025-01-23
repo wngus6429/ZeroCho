@@ -14,14 +14,17 @@ export default function RightSearchZone() {
     newSearchParams.set("pf", "on");
     router.replace(`/search?${newSearchParams.toString()}`);
   };
+
   const onChangeAll = () => {
     const newSearchParams = new URLSearchParams(searchParams);
     newSearchParams.delete("pf");
     router.replace(`/search?${newSearchParams.toString()}`);
   };
+
   if (pathname === "/explore") {
     return null;
   }
+
   if (pathname === "/search") {
     return (
       <div>
@@ -42,6 +45,7 @@ export default function RightSearchZone() {
       </div>
     );
   }
+
   return (
     <div style={{ marginBottom: 60, width: "inherit" }}>
       <SearchForm />

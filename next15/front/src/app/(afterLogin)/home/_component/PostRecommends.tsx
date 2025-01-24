@@ -23,10 +23,11 @@ export default function PostRecommends() {
     queryKey: ["posts", "recommends"],
     queryFn: getPostRecommends,
     initialPageParam: 0, //  1,2,3,4,5 여기서 5가 lastId가 되겠지
+    // 가장 최근에 불렀던 데이터 5개가 들어가 있다. 그래서 5가 lastId가 되겠지
     getNextPageParam: (lastPage) => lastPage.at(-1)?.postId, // 글 삭제도 생각해줘야하니, 마지막 게시글의 포스트아이디
-    staleTime: 60 * 1000, // 이 값이 0 이면 0초뒤에 fresh에서 -> stale,
+    staleTime: 60 * 1000 * 1,
     // 지금 값은 1분동안은 fresh 상태임, infinite는 캐쉬 무제한
-    gcTime: 300 * 1000, // 캐시타임이 5분이면 gcTime이 5분이 지나면 캐시가 삭제됨
+    gcTime: 60 * 1000 * 5, // 캐시타임이 5분이면 그 페이지를 안보고 있는 inactivate 이면 5분이 지나면 캐시가 삭제
   });
 
   // useInView는 react-intersection-observer 훅으로,
@@ -43,23 +44,6 @@ export default function PostRecommends() {
       fetchNextPage(); // 상태 업데이트는 이 조건이 모두 충족될 때만 실행
     }
   }, [inView, isFetching, hasNextPage, fetchNextPage]);
-
-  // useEffect(() => {
-  //   // Debounce the fetchNextPage call to prevent rapid multiple calls
-  //   let timeoutId: NodeJS.Timeout;
-
-  //   if (inView && !isFetching && hasNextPage) {
-  //     timeoutId = setTimeout(() => {
-  //       fetchNextPage();
-  //     }, 100);
-  //   }
-
-  //   return () => {
-  //     if (timeoutId) {
-  //       clearTimeout(timeoutId);
-  //     }
-  //   };
-  // }, [inView, isFetching, hasNextPage, fetchNextPage]);
 
   if (isPending) {
     return (
@@ -86,7 +70,7 @@ export default function PostRecommends() {
     );
   }
 
-  console.log("data", data);
+  console.log("PostRecommends", data);
   return (
     <>
       {data?.pages.map((page, i) => (

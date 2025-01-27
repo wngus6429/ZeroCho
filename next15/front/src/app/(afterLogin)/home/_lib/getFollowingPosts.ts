@@ -5,10 +5,9 @@ export async function getFollowingPosts() {
       tags: ["posts", "followingPosts"],
     },
     credentials: "include",
-    cache: "no-store",
+    cache: "force-cache",
   });
-  // The return value is *not* serialized
-  // You can return Date, Map, Set, etc.
+  // RevalidateTag, RevalidatePath를 사용하기 전까지는 다시 요청을 보내지 않는다.
 
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary

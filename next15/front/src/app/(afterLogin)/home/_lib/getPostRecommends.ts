@@ -6,6 +6,7 @@ export async function getPostRecommends({ pageParam }: Props) {
     next: {
       tags: ["posts", "recommends"],
     },
+    cache: "force-cache",
   });
   console.log("res", res);
   // The return value is *not* serialized

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next -p 9000",
+    "dev": "cross-env NODE_OPTIONS=--openssl-legacy-provider next -p 9000",
     "start": "next start -p 9000",
     "build": "cross-env ANALYZE=true NODE_ENV=production next build"
   },

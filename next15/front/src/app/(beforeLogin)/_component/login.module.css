@@ -1,38 +1,54 @@
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 .modalBackground {
   width: 100vw;
   height: 100%;
   display: flex;
   justify-content: center;
   position: absolute;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: 1000;
 }
 
 @media (prefers-color-scheme: dark) {
   .modalBackground {
-    background-color: rgba(91, 112, 131, 0.4);
+    background-color: rgba(30, 40, 50, 0.6);
   }
 }
 
 .modal {
   background-color: rgb(var(--background-end-rgb));
   position: relative;
-  top: 5%;
+  top: 10%;
   max-width: 80vw;
   min-width: 600px;
-  border-radius: 16px;
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
-  height: 450px;
+  height: 480px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .modalHeader {
   padding: 36px 80px 20px;
-  font-size: 31px;
-  font-weight: bold;
+  font-size: 32px;
+  font-weight: 800;
+  color: rgb(var(--foreground-rgb));
 }
 
 .modal form {
@@ -47,10 +63,10 @@
 }
 @media all and (min-width: 687px) {
   .modal {
-    top: 5%;
+    top: 10%;
     min-width: 600px;
     max-width: 600px;
-    height: 450px;
+    height: 480px;
     padding: 0;
   }
   .modalHeader {
@@ -64,9 +80,9 @@
 .inputDiv {
   display: flex;
   flex-direction: column;
-  height: 56px;
+  height: 60px;
   position: relative;
-  margin: 12px 0;
+  margin: 16px 0;
 }
 .inputLabel {
   width: 100%;
@@ -74,22 +90,27 @@
   position: absolute;
   top: 0;
   border: 1px solid rgb(207, 217, 222);
-  border-radius: 4px;
-  font-size: 13px;
-  height: 56px;
-  padding: 8px 8px 0;
+  border-radius: 8px;
+  font-size: 14px;
+  height: 60px;
+  padding: 8px 12px 0;
   color: rgb(83, 100, 113);
+  transition: all 0.2s ease;
 }
 .inputLabel:focus-within {
-  color: red;
+  border-color: #1d9bf0;
+  box-shadow: 0 0 0 1px #1d9bf0;
+  color: #1d9bf0;
 }
 .input {
   width: 100%;
   border: none;
-  font-size: 17px;
-  margin-top: 16px;
-  padding: 12px 8px 8px;
+  font-size: 18px;
+  margin-top: 20px;
+  padding: 8px 12px;
   outline: none;
+  background: transparent;
+  color: rgb(var(--foreground-rgb));
 }
 
 .modalFooter {
@@ -98,41 +119,49 @@
 
 .actionButton {
   width: 100%;
-  height: 50px;
-  border-radius: 25px;
-  background-color: rgb(15, 20, 25);
+  height: 52px;
+  border-radius: 26px;
+  background: linear-gradient(135deg, #1d9bf0, #1a8cd8);
   color: white;
-  font-size: 17px;
+  font-size: 18px;
+  font-weight: 600;
   cursor: pointer;
   border: none;
+  box-shadow: 0 4px 14px rgba(29, 155, 240, 0.3);
+  transition: all 0.2s ease;
 }
 .actionButton:disabled {
   opacity: 0.5;
+  background: rgb(15, 20, 25);
+  box-shadow: none;
+  cursor: not-allowed;
 }
-.actionButton:hover {
-  background-color: rgb(39, 44, 48);
+.actionButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(29, 155, 240, 0.4);
 }
 
 .closeButton {
-  width: 34px;
-  height: 34px;
-  border-radius: 17px;
+  width: 36px;
+  height: 36px;
+  border-radius: 18px;
   border: none;
   cursor: pointer;
-  background-color: #fff;
+  background-color: transparent;
   position: absolute;
-  left: 16px;
-  top: 16px;
+  left: 20px;
+  top: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background-color 0.2s;
 }
 .closeButton:hover {
   background-color: rgba(15, 20, 25, 0.1);
 }
 @media (prefers-color-scheme: dark) {
-  .closeButton {
-    background-color: black;
+  .closeButton:hover {
+    background-color: rgba(255, 255, 255, 0.1);
   }
   .closeButton svg {
     fill: white;
@@ -140,7 +169,9 @@
 }
 
 .message {
-  color: red;
+  color: #f4212e;
   display: flex;
   justify-content: center;
+  font-weight: 500;
+  margin-top: 10px;
 }

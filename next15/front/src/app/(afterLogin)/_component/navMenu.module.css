@@ -3,17 +3,48 @@
   height: 50px;
   padding: 12px;
   align-items: center;
+  transition: background-color 0.2s;
+  border-radius: 25px;
+  color: #0f1419;
 }
+
+@media (prefers-color-scheme: dark) {
+  .navPill {
+    color: #e7e9ea;
+  }
+}
+
 .navPill:hover {
   background-color: rgba(15, 20, 25, 0.1);
-  border-radius: 29px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .navPill:hover {
+    background-color: rgba(231, 233, 234, 0.1);
+  }
 }
 
 .navPill > div {
   display: none;
 }
 
+.navPill svg {
+  fill: #0f1419;
+}
+
+@media (prefers-color-scheme: dark) {
+  .navPill svg {
+    fill: #e7e9ea;
+  }
+}
+
 @media all and (min-width: 1300px) {
+  .navPill {
+    padding: 0 16px;
+    height: 52px;
+    margin-bottom: 4px;
+  }
+  
   .navPill > div {
     margin-left: 20px;
     margin-right: 16px;

@@ -6,8 +6,7 @@ import SearchResult from "./_component/SearchResult";
 import { Metadata, ResolvingMetadata } from "next";
 
 type Props = {
-  searchParams: { q: string; f?: string; pf?: string };
-  // Next15 searchParams: Promise<{ q: string; f?: string; pf?: string }>;
+  searchParams: Promise<{ q: string; f?: string; pf?: string }>;
 };
 
 export async function generateMetadata({ searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {

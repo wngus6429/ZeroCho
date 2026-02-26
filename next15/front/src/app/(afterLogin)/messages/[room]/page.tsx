@@ -15,12 +15,13 @@ dayjs.locale("ko");
 dayjs.extend(relativeTime);
 
 type Props = {
-  params: { room: string };
+  params: Promise<{ room: string }>;
 };
 export default async function ChatRoom({ params }: Props) {
+  const { room } = await params;
   const session = await auth();
   const queryClient = new QueryClient();
-  const ids = params.room.split("-").filter((v) => v !== session?.user?.email);
+  const ids = room.split("-").filter((v) => v !== session?.user?.email);
   if (!ids[0]) {
     return null;
   }

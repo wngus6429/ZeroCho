@@ -111,7 +111,8 @@ export const {
         console.log("set-cookie", setCookie);
         if (setCookie) {
           const parsed = cookie.parse(setCookie);
-          cookies().set("connect.sid", parsed["connect.sid"], parsed);
+          const cookieStore = await cookies();
+          cookieStore.set("connect.sid", parsed["connect.sid"], parsed as any);
           // 브라우저에 쿠키를 심어주는 것
           // 프론트서버에는 쿠키를 심으면 안된다. 서버는 공용이기 때문에 심으면 개인정보 유출 발생
         }

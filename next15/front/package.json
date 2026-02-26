@@ -23,12 +23,17 @@
     "zustand": "^5.0.2"
   },
   "devDependencies": {
+    "@mswjs/http-middleware": "^0.10.3",
     "@tanstack/react-query-devtools": "^5.62.3",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "cors": "^2.8.6",
     "eslint": "^8",
     "eslint-config-next": "^15.0.3",
+    "express": "^5.2.1",
     "msw": "^2.6.6",
     "typescript": "^5"
   },
